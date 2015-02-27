@@ -1,5 +1,5 @@
 # DKVDua
-Dorong Kotak versi dua
+Dorong Kotak versi dua\n
 Game ini terinspirasi dari Game Zelda, Push The Box, dan Sokoban
 Terima kasih kepada para developer game tersebut yang telah membuat
 game tersebut, juga kepada Mario Zechner yang sudah membuat framework/library untuk
