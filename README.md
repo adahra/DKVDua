@@ -2,6 +2,7 @@
 Dorong Kotak versi dua
 
 Game ini terinspirasi dari Game Zelda, Push The Box, dan Sokoban
+
 Terima kasih kepada para developer game tersebut yang telah membuat
 game tersebut, juga kepada Mario Zechner yang sudah membuat framework/library untuk
 membuat game, dan kepada Robert Green yang telah membuat tutorial bagaimana
