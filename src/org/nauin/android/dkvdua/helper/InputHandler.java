@@ -4,6 +4,12 @@ import org.nauin.android.dkvdua.gameworld.GameWorld;
 
 import com.badlogic.gdx.InputProcessor;
 
+/**
+ * Kelas yang digunakan untuk menganani inputan/masukan pada aplikasi permainan
+ * 
+ * @author nauin
+ *
+ */
 public class InputHandler implements InputProcessor {
 	private GameWorld myWorld;
 	private float scaleFactorX;
