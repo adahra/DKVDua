@@ -19,6 +19,7 @@ public class AssetLoader {
 	public static Texture dkvduaMatchButtonClick;
 	public static Texture dkvduaMatchButtonNormal;
 	public static Texture dkvduaMatchUI;
+	public static Texture dkvduaTitle;
 
 	public static BitmapFont dkvduaFont;
 	public static BitmapFont dkvduaFontShadow;
@@ -46,16 +47,25 @@ public class AssetLoader {
 	}
 
 	private static void antarMuka() {
-		dkvduaMatchUI = new Texture(Gdx.files.internal("data/gfx/dkvduaMatchUI.png"));
+		dkvduaMatchUI = new Texture(
+				Gdx.files.internal("data/gfx/dkvduaMatchUI.png"));
 		dkvduaMatchUI.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-		
-		dkvduaMatchButtonNormal = new Texture(Gdx.files.internal("data/gfx/dkvduaMatchButtonNormal.png"));
-		dkvduaMatchButtonNormal.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-		
-		dkvduaMatchButtonNormal = new Texture(Gdx.files.internal("data/gfx/dkvduaMatchButtonClick.png"));
-		dkvduaMatchButtonNormal.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+
+		dkvduaMatchButtonNormal = new Texture(
+				Gdx.files.internal("data/gfx/dkvduaMatchButtonNormal.png"));
+		dkvduaMatchButtonNormal.setFilter(TextureFilter.Nearest,
+				TextureFilter.Nearest);
+
+		dkvduaMatchButtonNormal = new Texture(
+				Gdx.files.internal("data/gfx/dkvduaMatchButtonClick.png"));
+		dkvduaMatchButtonNormal.setFilter(TextureFilter.Nearest,
+				TextureFilter.Nearest);
+
+		dkvduaTitle = new Texture(
+				Gdx.files.internal("data/gfx/dkvduaTitle.png"));
+		dkvduaTitle.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 	}
-	
+
 	private static void dengarSuara() {
 		dkvduaSoundClick = Gdx.audio.newSound(Gdx.files
 				.internal("data/sfx/dkvduaClick.ogg"));
@@ -72,16 +82,24 @@ public class AssetLoader {
 	}
 
 	private static void dengarMusik() {
-
+		dkvduaMusicHappyEnding = Gdx.audio.newMusic(Gdx.files
+				.internal("data/sfx/dkvduaHappyEnding.ogg"));
+		dkvduaMusicKremKaakkuja = Gdx.audio.newMusic(Gdx.files
+				.internal("data/sfx/dkvduaKremKaakkuja.ogg"));
+		dkvduaMusicLonely = Gdx.audio.newMusic(Gdx.files
+				.internal("data/sfx/dkvduaLonely.ogg"));
+		dkvduaMusicMysteryBox = Gdx.audio.newMusic(Gdx.files
+				.internal("data/sfx/dkvduaMysteryBox.ogg"));
+		dkvduaMusicMysteryBox.setLooping(true);
 	}
 
 	private static void tampilFont() {
 		dkvduaFont = new BitmapFont(
-				Gdx.files.internal("data/gfx/font/dkvduaFontText.fnt"));
+				Gdx.files.internal("data/gfx/font/dkvduafont/text.fnt"));
 		dkvduaFont.setScale(.25f, -.25f);
 
 		dkvduaFontShadow = new BitmapFont(
-				Gdx.files.internal("data/gfx/font/dkvduaFontShadow.fnt"));
+				Gdx.files.internal("data/gfx/font/dkvduafont/shadow.fnt"));
 		dkvduaFontShadow.setScale(.25f, -.25f);
 	}
 
@@ -116,23 +134,24 @@ public class AssetLoader {
 	}
 
 	public static void dispose() {
-		dkvduaMatchButtonClick.dispose();
-		dkvduaMatchButtonNormal.dispose();
+		// dkvduaMatchButtonClick.dispose();
+		// dkvduaMatchButtonNormal.dispose();
 		dkvduaMatchUI.dispose();
+		dkvduaTitle.dispose();
 
 		dkvduaFont.dispose();
 		dkvduaFontShadow.dispose();
 
-		dkvduaSoundClick.dispose();
-		dkvduaSoundExplode.dispose();
-		dkvduaSoundGameOver.dispose();
-		dkvduaSoundLaser.dispose();
-		dkvduaSoundMonsterCome.dispose();
-		dkvduaSoundPickItem.dispose();
+		/*
+		 * dkvduaSoundClick.dispose(); dkvduaSoundExplode.dispose();
+		 * dkvduaSoundGameOver.dispose(); dkvduaSoundLaser.dispose();
+		 * dkvduaSoundMonsterCome.dispose(); dkvduaSoundPickItem.dispose();
+		 */
 
-		dkvduaMusicHappyEnding.dispose();
-		dkvduaMusicKremKaakkuja.dispose();
-		dkvduaMusicLonely.dispose();
+		/*
+		 * dkvduaMusicHappyEnding.dispose(); dkvduaMusicKremKaakkuja.dispose();
+		 * dkvduaMusicLonely.dispose(); dkvduaMusicMysteryBox.dispose();
+		 */
 		dkvduaMusicMysteryBox.dispose();
 	}
 }
