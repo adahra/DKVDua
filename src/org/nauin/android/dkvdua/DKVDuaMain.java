@@ -2,7 +2,7 @@ package org.nauin.android.dkvdua;
 
 import org.nauin.android.dkvdua.gameobject.AssetLoader;
 import org.nauin.android.dkvdua.gamescreen.Game;
-import org.nauin.android.dkvdua.layar.LayarMenuUtama;
+import org.nauin.android.dkvdua.gamescreen.LayarPermainan;
 
 /**
  * Kelas utama dari aplikasi
@@ -15,7 +15,7 @@ public class DKVDuaMain extends Game {
 	@Override
 	public void create() {
 		AssetLoader.load();
-		setScreen(new LayarMenuUtama(this));
+		setScreen(new LayarPermainan());
 	}
 	
 	@Override
