@@ -1,5 +1,7 @@
 package org.nauin.android.dkvdua.gameworld;
 
+import org.nauin.android.dkvdua.gameobject.AssetLoader;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -37,8 +39,6 @@ public class GameRenderer {
 		shapeRenderer.end();
 
 		batcher.begin();
-		batcher.disableBlending();
-		batcher.enableBlending();
 		batcher.end();
 	}
 }
