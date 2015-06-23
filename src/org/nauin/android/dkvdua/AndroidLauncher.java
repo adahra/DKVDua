@@ -20,6 +20,7 @@ public class AndroidLauncher extends AndroidApplication {
 		config.useAccelerometer = false;
 		config.useCompass = false;
 		config.useWakelock = true;
-		initialize(new DKVDuaMain(), config);
+		// initialize(new DKVDuaMain(), config);
+		initialize(new SuperKoalio(), config);
 	}
 }
