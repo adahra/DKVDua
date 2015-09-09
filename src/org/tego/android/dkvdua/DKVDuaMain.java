@@ -2,6 +2,7 @@ package org.tego.android.dkvdua;
 
 import org.tego.android.dkvdua.gameobject.AssetLoader;
 import org.tego.android.dkvdua.gamescreen.Game;
+import org.tego.android.dkvdua.gamescreen.LayarPermainan;
 import org.tego.android.dkvdua.layar.UISimpleTest;
 
 /**
@@ -22,6 +23,7 @@ public class DKVDuaMain extends Game {
 		AssetLoader.load();
 		// setScreen(new LayarMenuUtama());
 		setScreen(new UISimpleTest());
+		// setScreen(new LayarPermainan());
 	}
 
 	/*
