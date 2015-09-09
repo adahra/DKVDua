@@ -19,6 +19,9 @@
 
 package org.tego.android.dkvdua.gameobject;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 /**
  * Kelas yang digunakan untuk mengatur pemain, menampilkan pemain, pergerakan
  * pemain, dan ketika pemain melakukan kontak dengan musuh
@@ -27,5 +30,43 @@ package org.tego.android.dkvdua.gameobject;
  *
  */
 public class Pemain extends Obyek {
+	private float x;
+	private float y;
+	private Texture pemainAtas;
+	private Texture pemainBawah;
+	private Texture pemainKiri;
+	private Texture pemainKanan;
+	public static int V_WIDTH = 800;
+	public static int V_HEIGHT = 480;
+	public static int VIEWPORT_WIDTH = 312;
+	public static int VIEWPORT_HEIGHT = 192;
 
+	public Pemain() {
+		x = VIEWPORT_WIDTH / 2;
+		y = VIEWPORT_HEIGHT / 2;
+
+		muatGambarPemain();
+	}
+
+	public void update(float delta) {
+
+	}
+
+	public void render(SpriteBatch spriteBatch) {
+		spriteBatch.draw(pemainAtas, x, y);
+	}
+
+	public void muatGambarPemain() {
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.tego.android.dkvdua.gameobject.Obyek#bergerak(int, int)
+	 */
+	@Override
+	public void bergerak(int x, int y) {
+		// TODO Auto-generated method stub
+		super.bergerak(x, y);
+	}
 }
