@@ -27,4 +27,15 @@ package org.tego.android.dkvdua.gameobject;
  */
 public class Obyek {
 
+	/**
+	 * Method yang digunakan untuk membuat obyek dalam permainan bergerak
+	 * 
+	 * @param x
+	 *            posisi x dari obyek
+	 * @param y
+	 *            posisi y dari obyek
+	 */
+	public void bergerak(int x, int y) {
+
+	}
 }
