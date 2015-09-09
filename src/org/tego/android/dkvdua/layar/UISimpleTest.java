@@ -27,7 +27,8 @@ import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 public class UISimpleTest implements Screen {
 	private TiledMap map;
 	private MapLayers layers;
-	private TiledMapTileLayer layer;
+	private TiledMapTileLayer layerLantai;
+	private TiledMapTileLayer layerDinding;
 	private TiledMapRenderer renderer;
 	private Texture tiles;
 	private TextureRegion[][] splitTiles;
@@ -36,6 +37,28 @@ public class UISimpleTest implements Screen {
 	private OrthographicCamera oCamera;
 	private float lebar = Gdx.graphics.getWidth();
 	private float tinggi = Gdx.graphics.getHeight();
+	private int[][] arrayPetaLantai = new int[][] {
+			{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
+			{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
+			{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
+			{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
+			{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
+			{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
+			{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
+			{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
+			{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
+			{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
+			{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
+			{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
+			{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
+			{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
+			{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
+			{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
+			{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
+			{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
+			{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
+			{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 } };
+
 	private int[][] arrayPetaHalangan = new int[][] {
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -80,6 +103,11 @@ public class UISimpleTest implements Screen {
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, };
 
+	 public UISimpleTest() {
+		// TODO Auto-generated constructor stub
+		 
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -107,7 +135,7 @@ public class UISimpleTest implements Screen {
 	public void resize(int width, int height) {
 		// oCamera.viewportWidth = width;
 		// oCamera.viewportHeight = height;
-		// oCamera.update();
+		oCamera.update();
 	}
 
 	/*
@@ -123,25 +151,32 @@ public class UISimpleTest implements Screen {
 
 		spriteBatch = new SpriteBatch();
 
-		// tiles = new Texture(Gdx.files.internal("data/gfx/dkvduaTextures.png"));
-		tiles = new Texture(Gdx.files.internal("data/gfx/dkvduaBasicTiles.png"));
+		tiles = new Texture(Gdx.files.internal("data/gfx/dkvduaTextures.png"));
+		// tiles = new
+		// Texture(Gdx.files.internal("data/gfx/dkvduaBasicTiles.png"));
 		splitTiles = TextureRegion.split(tiles, 16, 16);
 
 		map = new TiledMap();
 		layers = map.getLayers();
 
-		for (int l = 0; l < 10; l++) {
-			layer = new TiledMapTileLayer(40, 20, 16, 16);
-			for (int x = 0; x < 150; x++) {
-				for (int y = 0; y < 100; y++) {
-					cell = new Cell();
-					cell.setTile(new StaticTiledMapTile(splitTiles[2][1]));
-					layer.setCell(x, y, cell);
+		cell = new Cell();
+
+		layerLantai = new TiledMapTileLayer(13, 20, 16, 16);
+
+		for (int x = 0; x < arrayPetaLantai.length; x++) {
+			for (int y = 0; y < arrayPetaLantai[0].length; y++) {
+				switch (arrayPetaLantai[x][y]) {
+				case 5:
+					cell.setTile(new StaticTiledMapTile(splitTiles[1][1]));
+					layerLantai.setCell(x, y, cell);
+					break;
+				default:
+					break;
 				}
 			}
 		}
 
-		layers.add(layer);
+		layers.add(layerLantai);
 
 		renderer = new OrthogonalTiledMapRenderer(map);
 	}
