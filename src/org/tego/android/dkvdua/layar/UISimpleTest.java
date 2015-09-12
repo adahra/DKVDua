@@ -103,11 +103,11 @@ public class UISimpleTest implements Screen {
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, };
 
-	 public UISimpleTest() {
+	public UISimpleTest() {
 		// TODO Auto-generated constructor stub
-		 
+
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -146,7 +146,7 @@ public class UISimpleTest implements Screen {
 	@Override
 	public void show() {
 		oCamera = new OrthographicCamera();
-		oCamera.setToOrtho(false, (lebar / tinggi) * 320, 320);
+		oCamera.setToOrtho(false, (lebar / tinggi) * 320, 256);
 		oCamera.update();
 
 		spriteBatch = new SpriteBatch();
@@ -162,20 +162,24 @@ public class UISimpleTest implements Screen {
 		cell = new Cell();
 
 		layerLantai = new TiledMapTileLayer(13, 20, 16, 16);
-
-		for (int x = 0; x < arrayPetaLantai.length; x++) {
-			for (int y = 0; y < arrayPetaLantai[0].length; y++) {
-				switch (arrayPetaLantai[x][y]) {
-				case 5:
-					cell.setTile(new StaticTiledMapTile(splitTiles[1][1]));
-					layerLantai.setCell(x, y, cell);
-					break;
-				default:
-					break;
+		
+		/*
+		for (int z = 0; z < 10; z++) {
+			for (int x = 0; x < arrayPetaLantai.length; x++) {
+				for (int y = 0; y < arrayPetaLantai[0].length; y++) {
+					switch (arrayPetaLantai[x][y]) {
+					case 5:
+						cell.setTile(new StaticTiledMapTile(splitTiles[1][1]));
+						layerLantai.setCell(x, y, cell);
+						break;
+					default:
+						break;
+					}
 				}
 			}
 		}
-
+		*/
+		
 		layers.add(layerLantai);
 
 		renderer = new OrthogonalTiledMapRenderer(map);
