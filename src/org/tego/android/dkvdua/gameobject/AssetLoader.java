@@ -26,6 +26,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 /**
  * Kelas yang menyimpan semua variabel static yang berupa gambar, suara, dan
@@ -40,7 +41,26 @@ public class AssetLoader {
 	public static Texture dkvduaMatchUI;
 	public static Texture dkvduaTitle;
 	public static Texture dkvduaPopup;
-
+	public static Texture dkvduaTexture;
+	public static Texture dkvduaBasicTile;
+	public static Texture dkvduaCharacter;
+	public static Texture dkvduaIcon;
+	public static Texture dkvduaDead;
+	
+	public static TextureRegion gambarPemain;
+	public static TextureRegion gambarMusuh;
+	public static TextureRegion gambarKotak;
+	public static TextureRegion gambarLubang;
+	public static TextureRegion gambarUbinKiri;
+	public static TextureRegion gambarUbinKanan;
+	public static TextureRegion gambarUbinAtas;
+	public static TextureRegion gambarUbinBawah;
+	public static TextureRegion gambarUbin;
+	public static TextureRegion gambarUbinPojokKiriAtas;
+	public static TextureRegion gambarUbinPojokKananAtas;
+	public static TextureRegion gambarUbinPojokKiriBawah;
+	public static TextureRegion gambarUbinPojokKananBawah;
+	
 	public static BitmapFont dkvduaFont;
 	public static BitmapFont dkvduaFontShadow;
 
@@ -59,13 +79,19 @@ public class AssetLoader {
 	public static Preferences pengaturan;
 
 	public static void load() {
+		dkvduaTexture = new Texture(Gdx.files.internal("data/gfx/dkvduaTextures.png"));
+		dkvduaTexture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+		
+		gambarUbin = new TextureRegion(dkvduaTexture, 16, 16, 16, 16);
+		gambarUbin.flip(false, true);
+		
 		antarMuka();
 		dengarSuara();
 		dengarMusik();
 		tampilFont();
 		konfigurasi();
 	}
-
+	
 	private static void antarMuka() {
 		dkvduaMatchUI = new Texture(
 				Gdx.files.internal("data/gfx/dkvduaMatchUI.png"));
