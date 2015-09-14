@@ -28,4 +28,9 @@ package org.tego.android.dkvdua.gameobject;
  */
 public class Angka extends Item {
 
+	public Angka(float x, float y, int lebar, int tinggi) {
+		super(x, y, lebar, tinggi);
+		// TODO Auto-generated constructor stub
+	}
+
 }
