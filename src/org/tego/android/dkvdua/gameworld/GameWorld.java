@@ -10,6 +10,7 @@ public class GameWorld {
 	private GameState currentState;
 	private float gameWidth;
 	private float gameHeight;
+	private GameRenderer renderer;
 
 	/**
 	 * Status dari permainan
@@ -18,7 +19,7 @@ public class GameWorld {
 	 *
 	 */
 	public enum GameState {
-		MENU, READY, RUNNING, GAMEOVER
+		MENU, READY, RUNNING, GAMEOVER, ABOUT, SETTING
 	}
 
 	/**
@@ -55,9 +56,23 @@ public class GameWorld {
 			break;
 		case GAMEOVER:
 			updateGameOver(delta);
+		case ABOUT:
+			updateAbout(delta);
+		case SETTING:
+			updateSetting(delta);
 		default:
 			break;
 		}
+	}
+
+	private void updateSetting(float delta) {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void updateAbout(float delta) {
+		// TODO Auto-generated method stub
+
 	}
 
 	/**
@@ -101,6 +116,14 @@ public class GameWorld {
 	 */
 	private void updateGameOver(float delta) {
 
+	}
+
+	public boolean isSetting() {
+		return currentState == GameState.SETTING;
+	}
+
+	public boolean isAbout() {
+		return currentState == GameState.ABOUT;
 	}
 
 	/**
@@ -160,5 +183,9 @@ public class GameWorld {
 	 */
 	public void ready() {
 		currentState = GameState.READY;
+	}
+	
+	public void setRenderer(GameRenderer renderer) {
+		this.renderer = renderer;
 	}
 }
