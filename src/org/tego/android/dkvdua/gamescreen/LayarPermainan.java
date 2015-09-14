@@ -20,7 +20,7 @@ public class LayarPermainan implements Screen {
 	public LayarPermainan() {
 		float screenWidth = Gdx.graphics.getWidth();
 		float screenHeight = Gdx.graphics.getHeight();
-		float gameWidth = 136;
+		float gameWidth = 200;
 		float gameHeight = screenHeight / (screenWidth / gameWidth);
 
 		world = new GameWorld(gameWidth, gameHeight);
