@@ -19,6 +19,8 @@
 
 package org.tego.android.dkvdua.gameobject;
 
+import com.badlogic.gdx.math.Vector2;
+
 /**
  * Digunakan untuk mengatur semua konfigurasi dari item yang dijatuhkan oleh
  * Musuh
@@ -27,5 +29,42 @@ package org.tego.android.dkvdua.gameobject;
  *
  */
 public class Item {
-
+	protected Vector2 posisi;
+	protected int lebar;
+	protected int tinggi;
+	
+	public Item(float x, float y, int lebar, int tinggi) {
+		// TODO Auto-generated constructor stub
+		posisi = new Vector2(x, y);
+		this.lebar = lebar;
+		this.tinggi = tinggi;
+	}
+	
+	public void update(float delta) {
+		
+	}
+	
+	public void reset() {
+		
+	}
+	
+	public void stop() {
+		
+	}
+	
+	public float getX() {
+		return posisi.x;
+	}
+	
+	public float getY() {
+		return posisi.y;
+	}
+	
+	public int getLebar() {
+		return lebar;
+	}
+	
+	public int getTinggi() {
+		return tinggi;
+	}
 }
