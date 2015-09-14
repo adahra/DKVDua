@@ -19,6 +19,8 @@
 
 package org.tego.android.dkvdua.gameobject;
 
+import com.badlogic.gdx.math.Vector2;
+
 /**
  * Kelas yang menangani semua obyek yang ada pada aplikasi permainan
  * 
@@ -26,7 +28,48 @@ package org.tego.android.dkvdua.gameobject;
  *
  */
 public class Obyek {
-
+	protected Vector2 posisi;
+	protected Vector2 kecepatan;
+	protected int lebar;
+	protected int tinggi;
+	
+	public Obyek(float x, float y, int lebar, int tinggi, float kecepatan) {
+		// TODO Auto-generated constructor stub
+		posisi = new Vector2(x, y);
+		this.lebar = lebar;
+		this.tinggi = tinggi;
+		
+	}
+	
+	public void update(float delta) {
+		posisi.add(kecepatan.cpy().scl(delta));
+		
+	}
+	
+	public void reset(float posisiXBaru, float posisiYBaru) {
+		
+	}
+	
+	public void stop() {
+		
+	}
+	
+	public float getX() {
+		return posisi.x;
+	}
+	
+	public float getY() {
+		return posisi.y;
+	}
+	
+	public int getLebar() {
+		return lebar;
+	}
+	
+	public int getTinggi() {
+		return tinggi;
+	}
+	
 	/**
 	 * Method yang digunakan untuk membuat obyek dalam permainan bergerak
 	 * 
@@ -35,7 +78,11 @@ public class Obyek {
 	 * @param y
 	 *            posisi y dari obyek
 	 */
-	public void bergerak(int x, int y) {
-
+	public boolean bergerak(int posisiDX, int posisiDY) {
+		return false;
+	}
+	
+	public boolean lokasiValid(float posisiNX, float posisiNY) {
+		return true;
 	}
 }
