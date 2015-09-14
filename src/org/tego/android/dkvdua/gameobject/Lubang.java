@@ -28,4 +28,9 @@ package org.tego.android.dkvdua.gameobject;
  */
 public class Lubang extends Obyek {
 
+	public Lubang(float x, float y, int lebar, int tinggi, float kecepatan) {
+		super(x, y, lebar, tinggi, kecepatan);
+		// TODO Auto-generated constructor stub
+	}
+
 }
