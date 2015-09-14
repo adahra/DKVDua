@@ -22,8 +22,8 @@ public class DKVDuaMain extends Game {
 	public void create() {
 		AssetLoader.load();
 		// setScreen(new LayarMenuUtama());
-		setScreen(new UISimpleTest());
-		// setScreen(new LayarPermainan());
+		// setScreen(new UISimpleTest());
+		setScreen(new LayarPermainan());
 	}
 
 	/*
