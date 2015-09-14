@@ -21,6 +21,8 @@ package org.tego.android.dkvdua.gameobject;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 
 /**
  * Kelas yang digunakan untuk mengatur pemain, menampilkan pemain, pergerakan
@@ -30,43 +32,66 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  *
  */
 public class Pemain extends Obyek {
-	private float x;
-	private float y;
-	private Texture pemainAtas;
-	private Texture pemainBawah;
-	private Texture pemainKiri;
-	private Texture pemainKanan;
-	public static int V_WIDTH = 800;
-	public static int V_HEIGHT = 480;
-	public static int VIEWPORT_WIDTH = 312;
-	public static int VIEWPORT_HEIGHT = 192;
+	
+	private Rectangle kotakPemain;
+	private Level level;
+	private float ukuran = 0.3f;
+	private float sudut;
 
-	public Pemain() {
-		x = VIEWPORT_WIDTH / 2;
-		y = VIEWPORT_HEIGHT / 2;
-
-		muatGambarPemain();
+	public Pemain(float x, float y, int lebar, int tinggi, float kecepatan) {
+		super(x, y, lebar, tinggi, kecepatan);
+		kotakPemain = new Rectangle();
 	}
 
-	public void update(float delta) {
-
-	}
-
-	public void render(SpriteBatch spriteBatch) {
-		spriteBatch.draw(pemainAtas, x, y);
-	}
-
-	public void muatGambarPemain() {
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see org.tego.android.dkvdua.gameobject.Obyek#bergerak(int, int)
-	 */
 	@Override
-	public void bergerak(int x, int y) {
+	public void update(float delta) {
 		// TODO Auto-generated method stub
-		super.bergerak(x, y);
+		super.update(delta);
+		kotakPemain.set(posisi.x, posisi.y, lebar, tinggi);
+	}
+	
+	@Override
+	public void reset(float posisiXBaru, float posisiYBaru) {
+		// TODO Auto-generated method stub
+		super.reset(posisiXBaru, posisiYBaru);
+		
+	}
+	
+	public Rectangle getKotakPemain() {
+		return kotakPemain;
+	}
+	
+	@Override
+	public boolean bergerak(int posisiDX, int posisiDY) {
+		// TODO Auto-generated method stub
+		super.bergerak(posisiDX, posisiDY);
+		float nx = posisi.x + posisiDX;
+		float ny = posisi.x + posisiDY;
+		
+		if (lokasiValid(nx, ny)) {
+			posisi.x = nx;
+			posisi.y = ny;
+			
+			sudut = (float) (MathUtils.atan2(posisiDX, posisiDY) - (MathUtils.PI / 2));
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	@Override
+	public boolean lokasiValid(float posisiNX, float posisiNY) {
+		// TODO Auto-generated method stub
+		if (level.halangan(posisiNX - ukuran, posisiNY - ukuran)) {
+			return false;
+		} else if (level.halangan(posisiNX + ukuran, posisiNY - ukuran)) {
+			return false;
+		} else if (level.halangan(posisiNX - ukuran, posisiNY + ukuran)) {
+			return false;
+		} else if (level.halangan(posisiNX + ukuran, posisiNY + ukuran)) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 }
