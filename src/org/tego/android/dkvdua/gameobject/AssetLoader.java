@@ -46,7 +46,7 @@ public class AssetLoader {
 	public static Texture dkvduaCharacter;
 	public static Texture dkvduaIcon;
 	public static Texture dkvduaDead;
-	
+
 	public static TextureRegion gambarPemain;
 	public static TextureRegion gambarMusuh;
 	public static TextureRegion gambarKotak;
@@ -60,7 +60,7 @@ public class AssetLoader {
 	public static TextureRegion gambarUbinPojokKananAtas;
 	public static TextureRegion gambarUbinPojokKiriBawah;
 	public static TextureRegion gambarUbinPojokKananBawah;
-	
+
 	public static BitmapFont dkvduaFont;
 	public static BitmapFont dkvduaFontShadow;
 
@@ -79,19 +79,47 @@ public class AssetLoader {
 	public static Preferences pengaturan;
 
 	public static void load() {
-		dkvduaTexture = new Texture(Gdx.files.internal("data/gfx/dkvduaTextures.png"));
-		dkvduaTexture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-		
-		gambarUbin = new TextureRegion(dkvduaTexture, 16, 16, 16, 16);
-		gambarUbin.flip(false, true);
-		
+		muatGambarUbin();
 		antarMuka();
 		dengarSuara();
 		dengarMusik();
 		tampilFont();
 		konfigurasi();
 	}
-	
+
+	private static void muatGambarUbin() {
+		dkvduaTexture = new Texture(
+				Gdx.files.internal("data/gfx/dkvduaTextures.png"));
+		dkvduaTexture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+
+		gambarUbin = new TextureRegion(dkvduaTexture, 16, 16, 16, 16);
+		gambarUbin.flip(false, true);
+
+		gambarUbinAtas = new TextureRegion(dkvduaTexture, 16, 0, 16, 16);
+		gambarUbinAtas.flip(false, true);
+
+		gambarUbinBawah = new TextureRegion(dkvduaTexture, 16, 32, 16, 16);
+		gambarUbinBawah.flip(false, true);
+
+		gambarUbinKanan = new TextureRegion(dkvduaTexture, 32, 16, 16, 16);
+		gambarUbinKanan.flip(false, true);
+
+		gambarUbinKiri = new TextureRegion(dkvduaTexture, 0, 16, 16, 16);
+		gambarUbinKiri.flip(false, true);
+		
+		gambarUbinPojokKananAtas = new TextureRegion(dkvduaTexture, 32, 0, 16, 16);
+		gambarUbinPojokKananAtas.flip(false, true);
+		
+		gambarUbinPojokKiriAtas = new TextureRegion(dkvduaTexture, 0, 0, 16, 16);
+		gambarUbinPojokKiriAtas.flip(false, true);
+		
+		gambarUbinPojokKananBawah = new TextureRegion(dkvduaTexture, 32, 32, 16, 16);
+		gambarUbinPojokKananBawah.flip(false, true);
+		
+		gambarUbinPojokKiriBawah = new TextureRegion(dkvduaTexture, 0, 32, 16, 16);
+		gambarUbinPojokKiriBawah.flip(false, true);
+	}
+
 	private static void antarMuka() {
 		dkvduaMatchUI = new Texture(
 				Gdx.files.internal("data/gfx/dkvduaMatchUI.png"));
@@ -187,6 +215,8 @@ public class AssetLoader {
 		dkvduaPopup.dispose();
 		dkvduaTitle.dispose();
 
+		dkvduaTexture.dispose();
+		
 		dkvduaFont.dispose();
 		dkvduaFontShadow.dispose();
 
