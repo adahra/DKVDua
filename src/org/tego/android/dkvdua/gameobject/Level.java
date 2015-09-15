@@ -19,6 +19,9 @@
 
 package org.tego.android.dkvdua.gameobject;
 
+import org.tego.android.dkvdua.gameworld.GameWorld;
+
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
 /**
@@ -37,11 +40,16 @@ public class Level {
 	public static final int UKURAN_UBIN = 16;
 	public int[][] data = new int[LEBAR][TINGGI];
 	public Rectangle kotak;
+	public int lebarLayar;
+	public int tinggiLayar;
 	
 	
-	public Level() {
+	public Level(GameWorld duniaGim, int lebarDuniaGim, int tinggiDuniaGim) {
 		// TODO Auto-generated constructor stub
 		kotak = new Rectangle();
+		
+		lebarLayar = lebarDuniaGim;
+		tinggiLayar = lebarDuniaGim;
 		
 		for (int y = 0; y < TINGGI; y++) {
 			data[0][y] = DINDING;
@@ -65,10 +73,24 @@ public class Level {
 		data[10][2] = KOSONG;
 		data[1][4] = KOSONG;
 		data[10][6] = KOSONG;
+		data[1][8] = KOSONG;
 	}
 	
 	public void update(float delta) {
 		
+	}
+	
+	public void tampilPetaLevel(SpriteBatch batcher) {
+		for (int x = 0; x < LEBAR; x++) {
+			for (int y = 0; y < TINGGI; y++) {
+				batcher.draw(AssetLoader.gambarUbin, x * UKURAN_UBIN, y * UKURAN_UBIN);
+				
+				if (data[x][y] == DINDING) {
+					
+				}
+					
+			}
+		}
 	}
 	
 	public boolean halangan(float x, float y) {
