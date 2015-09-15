@@ -2,6 +2,7 @@ package org.tego.android.dkvdua.gameworld;
 
 import org.tego.android.dkvdua.gameobject.AssetLoader;
 import org.tego.android.dkvdua.gameobject.Kotak;
+import org.tego.android.dkvdua.gameobject.Level;
 import org.tego.android.dkvdua.gameobject.Lubang;
 import org.tego.android.dkvdua.gameobject.Musuh;
 import org.tego.android.dkvdua.gameobject.Pemain;
@@ -37,6 +38,7 @@ public class GameRenderer {
 	private TextureRegion trLubang;
 	private int lebarLayar;
 	private int tinggiLayar;
+	private Level petaGim;
 
 	/**
 	 * Konstruktor dari kelas
@@ -57,6 +59,8 @@ public class GameRenderer {
 		camera = new OrthographicCamera();
 		camera.setToOrtho(true, gameWidth, gameHeight);
 
+		petaGim = new Level(world, lebarLayar, tinggiLayar);
+		
 		batcher = new SpriteBatch();
 		batcher.setProjectionMatrix(camera.combined);
 		shapeRenderer = new ShapeRenderer();
@@ -97,7 +101,7 @@ public class GameRenderer {
 		shapeRenderer.end();
 
 		batcher.begin();
-		// batcher.draw(AssetLoader.gambarUbin, 15, 15);
+		petaGim.tampilPetaLevel(batcher);
 		batcher.end();
 	}
 	
