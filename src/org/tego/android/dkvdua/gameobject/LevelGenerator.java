@@ -19,6 +19,8 @@
 
 package org.tego.android.dkvdua.gameobject;
 
+import org.tego.android.dkvdua.gameworld.GameWorld;
+
 /**
  * Kelas yang digunakan untuk membuat level pada permainan
  * 
@@ -26,5 +28,11 @@ package org.tego.android.dkvdua.gameobject;
  *
  */
 public class LevelGenerator extends Level {
+
+	public LevelGenerator(GameWorld duniaGim, int lebarDuniaGim,
+			int tinggiDuniaGim) {
+		super(duniaGim, lebarDuniaGim, tinggiDuniaGim);
+		// TODO Auto-generated constructor stub
+	}
 
 }
