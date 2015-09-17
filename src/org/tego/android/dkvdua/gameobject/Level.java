@@ -32,75 +32,111 @@ import com.badlogic.gdx.math.Rectangle;
  */
 public class Level {
 	public static final int KOSONG = 0;
-	public static final int DINDING = 1;
-	public static final int KOTAK = 2;
-	public static final int LUBANG = 3;
+
+	public static final int DINDING_KIRI_ATAS = 1;
+	public static final int DINDING_ATAS = 2;
+	public static final int DINDING_KANAN_ATAS = 3;
+	public static final int DINDING_KIRI = 4;
+	public static final int DINDING = 5;
+	public static final int DINDING_KANAN = 6;
+	public static final int DINDING_KIRI_BAWAH = 7;
+	public static final int DINDING_BAWAH = 8;
+	public static final int DINDING_KANAN_BAWAH = 9;
+
+	public static final int KOTAK = 10;
+	public static final int LUBANG = 11;
+
 	public static final int LEBAR = 12;
 	public static final int TINGGI = 20;
 	public static final int UKURAN_UBIN = 16;
+
 	public int[][] data = new int[LEBAR][TINGGI];
+
 	public Rectangle kotak;
+
 	public int lebarLayar;
 	public int tinggiLayar;
-	
-	
+
 	public Level(GameWorld duniaGim, int lebarDuniaGim, int tinggiDuniaGim) {
 		// TODO Auto-generated constructor stub
 		kotak = new Rectangle();
-		
+
 		lebarLayar = lebarDuniaGim;
 		tinggiLayar = lebarDuniaGim;
-		
+
 		for (int y = 0; y < TINGGI; y++) {
 			data[0][y] = DINDING;
 			data[LEBAR - 1][y] = DINDING;
 		}
-		
+
 		for (int x = 0; x < LEBAR; x++) {
 			if ((x > 0) && (x < LEBAR - 1)) {
 				data[x][10] = KOSONG;
 			}
-			
+
 			data[x][2] = DINDING;
 			data[x][4] = DINDING;
 			data[x][6] = DINDING;
 			data[x][8] = DINDING;
-			
+
 			data[x][0] = DINDING;
 			data[x][TINGGI - 1] = DINDING;
 		}
-		
+
 		data[10][2] = KOSONG;
 		data[1][4] = KOSONG;
 		data[10][6] = KOSONG;
 		data[1][8] = KOSONG;
 	}
-	
+
 	public void update(float delta) {
-		
+
 	}
-	
+
 	public void tampilPetaLevel(SpriteBatch batcher) {
 		for (int x = 0; x < LEBAR; x++) {
 			for (int y = 0; y < TINGGI; y++) {
-				batcher.draw(AssetLoader.gambarUbin, x * UKURAN_UBIN, y * UKURAN_UBIN);
-				
-				if (data[x][y] == DINDING) {
-					
+				switch (data[x][y]) {
+				case DINDING:
+					batcher.draw(AssetLoader.gambarUbinAtas, x * UKURAN_UBIN, y
+							* UKURAN_UBIN);
+					break;
+				case KOSONG:
+					batcher.draw(AssetLoader.gambarUbin, x * UKURAN_UBIN, y
+							* UKURAN_UBIN);
+					break;
+				default:
+					break;
 				}
-					
 			}
 		}
 	}
-	
+
 	public boolean halangan(float x, float y) {
-		if (data[(int) x][(int) y] == DINDING) {
+		switch (data[(int) x][(int) y]) {
+		case DINDING_KIRI_ATAS:
 			return true;
-		} else if (data[(int) x][(int) y] == KOTAK) {
+		case DINDING_ATAS:
 			return true;
-		} else if (data[(int) x][(int) y] == LUBANG) {
+		case DINDING_KANAN_ATAS:
 			return true;
-		} else {
+		case DINDING_KIRI:
+			return true;
+		case DINDING:
+			return true;
+		case DINDING_KANAN:
+			return true;
+		case DINDING_KIRI_BAWAH:
+			return true;
+		case DINDING_BAWAH:
+			return true;
+		case DINDING_KANAN_BAWAH:
+			return true;
+		case KOTAK:
+			return true;
+		case LUBANG:
+			return true;
+		default:
 			return false;
 		}
 	}
