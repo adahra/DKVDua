@@ -57,7 +57,8 @@ public class GameRenderer {
 		tinggiLayar = gameHeight;
 		
 		camera = new OrthographicCamera();
-		camera.setToOrtho(true, gameWidth, gameHeight);
+		camera.setToOrtho(true, lebarLayar, tinggiLayar);
+		// camera.setToOrtho(true, lebarLayar, tinggiLayar);
 
 		petaGim = new Level(world, lebarLayar, tinggiLayar);
 		
@@ -65,6 +66,9 @@ public class GameRenderer {
 		batcher.setProjectionMatrix(camera.combined);
 		shapeRenderer = new ShapeRenderer();
 		shapeRenderer.setProjectionMatrix(camera.combined);
+		
+		System.out.println("Lebar Layar  :" +lebarLayar);
+		System.out.println("Tinggi Layar :" +tinggiLayar);
 	}
 
 	/**
