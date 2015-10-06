@@ -51,7 +51,7 @@ public class LayarMenuUtama implements Screen {
 		mGameWorld = new GameWorld(gameWidth, gameHeight);
 		Gdx.input
 				.setInputProcessor(new InputHandler(mGameWorld, lebar, tinggi));
-		mGameRenderer = new GameRenderer(mGameWorld, gameWidth, gameHeight);
+		mGameRenderer = new GameRenderer(mGameWorld, (int) gameWidth, (int) gameHeight);
 		mSpriteBatch = new SpriteBatch();
 
 		this.tombolMenu = ((InputHandler) Gdx.input.getInputProcessor())
