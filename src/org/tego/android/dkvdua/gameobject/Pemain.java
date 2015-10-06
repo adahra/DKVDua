@@ -19,8 +19,6 @@
 
 package org.tego.android.dkvdua.gameobject;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 
@@ -38,8 +36,8 @@ public class Pemain extends Obyek {
 	private float ukuran = 0.3f;
 	private float sudut;
 
-	public Pemain(float x, float y, int lebar, int tinggi, float kecepatan) {
-		super(x, y, lebar, tinggi, kecepatan);
+	public Pemain(float x, float y, int lebar, int tinggi) {
+		super(x, y, lebar, tinggi);
 		kotakPemain = new Rectangle();
 	}
 

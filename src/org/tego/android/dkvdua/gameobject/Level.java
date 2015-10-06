@@ -19,6 +19,9 @@
 
 package org.tego.android.dkvdua.gameobject;
 
+import org.tego.android.dkvdua.game.Assets;
+import org.tego.android.dkvdua.game.WorldRenderer;
+import org.tego.android.dkvdua.gameobject.Dinding.TipeDinding;
 import org.tego.android.dkvdua.gameworld.GameWorld;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -54,16 +57,40 @@ public class Level {
 
 	public Rectangle kotak;
 
+	private Dinding dinding;
+	
 	public int lebarLayar;
 	public int tinggiLayar;
+	private WorldRenderer worldRenderer;
 
+	public Level(WorldRenderer worldRenderer) {
+		this.worldRenderer = worldRenderer;
+		
+		init();
+		
+		gambarLevel();
+	}
+	
 	public Level(GameWorld duniaGim, int lebarDuniaGim, int tinggiDuniaGim) {
 		// TODO Auto-generated constructor stub
-		kotak = new Rectangle();
-
+		init();
+		
 		lebarLayar = lebarDuniaGim;
 		tinggiLayar = lebarDuniaGim;
 
+		gambarLevel();
+	}
+
+	private void init() {
+		kotak = new Rectangle();
+		dinding = new Dinding();
+	}
+	
+	public void update(float delta) {
+
+	}
+
+	private void gambarLevel() {
 		for (int y = 0; y < TINGGI; y++) {
 			data[0][y] = DINDING;
 			data[LEBAR - 1][y] = DINDING;
@@ -88,21 +115,17 @@ public class Level {
 		data[10][6] = KOSONG;
 		data[1][8] = KOSONG;
 	}
-
-	public void update(float delta) {
-
-	}
-
-	public void tampilPetaLevel(SpriteBatch batcher) {
+	
+	private void tampilPetaLevel(SpriteBatch batcher) {
 		for (int x = 0; x < LEBAR; x++) {
 			for (int y = 0; y < TINGGI; y++) {
 				switch (data[x][y]) {
 				case DINDING:
-					batcher.draw(AssetLoader.gambarUbinAtas, x * UKURAN_UBIN, y
+					batcher.draw(AssetLoader.dkvduaTexture, x * UKURAN_UBIN, y
 							* UKURAN_UBIN);
 					break;
 				case KOSONG:
-					batcher.draw(AssetLoader.gambarUbin, x * UKURAN_UBIN, y
+					batcher.draw(AssetLoader.dkvduaTexture, x * UKURAN_UBIN, y
 							* UKURAN_UBIN);
 					break;
 				default:
@@ -112,6 +135,10 @@ public class Level {
 		}
 	}
 
+	public void render(SpriteBatch batch) {
+		tampilPetaLevel(batch);
+	}
+	
 	public boolean halangan(float x, float y) {
 		switch (data[(int) x][(int) y]) {
 		case DINDING_KIRI_ATAS:

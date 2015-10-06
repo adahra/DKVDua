@@ -19,6 +19,7 @@
 
 package org.tego.android.dkvdua.gameobject;
 
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 /**
@@ -29,20 +30,19 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class Obyek {
 	protected Vector2 posisi;
-	protected Vector2 kecepatan;
 	protected int lebar;
 	protected int tinggi;
+	protected Rectangle batasan;
 	
-	public Obyek(float x, float y, int lebar, int tinggi, float kecepatan) {
+	public Obyek(float x, float y, int lebar, int tinggi) {
 		// TODO Auto-generated constructor stub
 		posisi = new Vector2(x, y);
 		this.lebar = lebar;
 		this.tinggi = tinggi;
-		
+		batasan = new Rectangle();
 	}
 	
 	public void update(float delta) {
-		posisi.add(kecepatan.cpy().scl(delta));
 		
 	}
 	
@@ -68,6 +68,30 @@ public class Obyek {
 	
 	public int getTinggi() {
 		return tinggi;
+	}
+	
+	public void setLebar(int lebar) {
+		this.lebar = lebar;
+	}
+	
+	public void setTinggi(int tinggi) {
+		this.tinggi = tinggi;
+	}
+	
+	public void setX(int posisi) {
+		this.posisi.x = posisi;
+	} 
+	
+	public void setY(int posisi) {
+		this.posisi.y = posisi;
+	}
+	
+	public Rectangle getBatasan() {
+		return batasan;
+	}
+	
+	public void setBatasan() {
+		batasan.set(getX(), getY(), getLebar(), getTinggi());
 	}
 	
 	/**

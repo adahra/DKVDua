@@ -19,6 +19,8 @@
 
 package org.tego.android.dkvdua.gameobject;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 /**
  * Kelas yang digunakan untuk mengatur tampilan dan digunakan untuk menjatuhkan
  * item atau angka ketika musuh musnah
@@ -26,11 +28,12 @@ package org.tego.android.dkvdua.gameobject;
  * @author blackshadow
  *
  */
-public class Angka extends Item {
+public class Angka extends AbstractGameObject {
 
-	public Angka(float x, float y, int lebar, int tinggi) {
-		super(x, y, lebar, tinggi);
-		// TODO Auto-generated constructor stub
+	@Override
+	public void render(SpriteBatch batch) {
+		// TODO Auto-generated method stub
+		
 	}
-
+	
 }
