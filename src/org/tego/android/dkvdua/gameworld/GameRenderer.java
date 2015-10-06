@@ -1,12 +1,10 @@
 package org.tego.android.dkvdua.gameworld;
 
-import org.tego.android.dkvdua.gameobject.AssetLoader;
 import org.tego.android.dkvdua.gameobject.Kotak;
 import org.tego.android.dkvdua.gameobject.Level;
 import org.tego.android.dkvdua.gameobject.Lubang;
 import org.tego.android.dkvdua.gameobject.Musuh;
 import org.tego.android.dkvdua.gameobject.Pemain;
-import org.tego.android.dkvdua.ui.Tombol;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -15,7 +13,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.scenes.scene2d.ui.List;
 
 /**
  * Kelas yang digunakan untuk melakukan penggambaran dalam permainan
@@ -25,7 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.List;
  */
 public class GameRenderer {
 	private GameWorld myWorld;
-	private OrthographicCamera camera;
+	public OrthographicCamera camera;
 	private ShapeRenderer shapeRenderer;
 	private SpriteBatch batcher;
 	private Pemain pemain;
@@ -57,8 +54,7 @@ public class GameRenderer {
 		tinggiLayar = gameHeight;
 		
 		camera = new OrthographicCamera();
-		camera.setToOrtho(true, lebarLayar, tinggiLayar);
-		// camera.setToOrtho(true, lebarLayar, tinggiLayar);
+		camera.setToOrtho(true, 320, tinggiLayar);
 
 		petaGim = new Level(world, lebarLayar, tinggiLayar);
 		
@@ -69,17 +65,6 @@ public class GameRenderer {
 		
 		System.out.println("Lebar Layar  :" +lebarLayar);
 		System.out.println("Tinggi Layar :" +tinggiLayar);
-	}
-
-	/**
-	 * Konstruktor dari kelas
-	 * 
-	 * @param mGameWorld
-	 * @param gameWidth
-	 * @param gameHeight
-	 */
-	public GameRenderer(GameWorld mGameWorld, float gameWidth, float gameHeight) {
-
 	}
 
 	/**
@@ -103,9 +88,9 @@ public class GameRenderer {
 		shapeRenderer.setColor(195 / 255.0f, 195 / 255.0f, 195 / 255.0f, 1);
 		shapeRenderer.rect(lebarLayar - 40, tinggiLayar - 20, 40, 20);
 		shapeRenderer.end();
-
+		
 		batcher.begin();
-		petaGim.tampilPetaLevel(batcher);
+		petaGim.render(batcher);
 		batcher.end();
 	}
 	
