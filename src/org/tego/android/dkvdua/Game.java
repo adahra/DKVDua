@@ -27,8 +27,8 @@ public class Game implements ApplicationListener {
 	private TextureRegion textureRegion;
 	private Sprite sprite;
 
-	private float SCREEN_WIDTH;
-	private float SCREEN_HEIGHT;
+	private float SCREEN_WIDTH = 320;
+	private float SCREEN_HEIGHT = 480;
 
 	/*
 	 * (non-Javadoc)
@@ -38,21 +38,13 @@ public class Game implements ApplicationListener {
 	@Override
 	public void create() {
 		// TODO Auto-generated method stub
-		SCREEN_WIDTH = Gdx.graphics.getWidth();
-		SCREEN_HEIGHT = Gdx.graphics.getHeight();
+		// SCREEN_WIDTH = Gdx.graphics.getWidth();
+		// SCREEN_HEIGHT = Gdx.graphics.getHeight();
 
 		camera = new OrthographicCamera(SCREEN_WIDTH, SCREEN_HEIGHT);
 		camera.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
 		camera.update();
 		batch = new SpriteBatch();
-
-		texture = new Texture(Gdx.files.internal("data/gfx/dkvduaPopup.png"));
-		texture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-
-		textureRegion = new TextureRegion(texture, 0, 0, 500, 368);
-
-		sprite = new Sprite(textureRegion);
-		sprite.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 	}
 
 	/*
@@ -77,10 +69,10 @@ public class Game implements ApplicationListener {
 		Gdx.gl.glClearColor(0f, 0f, 0f, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
-		batch.begin();
+		// batch.begin();
 		// batch.draw(textureRegion, 0, 0);
-		sprite.draw(batch);
-		batch.end();
+		// sprite.draw(batch);
+		// batch.end();
 	}
 
 	/*
@@ -113,8 +105,8 @@ public class Game implements ApplicationListener {
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
-		batch.dispose();
-		texture.dispose();
+		// batch.dispose();
+		// texture.dispose();
 	}
 
 }
