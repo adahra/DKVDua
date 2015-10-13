@@ -25,6 +25,6 @@ public class AndroidLauncher extends AndroidApplication {
 		config.useAccelerometer = false;
 		config.useCompass = false;
 		config.useWakelock = true;
-		initialize(new BareBoneStage(), config);
+		initialize(new DKVDuaMain(), config);
 	}
 }
