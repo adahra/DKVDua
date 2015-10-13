@@ -38,13 +38,9 @@ public class Game implements ApplicationListener {
 	@Override
 	public void create() {
 		// TODO Auto-generated method stub
-		// SCREEN_WIDTH = Gdx.graphics.getWidth();
-		// SCREEN_HEIGHT = Gdx.graphics.getHeight();
-
 		camera = new OrthographicCamera(SCREEN_WIDTH, SCREEN_HEIGHT);
 		camera.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
 		camera.update();
-		batch = new SpriteBatch();
 	}
 
 	/*
@@ -68,11 +64,6 @@ public class Game implements ApplicationListener {
 		// TODO Auto-generated method stub
 		Gdx.gl.glClearColor(0f, 0f, 0f, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-
-		// batch.begin();
-		// batch.draw(textureRegion, 0, 0);
-		// sprite.draw(batch);
-		// batch.end();
 	}
 
 	/*
@@ -105,8 +96,6 @@ public class Game implements ApplicationListener {
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
-		// batch.dispose();
-		// texture.dispose();
 	}
 
 }
