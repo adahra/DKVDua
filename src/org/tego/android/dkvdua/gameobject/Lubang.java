@@ -19,11 +19,6 @@
 
 package org.tego.android.dkvdua.gameobject;
 
-import org.tego.android.dkvdua.game.Assets;
-
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-
 /**
  * Kelas yang digunakan untuk mengatur gambar lubang yang ada pada permainan dan
  * untuk mengatur tata letak dari lubang dimana musuh keluar
@@ -31,28 +26,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
  * @author blackshadow
  *
  */
-public class Lubang extends AbstractGameObject {
-	private TextureRegion texRegLubang;
+public class Lubang {
 
 	public Lubang() {
-		init();
+		
 	}
-
-	private void init() {
-		dimension.set(1, 1);
-		texRegLubang = Assets.instance.lubang.lubang;
-	}
-
-	@Override
-	public void render(SpriteBatch batch) {
-		// TODO Auto-generated method stub
-		TextureRegion textureRegion = null;
-		textureRegion = texRegLubang;
-		batch.draw(textureRegion.getTexture(), position.x, position.y,
-				origin.x, origin.y, dimension.x, dimension.y, scale.x, scale.y,
-				0, textureRegion.getRegionX(), textureRegion.getRegionY(),
-				textureRegion.getRegionWidth(),
-				textureRegion.getRegionHeight(), false, false);
-	}
-
 }
