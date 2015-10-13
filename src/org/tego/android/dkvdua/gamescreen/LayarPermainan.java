@@ -1,5 +1,6 @@
 package org.tego.android.dkvdua.gamescreen;
 
+import org.tego.android.dkvdua.gameobject.Level;
 import org.tego.android.dkvdua.gameworld.GameRenderer;
 import org.tego.android.dkvdua.gameworld.GameWorld;
 import org.tego.android.dkvdua.helper.InputHandler;
@@ -14,22 +15,26 @@ import com.badlogic.gdx.Screen;
  *
  */
 public class LayarPermainan implements Screen {
+	private static final String TAG = LayarPermainan.class.getSimpleName();
+
 	private GameWorld world;
 	private GameRenderer renderer;
 
 	public LayarPermainan() {
 		float screenWidth = Gdx.graphics.getWidth();
 		float screenHeight = Gdx.graphics.getHeight();
-		float gameWidth = 320;
-		float gameHeight = screenHeight / (screenWidth / gameWidth);
+		float gameWidth = 192;
+		// float gameHeight = screenHeight / (screenWidth / gameWidth);
+		// float gameHeight = (screenHeight / screenWidth) * gameWidth;
+		float gameHeight = 272;
 
 		world = new GameWorld(gameWidth, gameHeight);
 		Gdx.input.setInputProcessor(new InputHandler(world, screenWidth
 				/ gameWidth, screenHeight / gameHeight));
 		renderer = new GameRenderer(world, (int) gameWidth, (int) gameHeight);
 
-		System.out.println("Lebar Layar HP  : " + screenWidth);
-		System.out.println("Tinggi Layar HP : " + screenHeight);
+		Gdx.app.log(TAG, "Lebar Layar HP : " + screenWidth
+				+ " \nTinggi Layar HP : " + screenHeight);
 	}
 
 	/*
@@ -50,7 +55,7 @@ public class LayarPermainan implements Screen {
 	 */
 	@Override
 	public void resize(int width, int height) {
-		
+
 	}
 
 	/*
