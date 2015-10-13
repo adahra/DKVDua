@@ -19,13 +19,15 @@
 
 package org.tego.android.dkvdua.gameobject;
 
-import org.tego.android.dkvdua.game.Assets;
-import org.tego.android.dkvdua.game.WorldRenderer;
-import org.tego.android.dkvdua.gameobject.Dinding.TipeDinding;
+import org.tego.android.dkvdua.gameworld.GameRenderer;
 import org.tego.android.dkvdua.gameworld.GameWorld;
+import org.tego.android.dkvdua.utilitas.AssetLoader;
+import org.tego.android.dkvdua.utilitas.MetodePengacakan;
 
+import com.badlogic.gdx.Application.ApplicationType;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
 
 /**
  * Kelas yang digunakan untuk menggambar peta level pada permainan
@@ -34,137 +36,316 @@ import com.badlogic.gdx.math.Rectangle;
  *
  */
 public class Level {
-	public static final int KOSONG = 0;
+	public static final String TAG = Level.class.getSimpleName();
 
-	public static final int DINDING_KIRI_ATAS = 1;
-	public static final int DINDING_ATAS = 2;
-	public static final int DINDING_KANAN_ATAS = 3;
-	public static final int DINDING_KIRI = 4;
-	public static final int DINDING = 5;
-	public static final int DINDING_KANAN = 6;
-	public static final int DINDING_KIRI_BAWAH = 7;
-	public static final int DINDING_BAWAH = 8;
-	public static final int DINDING_KANAN_BAWAH = 9;
-
-	public static final int KOTAK = 10;
-	public static final int LUBANG = 11;
-
-	public static final int LEBAR = 12;
-	public static final int TINGGI = 20;
 	public static final int UKURAN_UBIN = 16;
 
-	public int[][] data = new int[LEBAR][TINGGI];
-
-	public Rectangle kotak;
-
-	private Dinding dinding;
-	
 	public int lebarLayar;
 	public int tinggiLayar;
-	private WorldRenderer worldRenderer;
 
-	public Level(WorldRenderer worldRenderer) {
-		this.worldRenderer = worldRenderer;
-		
-		init();
-		
-		gambarLevel();
+	private int posisiX = 1;
+	private int posisiY = 3;
+
+	private int arahPemain = 3;
+
+	private int x;
+	private int y;
+
+	public static final int KIRI = 1;
+	public static final int KANAN = 2;
+	public static final int DEPAN = 3;
+	public static final int BELAKANG = 4;
+
+	private GameWorld duniaGim;
+
+	public int[][] petaLevel = new int[][] {
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+			{ 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3 },
+			{ 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6 },
+			{ 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6 },
+			{ 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6 },
+			{ 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6 },
+			{ 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6 },
+			{ 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6 },
+			{ 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6 },
+			{ 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6 },
+			{ 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6 },
+			{ 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6 },
+			{ 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6 },
+			{ 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6 },
+			{ 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6 },
+			{ 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9 } };
+
+	public int[][] labirin = new int[][] {
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+			{ 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0 },
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+			{ 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0 },
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+			{ 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0 },
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
+
+	public int[][] obyek = new int[][] {
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+			{ 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 3, 0, 0, 0, 0, 1, 0, 0 },
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 3, 0, 0, 0, 0, 0, 1, 0, 0 },
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
+
+	public Level(GameWorld duniaGim) {
+		this.duniaGim = duniaGim;
+		acakArray();
+		mainkanMusik();
 	}
-	
+
 	public Level(GameWorld duniaGim, int lebarDuniaGim, int tinggiDuniaGim) {
 		// TODO Auto-generated constructor stub
-		init();
-		
+		this.duniaGim = duniaGim;
 		lebarLayar = lebarDuniaGim;
 		tinggiLayar = lebarDuniaGim;
 
-		gambarLevel();
+		acakArray();
+		mainkanMusik();
 	}
 
-	private void init() {
-		kotak = new Rectangle();
-		dinding = new Dinding();
+	private static void mainkanMusik() {
+		AssetLoader.dkvduaMusicKremKaakkuja.play();
 	}
 	
 	public void update(float delta) {
-
+		float waktuBerjalan = 0;
+		waktuBerjalan = waktuBerjalan + delta;
+		kontrolGerakan(waktuBerjalan);
 	}
 
-	private void gambarLevel() {
-		for (int y = 0; y < TINGGI; y++) {
-			data[0][y] = DINDING;
-			data[LEBAR - 1][y] = DINDING;
-		}
+	private void kontrolGerakan(float delta) {
+		float x0 = (Gdx.input.getX(0) / (float) Gdx.graphics.getWidth()) * 192;
+		float x1 = (Gdx.input.getX(1) / (float) Gdx.graphics.getWidth()) * 192;
+		float y0 = 272 - (Gdx.input.getY(0) / (float) Gdx.graphics.getHeight()) * 272;
+		float y1 = 272 - (Gdx.input.getY(1) / (float) Gdx.graphics.getHeight()) * 272;
 
-		for (int x = 0; x < LEBAR; x++) {
-			if ((x > 0) && (x < LEBAR - 1)) {
-				data[x][10] = KOSONG;
+		boolean tombolAtas = (Gdx.input.isTouched(0) && y0 > 32 && y0 < 208)
+				|| (Gdx.input.isTouched(1) && y1 > 32 && y1 < 208);
+		boolean tombolBawah = (Gdx.input.isTouched(0) && x0 > 0 && x0 < 208)
+				|| (Gdx.input.isTouched(1) && x1 > 0 && x1 < 208);
+		boolean tombolKiri = (Gdx.input.isTouched(0) && x0 > 32 && x0 < 160)
+				|| (Gdx.input.isTouched(1) && x1 > 32 && x1 < 160);
+		boolean tombolKanan = (Gdx.input.isTouched(0) && x0 > 64 && y0 < 64)
+				|| (Gdx.input.isTouched(1) && x1 > 64 && y0 < 64);
+
+		if (Gdx.input.isKeyPressed(Keys.LEFT) || tombolKiri) {
+			if (petaLevel[posisiY][posisiX - 1] == 5) {
+				if (!cekHalangan(posisiY, posisiX - 1)) {
+					gerakanPemain(-1, 0, KIRI);
+				}
 			}
-
-			data[x][2] = DINDING;
-			data[x][4] = DINDING;
-			data[x][6] = DINDING;
-			data[x][8] = DINDING;
-
-			data[x][0] = DINDING;
-			data[x][TINGGI - 1] = DINDING;
+		} else if (Gdx.input.isKeyPressed(Keys.RIGHT) || tombolKanan) {
+			if (petaLevel[posisiY][posisiX + 1] == 5) {
+				if (!cekHalangan(posisiY, posisiX + 1)) {
+					gerakanPemain(1, 0, KANAN);
+				}
+			}
+		} else if (Gdx.input.isKeyPressed(Keys.UP) || tombolAtas) {
+			if (petaLevel[posisiY - 1][posisiX] == 5) {
+				if (!cekHalangan(posisiY - 1, posisiX)) {
+					gerakanPemain(0, -1, BELAKANG);
+				}
+			}
+		} else if (Gdx.input.isKeyPressed(Keys.DOWN) || tombolBawah) {
+			if (petaLevel[posisiY + 1][posisiX] == 5) {
+				if (!cekHalangan(posisiY + 1, posisiX)) {
+					gerakanPemain(0, 1, DEPAN);
+				}
+			}
+		} else {
+			// gerakanPemain(0, 0, DEPAN);
 		}
-
-		data[10][2] = KOSONG;
-		data[1][4] = KOSONG;
-		data[10][6] = KOSONG;
-		data[1][8] = KOSONG;
 	}
-	
-	private void tampilPetaLevel(SpriteBatch batcher) {
-		for (int x = 0; x < LEBAR; x++) {
-			for (int y = 0; y < TINGGI; y++) {
-				switch (data[x][y]) {
-				case DINDING:
-					batcher.draw(AssetLoader.dkvduaTexture, x * UKURAN_UBIN, y
+
+	private void gambarKontrolLayar(SpriteBatch spriteBatch) {
+		spriteBatch.draw(AssetLoader.arTombolPanahAtas, 0, 240);
+		spriteBatch.draw(AssetLoader.arTombolPanahBawah, 0, 208);
+		spriteBatch.draw(AssetLoader.arTombolPanahKanan, 160, 240);
+		spriteBatch.draw(AssetLoader.arTombolPanahKiri, 128, 240);
+	}
+
+	private void acakArray() {
+		MetodePengacakan.shuffle(obyek);
+	}
+
+	private void tampilPemain(SpriteBatch spriteBatch) {
+		for (int x = 0; x < petaLevel.length; x++) {
+			for (int y = 0; y < petaLevel[0].length; y++) {
+				if ((y == posisiX) && (x == posisiY)) {
+					switch (arahPemain) {
+					case DEPAN:
+						spriteBatch.draw(AssetLoader.gambarPemainDepan, posisiX
+								* UKURAN_UBIN, posisiY * UKURAN_UBIN);
+						break;
+					case BELAKANG:
+						spriteBatch.draw(AssetLoader.gambarPemainBelakang,
+								posisiX * UKURAN_UBIN, posisiY * UKURAN_UBIN);
+						break;
+					case KIRI:
+						spriteBatch.draw(AssetLoader.gambarPemainKiri, posisiX
+								* UKURAN_UBIN, posisiY * UKURAN_UBIN);
+						break;
+					case KANAN:
+						spriteBatch.draw(AssetLoader.gambarPemainKanan, posisiX
+								* UKURAN_UBIN, posisiY * UKURAN_UBIN);
+					}
+				}
+			}
+		}
+	}
+
+	private void tampilLabirin(SpriteBatch batcher) {
+		for (int x = 0; x < labirin.length; x++) {
+			for (int y = 0; y < labirin[0].length; y++) {
+				if (labirin[x][y] == 3) {
+					batcher.draw(AssetLoader.gambarHalangan, y * UKURAN_UBIN, x
+							* UKURAN_UBIN);
+				}
+			}
+		}
+	}
+
+	private void tampilObyek(SpriteBatch batcher) {
+		for (int x = 0; x < obyek.length; x++) {
+			for (int y = 0; y < obyek[0].length; y++) {
+				switch (obyek[x][y]) {
+				case 1:
+					batcher.draw(AssetLoader.gambarLubang, y * UKURAN_UBIN, x
 							* UKURAN_UBIN);
 					break;
-				case KOSONG:
-					batcher.draw(AssetLoader.dkvduaTexture, x * UKURAN_UBIN, y
-							* UKURAN_UBIN);
+				case 2:
 					break;
-				default:
+				case 3:
+					batcher.draw(AssetLoader.gambarKotak, y * UKURAN_UBIN, x
+							* UKURAN_UBIN);
 					break;
 				}
 			}
 		}
 	}
 
+	private void tampilPetaLevel(SpriteBatch batcher) {
+		for (int x = 0; x < petaLevel.length; x++) {
+			for (int y = 0; y < petaLevel[0].length; y++) {
+				switch (petaLevel[x][y]) {
+				case 1:
+					batcher.draw(AssetLoader.gambarUbinPojokKiriAtas, y
+							* UKURAN_UBIN, x * UKURAN_UBIN);
+					break;
+				case 2:
+					batcher.draw(AssetLoader.gambarUbinAtas, y * UKURAN_UBIN, x
+							* UKURAN_UBIN);
+					break;
+				case 3:
+					batcher.draw(AssetLoader.gambarUbinPojokKananAtas, y
+							* UKURAN_UBIN, x * UKURAN_UBIN);
+					break;
+				case 4:
+					batcher.draw(AssetLoader.gambarUbinKiri, y * UKURAN_UBIN, x
+							* UKURAN_UBIN);
+					break;
+				case 5:
+					batcher.draw(AssetLoader.gambarUbin, y * UKURAN_UBIN, x
+							* UKURAN_UBIN);
+					break;
+				case 6:
+					batcher.draw(AssetLoader.gambarUbinKanan, y * UKURAN_UBIN,
+							x * UKURAN_UBIN);
+					break;
+				case 7:
+					batcher.draw(AssetLoader.gambarUbinPojokKiriBawah, y
+							* UKURAN_UBIN, x * UKURAN_UBIN);
+					break;
+				case 8:
+					batcher.draw(AssetLoader.gambarUbinBawah, y * UKURAN_UBIN,
+							x * UKURAN_UBIN);
+					break;
+				case 9:
+					batcher.draw(AssetLoader.gambarUbinPojokKananBawah, y
+							* UKURAN_UBIN, x * UKURAN_UBIN);
+					break;
+				}
+			}
+		}
+	}
+
+	public void gerakanPemain(int x, int y, int arah) {
+		float waktuDelta = Gdx.graphics.getDeltaTime();
+
+		setX(x);
+		setY(y);
+
+		arahPemain = arah;
+
+		posisiX += getX() + (int) waktuDelta;
+		posisiY += getY() + (int) waktuDelta;
+	}
+
 	public void render(SpriteBatch batch) {
 		tampilPetaLevel(batch);
+		tampilLabirin(batch);
+		tampilObyek(batch);
+		tampilPemain(batch);
+		gambarKontrolLayar(batch);
 	}
-	
-	public boolean halangan(float x, float y) {
-		switch (data[(int) x][(int) y]) {
-		case DINDING_KIRI_ATAS:
+
+	public boolean cekHalangan(int x, int y) {
+		if (labirin[x][y] == 3) {
 			return true;
-		case DINDING_ATAS:
-			return true;
-		case DINDING_KANAN_ATAS:
-			return true;
-		case DINDING_KIRI:
-			return true;
-		case DINDING:
-			return true;
-		case DINDING_KANAN:
-			return true;
-		case DINDING_KIRI_BAWAH:
-			return true;
-		case DINDING_BAWAH:
-			return true;
-		case DINDING_KANAN_BAWAH:
-			return true;
-		case KOTAK:
-			return true;
-		case LUBANG:
-			return true;
-		default:
+		} else {
 			return false;
 		}
+	}
+
+	public boolean cekLubang(int x, int y) {
+		if (obyek[x][y] == 3) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setY(int y) {
+		this.y = y;
 	}
 }
