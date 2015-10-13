@@ -19,8 +19,6 @@
 
 package org.tego.android.dkvdua.gameobject;
 
-import org.tego.android.dkvdua.game.Assets;
-
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
@@ -31,29 +29,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
  * @author nauin
  *
  */
-public class Kotak extends AbstractGameObject {
-	private TextureRegion texRegKotak;
+public class Kotak {
 
 	public Kotak() {
-		init();
+		
 	}
-
-	private void init() {
-		dimension.set(1, 1);
-
-		texRegKotak = Assets.instance.kotak.kotak;
-	}
-
-	@Override
-	public void render(SpriteBatch batch) {
-		// TODO Auto-generated method stub
-		TextureRegion textureRegion = null;
-		textureRegion = texRegKotak;
-		batch.draw(textureRegion.getTexture(), position.x, position.y,
-				origin.x, origin.y, dimension.x, dimension.y, scale.x, scale.y,
-				0, textureRegion.getRegionX(), textureRegion.getRegionY(),
-				textureRegion.getRegionWidth(),
-				textureRegion.getRegionHeight(), false, false);
-	}
-
 }
