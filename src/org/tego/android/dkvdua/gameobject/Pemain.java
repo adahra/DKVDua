@@ -19,9 +19,6 @@
 
 package org.tego.android.dkvdua.gameobject;
 
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Rectangle;
-
 /**
  * Kelas yang digunakan untuk mengatur pemain, menampilkan pemain, pergerakan
  * pemain, dan ketika pemain melakukan kontak dengan musuh
@@ -29,67 +26,6 @@ import com.badlogic.gdx.math.Rectangle;
  * @author blackshadow
  *
  */
-public class Pemain extends Obyek {
+public class Pemain {
 	
-	private Rectangle kotakPemain;
-	private Level level;
-	private float ukuran = 0.3f;
-	private float sudut;
-
-	public Pemain(float x, float y, int lebar, int tinggi) {
-		super(x, y, lebar, tinggi);
-		kotakPemain = new Rectangle();
-	}
-
-	@Override
-	public void update(float delta) {
-		// TODO Auto-generated method stub
-		super.update(delta);
-		kotakPemain.set(posisi.x, posisi.y, lebar, tinggi);
-	}
-	
-	@Override
-	public void reset(float posisiXBaru, float posisiYBaru) {
-		// TODO Auto-generated method stub
-		super.reset(posisiXBaru, posisiYBaru);
-		
-	}
-	
-	public Rectangle getKotakPemain() {
-		return kotakPemain;
-	}
-	
-	@Override
-	public boolean bergerak(int posisiDX, int posisiDY) {
-		// TODO Auto-generated method stub
-		super.bergerak(posisiDX, posisiDY);
-		float nx = posisi.x + posisiDX;
-		float ny = posisi.x + posisiDY;
-		
-		if (lokasiValid(nx, ny)) {
-			posisi.x = nx;
-			posisi.y = ny;
-			
-			sudut = (float) (MathUtils.atan2(posisiDX, posisiDY) - (MathUtils.PI / 2));
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
-	@Override
-	public boolean lokasiValid(float posisiNX, float posisiNY) {
-		// TODO Auto-generated method stub
-		if (level.halangan(posisiNX - ukuran, posisiNY - ukuran)) {
-			return false;
-		} else if (level.halangan(posisiNX + ukuran, posisiNY - ukuran)) {
-			return false;
-		} else if (level.halangan(posisiNX - ukuran, posisiNY + ukuran)) {
-			return false;
-		} else if (level.halangan(posisiNX + ukuran, posisiNY + ukuran)) {
-			return false;
-		} else {
-			return true;
-		}
-	}
 }
