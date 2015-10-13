@@ -21,6 +21,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
  *
  */
 public class GameRenderer {
+	public static final String TAG = GameRenderer.class.getSimpleName();
+
 	private GameWorld myWorld;
 	public OrthographicCamera camera;
 	private ShapeRenderer shapeRenderer;
@@ -52,19 +54,19 @@ public class GameRenderer {
 
 		lebarLayar = gameWidth;
 		tinggiLayar = gameHeight;
-		
+
 		camera = new OrthographicCamera();
-		camera.setToOrtho(true, 320, tinggiLayar);
+		camera.setToOrtho(true, lebarLayar, tinggiLayar);
 
 		petaGim = new Level(world, lebarLayar, tinggiLayar);
-		
+
 		batcher = new SpriteBatch();
 		batcher.setProjectionMatrix(camera.combined);
 		shapeRenderer = new ShapeRenderer();
 		shapeRenderer.setProjectionMatrix(camera.combined);
-		
-		System.out.println("Lebar Layar  :" +lebarLayar);
-		System.out.println("Tinggi Layar :" +tinggiLayar);
+
+		Gdx.app.log(TAG, "Lebar Layar : " + lebarLayar + " \nTinggi Layar : "
+				+ tinggiLayar);
 	}
 
 	/**
@@ -79,46 +81,46 @@ public class GameRenderer {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		shapeRenderer.begin(ShapeType.Filled);
-		shapeRenderer.setColor(55 / 255.0f, 80 / 255.0f, 100 / 255.0f, 1);
-		shapeRenderer.rect(0, 0, lebarLayar, tinggiLayar);
-		shapeRenderer.setColor(119 / 255.0f, 79 / 255.0f, 4 / 255.0f, 1);
-		shapeRenderer.rect(0, 32, lebarLayar, tinggiLayar);
-		shapeRenderer.setColor(195 / 255.0f, 195 / 255.0f, 195 / 255.0f, 1);
-		shapeRenderer.rect(0, tinggiLayar - 40, 20, 40);
-		shapeRenderer.setColor(195 / 255.0f, 195 / 255.0f, 195 / 255.0f, 1);
-		shapeRenderer.rect(lebarLayar - 40, tinggiLayar - 20, 40, 20);
+		shapeRenderer.setColor(114 / 255.0f, 129 / 255.0f, 146 / 255.0f, 1);
+		shapeRenderer.rect(0, 0, lebarLayar, 32);
 		shapeRenderer.end();
-		
+
 		batcher.begin();
 		petaGim.render(batcher);
 		batcher.end();
+		
+		petaGim.update(delta);
 	}
-	
+
 	private void inisialisasiObyek() {
-		
+
 	}
-	
+
 	private void inisialisasiAset() {
-		
+
 	}
-	
+
 	private void gambarPeta() {
-		
+
 	}
-	
+
 	private void gambarPemain() {
-		
+
 	}
-	
+
 	private void gambarMusuh() {
-		
+
 	}
-	
+
 	private void gambarKotak() {
-		
+
 	}
-	
+
 	private void gambarLubang() {
-		
+
+	}
+
+	private void gambarHati() {
+
 	}
 }
