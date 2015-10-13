@@ -27,12 +27,10 @@ import org.tego.android.dkvdua.gameworld.GameWorld;
  * @author blackshadow
  *
  */
-public class LevelGenerator extends Level {
+public class LevelGenerator {
 
 	public LevelGenerator(GameWorld duniaGim, int lebarDuniaGim,
 			int tinggiDuniaGim) {
-		super(duniaGim, lebarDuniaGim, tinggiDuniaGim);
-		// TODO Auto-generated constructor stub
 	}
 
 }
