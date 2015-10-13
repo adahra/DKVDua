@@ -4,17 +4,15 @@ import java.util.List;
 
 import javax.microedition.khronos.opengles.GL10;
 
-import org.tego.android.dkvdua.DKVDuaMain;
-import org.tego.android.dkvdua.gameobject.AssetLoader;
 import org.tego.android.dkvdua.gamescreen.Game;
 import org.tego.android.dkvdua.gameworld.GameRenderer;
 import org.tego.android.dkvdua.gameworld.GameWorld;
 import org.tego.android.dkvdua.helper.InputHandler;
 import org.tego.android.dkvdua.ui.Tombol;
+import org.tego.android.dkvdua.utilitas.AssetLoader;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -24,7 +22,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  * @author blackshadow
  *
  */
-public class LayarMenuUtama implements Screen {
+public class LayarMenuUtama extends Game {
 	private SpriteBatch mSpriteBatch;
 	private Sprite mSprite;
 	private GameWorld mGameWorld;
@@ -66,7 +64,7 @@ public class LayarMenuUtama implements Screen {
 	 * @see com.badlogic.gdx.Screen#render(float)
 	 */
 	@Override
-	public void render(float delta) {
+	public void render() {
 		Gdx.gl.glClearColor(0.2f, 0.2f, 0.2f, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		mSpriteBatch.begin();
@@ -88,25 +86,6 @@ public class LayarMenuUtama implements Screen {
 	@Override
 	public void resize(int width, int height) {
 
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.badlogic.gdx.Screen#show()
-	 */
-	@Override
-	public void show() {
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.badlogic.gdx.Screen#hide()
-	 */
-	@Override
-	public void hide() {
 	}
 
 	/*
