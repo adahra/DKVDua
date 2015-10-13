@@ -1,5 +1,7 @@
 package org.tego.android.dkvdua.gameworld;
 
+import org.tego.android.dkvdua.gameobject.Level;
+
 /**
  * Kelas yang digunakan untuk mengatur dunia penggambaran dari permainan
  * 
@@ -11,6 +13,7 @@ public class GameWorld {
 	private float gameWidth;
 	private float gameHeight;
 	private GameRenderer renderer;
+	private Level petaGim;
 
 	/**
 	 * Status dari permainan
@@ -94,7 +97,7 @@ public class GameWorld {
 	 *            Waktu yang sedang berjalan
 	 */
 	public void updateRunning(float delta) {
-
+		petaGim.update(delta);
 	}
 
 	/**
