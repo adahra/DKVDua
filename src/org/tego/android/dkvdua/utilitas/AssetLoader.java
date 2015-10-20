@@ -242,6 +242,7 @@ public class AssetLoader {
 				.internal("data/sfx/dkvduaHappyEnding.ogg"));
 		dkvduaMusicKremKaakkuja = Gdx.audio.newMusic(Gdx.files
 				.internal("data/sfx/dkvduaKremKaakkuja.ogg"));
+		dkvduaMusicKremKaakkuja.setLooping(true);
 		dkvduaMusicLonely = Gdx.audio.newMusic(Gdx.files
 				.internal("data/sfx/dkvduaLonely.ogg"));
 		dkvduaMusicMysteryBox = Gdx.audio.newMusic(Gdx.files
