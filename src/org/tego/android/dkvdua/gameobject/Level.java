@@ -19,12 +19,10 @@
 
 package org.tego.android.dkvdua.gameobject;
 
-import org.tego.android.dkvdua.gameworld.GameRenderer;
 import org.tego.android.dkvdua.gameworld.GameWorld;
 import org.tego.android.dkvdua.utilitas.AssetLoader;
 import org.tego.android.dkvdua.utilitas.MetodePengacakan;
 
-import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -58,6 +56,13 @@ public class Level {
 
 	private GameWorld duniaGim;
 
+	private boolean tombolDiTekan = false;
+
+	/*
+	 * Array data dari peta level gim, sebagai layer satu yang digunakan untuk
+	 * penggambaran lantai dan dinding angka 1, 2, 3, 4, 6, 7, 8, dan 9
+	 * merepresentasikan lantai dan dinding dari peta level
+	 */
 	public int[][] petaLevel = new int[][] {
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -77,25 +82,37 @@ public class Level {
 			{ 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6 },
 			{ 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9 } };
 
+	/*
+	 * Array data dari peta level gim sebagai layer dua yang digunakan untuk
+	 * penggambaran labirin angka 3 merupakan representasi dari labirin dan
+	 * angka 2 merupakan representasi daerah di mana kotak dan lubang harus
+	 * berada, jika di luar area tersebut dilakukan pengacakan lagi
+	 */
 	public int[][] labirin = new int[][] {
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-			{ 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0 },
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-			{ 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0 },
-			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-			{ 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0 },
+			{ 0, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0 },
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 0 },
+			{ 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0 },
+			{ 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0 },
+			{ 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0 },
+			{ 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0 },
+			{ 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0 },
+			{ 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0 },
+			{ 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0 },
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
 
+	/*
+	 * Array data dari peta level gim sebagai layer tiga yang digunakan untuk
+	 * penggambaran lubang dan kotak, angka 1 mereprentasikan lubang dan angka 3
+	 * mereprentasikan kotak, ketika dilakukan pengacakan angka 1 dan 3 harus
+	 * berada pada area yang terdapat pada array labirin angka nomor 2
+	 */
 	public int[][] obyek = new int[][] {
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -116,14 +133,14 @@ public class Level {
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
 
 	public Level(GameWorld duniaGim) {
-		this.duniaGim = duniaGim;
+		this.setDuniaGim(duniaGim);
 		acakArray();
 		mainkanMusik();
 	}
 
 	public Level(GameWorld duniaGim, int lebarDuniaGim, int tinggiDuniaGim) {
 		// TODO Auto-generated constructor stub
-		this.duniaGim = duniaGim;
+		this.setDuniaGim(duniaGim);
 		lebarLayar = lebarDuniaGim;
 		tinggiLayar = lebarDuniaGim;
 
@@ -132,13 +149,11 @@ public class Level {
 	}
 
 	private static void mainkanMusik() {
-		AssetLoader.dkvduaMusicKremKaakkuja.play();
+		AssetLoader.dkvduaMusicMysteryBox.play();
 	}
-	
+
 	public void update(float delta) {
-		float waktuBerjalan = 0;
-		waktuBerjalan = waktuBerjalan + delta;
-		kontrolGerakan(waktuBerjalan);
+		kontrolGerakan(delta);
 	}
 
 	private void kontrolGerakan(float delta) {
@@ -157,31 +172,50 @@ public class Level {
 				|| (Gdx.input.isTouched(1) && x1 > 64 && y0 < 64);
 
 		if (Gdx.input.isKeyPressed(Keys.LEFT) || tombolKiri) {
-			if (petaLevel[posisiY][posisiX - 1] == 5) {
-				if (!cekHalangan(posisiY, posisiX - 1)) {
-					gerakanPemain(-1, 0, KIRI);
+			if (!tombolDiTekan) {
+				if (petaLevel[posisiY][posisiX - 1] == 5) {
+					if (!cekHalangan(posisiY, posisiX - 1)) {
+						gerakanPemain(-1, 0, KIRI);
+					}
 				}
+
+				tombolDiTekan = true;
 			}
 		} else if (Gdx.input.isKeyPressed(Keys.RIGHT) || tombolKanan) {
-			if (petaLevel[posisiY][posisiX + 1] == 5) {
-				if (!cekHalangan(posisiY, posisiX + 1)) {
-					gerakanPemain(1, 0, KANAN);
+			if (!tombolDiTekan) {
+				if (petaLevel[posisiY][posisiX + 1] == 5) {
+					if (!cekHalangan(posisiY, posisiX + 1)) {
+						gerakanPemain(1, 0, KANAN);
+					}
 				}
+
+				tombolDiTekan = true;
 			}
 		} else if (Gdx.input.isKeyPressed(Keys.UP) || tombolAtas) {
-			if (petaLevel[posisiY - 1][posisiX] == 5) {
-				if (!cekHalangan(posisiY - 1, posisiX)) {
-					gerakanPemain(0, -1, BELAKANG);
+			if (!tombolDiTekan) {
+				if (petaLevel[posisiY - 1][posisiX] == 5) {
+					if (!cekHalangan(posisiY - 1, posisiX)) {
+						gerakanPemain(0, -1, BELAKANG);
+					}
 				}
+
+				tombolDiTekan = true;
 			}
 		} else if (Gdx.input.isKeyPressed(Keys.DOWN) || tombolBawah) {
-			if (petaLevel[posisiY + 1][posisiX] == 5) {
-				if (!cekHalangan(posisiY + 1, posisiX)) {
-					gerakanPemain(0, 1, DEPAN);
+			if (!tombolDiTekan) {
+				if (petaLevel[posisiY + 1][posisiX] == 5) {
+					if (!cekHalangan(posisiY + 1, posisiX)) {
+						gerakanPemain(0, 1, DEPAN);
+					}
 				}
+
+				tombolDiTekan = true;
 			}
 		} else {
-			// gerakanPemain(0, 0, DEPAN);
+			if (tombolDiTekan) {
+				// gerakanPemain(0, 0, DEPAN);
+				tombolDiTekan = false;
+			}
 		}
 	}
 
@@ -192,8 +226,27 @@ public class Level {
 		spriteBatch.draw(AssetLoader.arTombolPanahKiri, 128, 240);
 	}
 
+	/**
+	 * Method yang digunakan untuk melakukan pengacakan pada peta level gim dan
+	 * melakukan pengecekan posisi lantai dan lubang apakah bertumpuk dengan
+	 * dinding atau labirin
+	 */
 	private void acakArray() {
-		MetodePengacakan.shuffle(obyek);
+		// MetodePengacakan.shuffle(obyek);
+
+		for (int i = 0; i < labirin.length; i++) {
+			for (int j = 0; j < labirin[0].length; j++) {
+				if (!labirin.equals(obyek)) {
+					if (cekBatasObyek(i, j)) {
+						MetodePengacakan.shuffle(obyek);
+					} else {
+
+					}
+				} else {
+
+				}
+			}
+		}
 	}
 
 	private void tampilPemain(SpriteBatch spriteBatch) {
@@ -298,15 +351,13 @@ public class Level {
 	}
 
 	public void gerakanPemain(int x, int y, int arah) {
-		float waktuDelta = Gdx.graphics.getDeltaTime();
-
 		setX(x);
 		setY(y);
 
 		arahPemain = arah;
 
-		posisiX += getX() + (int) waktuDelta;
-		posisiY += getY() + (int) waktuDelta;
+		posisiX += getX();
+		posisiY += getY();
 	}
 
 	public void render(SpriteBatch batch) {
@@ -318,15 +369,25 @@ public class Level {
 	}
 
 	public boolean cekHalangan(int x, int y) {
-		if (labirin[x][y] == 3) {
+		if ((labirin[x][y] == 3) || (obyek[x][y] == 3) || (obyek[x][y] == 1)) {
 			return true;
 		} else {
 			return false;
 		}
 	}
 
-	public boolean cekLubang(int x, int y) {
-		if (obyek[x][y] == 3) {
+	/**
+	 * Method yang digunakan untuk melakukan pengecekan terhadap data pada array
+	 * labirin apakah nilai baris dan kolom terdapat angka 2
+	 * 
+	 * @param x
+	 *            Posisi dari baris
+	 * @param y
+	 *            Posisi dari kolom
+	 * @return Bernilai benar
+	 */
+	public boolean cekBatasObyek(int x, int y) {
+		if (labirin[x][y] == 2) {
 			return true;
 		} else {
 			return false;
@@ -347,5 +408,13 @@ public class Level {
 
 	public void setY(int y) {
 		this.y = y;
+	}
+
+	public GameWorld getDuniaGim() {
+		return duniaGim;
+	}
+
+	public void setDuniaGim(GameWorld duniaGim) {
+		this.duniaGim = duniaGim;
 	}
 }
