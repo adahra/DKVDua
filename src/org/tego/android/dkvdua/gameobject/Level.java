@@ -54,11 +54,14 @@ public class Level {
 	public static final int DEPAN = 3;
 	public static final int BELAKANG = 4;
 
+	private static final int BARIS = 12;
+	private static final int KOLOM = 17;
+
 	private GameWorld duniaGim;
 
 	private boolean tombolDiTekan = false;
 
-	/*
+	/**
 	 * Array data dari peta level gim, sebagai layer satu yang digunakan untuk
 	 * penggambaran lantai dan dinding angka 1, 2, 3, 4, 6, 7, 8, dan 9
 	 * merepresentasikan lantai dan dinding dari peta level
@@ -82,7 +85,7 @@ public class Level {
 			{ 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6 },
 			{ 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9 } };
 
-	/*
+	/**
 	 * Array data dari peta level gim sebagai layer dua yang digunakan untuk
 	 * penggambaran labirin angka 3 merupakan representasi dari labirin dan
 	 * angka 2 merupakan representasi daerah di mana kotak dan lubang harus
@@ -107,7 +110,7 @@ public class Level {
 			{ 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0 },
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
 
-	/*
+	/**
 	 * Array data dari peta level gim sebagai layer tiga yang digunakan untuk
 	 * penggambaran lubang dan kotak, angka 1 mereprentasikan lubang dan angka 3
 	 * mereprentasikan kotak, ketika dilakukan pengacakan angka 1 dan 3 harus
@@ -132,12 +135,28 @@ public class Level {
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
 
+	/**
+	 * Konstruktor dari kelas Level
+	 * 
+	 * @param duniaGim
+	 *            dunia gim
+	 */
 	public Level(GameWorld duniaGim) {
 		this.setDuniaGim(duniaGim);
 		acakArray();
 		mainkanMusik();
 	}
 
+	/**
+	 * Konstruktor dari kelas level dengan tiga parameter
+	 * 
+	 * @param duniaGim
+	 *            dunia gim yang ada
+	 * @param lebarDuniaGim
+	 *            lebar dari dunia gim
+	 * @param tinggiDuniaGim
+	 *            tinggi dari dunia gim
+	 */
 	public Level(GameWorld duniaGim, int lebarDuniaGim, int tinggiDuniaGim) {
 		// TODO Auto-generated constructor stub
 		this.setDuniaGim(duniaGim);
@@ -148,14 +167,30 @@ public class Level {
 		mainkanMusik();
 	}
 
+	/**
+	 * Method yang digunakan untuk memainkan musik yang akan digunakan untuk gim
+	 */
 	private static void mainkanMusik() {
-		AssetLoader.dkvduaMusicMysteryBox.play();
+		AssetLoader.dkvduaMusicKremKaakkuja.play();
 	}
 
+	/**
+	 * Method yang digunakan untuk melakukan pembaharuan pada gim
+	 * 
+	 * @param delta
+	 *            waktu dari pustaka, waktu yang berjalan
+	 */
 	public void update(float delta) {
 		kontrolGerakan(delta);
 	}
 
+	/**
+	 * Method yang digunakan untuk melakukan kontrol untuk melakukan gerakan
+	 * terhadap pemain
+	 * 
+	 * @param delta
+	 *            waktu yang berjalann
+	 */
 	private void kontrolGerakan(float delta) {
 		float x0 = (Gdx.input.getX(0) / (float) Gdx.graphics.getWidth()) * 192;
 		float x1 = (Gdx.input.getX(1) / (float) Gdx.graphics.getWidth()) * 192;
@@ -219,6 +254,12 @@ public class Level {
 		}
 	}
 
+	/**
+	 * Method yang digunakan untuk menggambar kontrol yang terdapat pada layar
+	 * 
+	 * @param spriteBatch
+	 *            penggambaran yang dilakukan
+	 */
 	private void gambarKontrolLayar(SpriteBatch spriteBatch) {
 		spriteBatch.draw(AssetLoader.arTombolPanahAtas, 0, 240);
 		spriteBatch.draw(AssetLoader.arTombolPanahBawah, 0, 208);
@@ -232,26 +273,86 @@ public class Level {
 	 * dinding atau labirin
 	 */
 	private void acakArray() {
-		// MetodePengacakan.shuffle(obyek);
+		boolean acak = false;
 
-		for (int i = 0; i < labirin.length; i++) {
-			for (int j = 0; j < labirin[0].length; j++) {
-				if (!labirin.equals(obyek)) {
-					if (cekBatasObyek(i, j)) {
-						MetodePengacakan.shuffle(obyek);
-					} else {
+		System.out.println("Array obyek sebelum diacak");
+		for (int i = 0; i < obyek.length; i++) {
+			for (int j = 0; j < obyek[i].length; j++) {
+				System.out.print(obyek[i][j] + ", ");
+			}
 
-					}
+			System.out.println("");
+		}
+
+		if (!acak) {
+			MetodePengacakan.shuffle(obyek);
+			acak = false;
+		}
+
+		System.out.println("Array obyek sesudah diacak");
+		for (int i = 0; i < obyek.length; i++) {
+			for (int j = 0; j < obyek[i].length; j++) {
+				System.out.print(obyek[i][j] + ", ");
+			}
+
+			System.out.println("");
+		}
+
+		/*
+		 * for (int i = 0; i < KOLOM; i++) { for (int j = 0; j < BARIS; j++) {
+		 * if (cekObyek(i, j) == cekLabirin(i, j)) { acak = true;
+		 * System.out.println("Ada yang bertumpukan"); } else if (cekObyek(i, j)
+		 * == cekPetaLevel(i, j)) { acak = true;
+		 * System.out.println("Bertumpuk"); } else { acak = false; } } }
+		 */
+
+		for (int i = 0; i < KOLOM; i++) {
+			for (int j = 0; j < BARIS; j++) {
+				if (bandingkanArray(obyek, labirin)) {
+					acak = true;
+					System.out.println("Ada yang bertumpukan");
+				} else if (bandingkanArray(obyek, petaLevel)) {
+					acak = true;
+					System.out.println("Bertumpuk");
 				} else {
-
+					acak = false;
 				}
 			}
 		}
 	}
 
+	private static boolean bandingkanArray(int[][] larikSatu, int[][] larikDua) {
+		if (larikSatu == larikDua) {
+			return true;
+		}
+
+		if (larikSatu == null || larikDua == null) {
+			return false;
+		}
+
+		int panjang = larikSatu.length;
+		if (larikDua.length != panjang) {
+			return false;
+		}
+
+		for (int i = 0; i < panjang; i++) {
+			if (larikSatu[i] != larikDua[i]) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Method yang digunakan untuk melakukan penggambaran pemain
+	 * 
+	 * @param spriteBatch
+	 *            parameter yang digunakan untuk memanggil fungsi draw
+	 */
 	private void tampilPemain(SpriteBatch spriteBatch) {
 		for (int x = 0; x < petaLevel.length; x++) {
-			for (int y = 0; y < petaLevel[0].length; y++) {
+			for (int y = 0; y < petaLevel[x].length; y++) {
 				if ((y == posisiX) && (x == posisiY)) {
 					switch (arahPemain) {
 					case DEPAN:
@@ -275,9 +376,15 @@ public class Level {
 		}
 	}
 
+	/**
+	 * Method yang digunakan untuk menampilkan atau menggambar labirin
+	 * 
+	 * @param batcher
+	 *            fungsi yang dipanggil ketika memanggil fungsi draw
+	 */
 	private void tampilLabirin(SpriteBatch batcher) {
 		for (int x = 0; x < labirin.length; x++) {
-			for (int y = 0; y < labirin[0].length; y++) {
+			for (int y = 0; y < labirin[x].length; y++) {
 				if (labirin[x][y] == 3) {
 					batcher.draw(AssetLoader.gambarHalangan, y * UKURAN_UBIN, x
 							* UKURAN_UBIN);
@@ -286,9 +393,15 @@ public class Level {
 		}
 	}
 
+	/**
+	 * Method yang digunakan untuk melakukan penggambaran obyek pada gim
+	 * 
+	 * @param batcher
+	 *            untuk memanggil method draw
+	 */
 	private void tampilObyek(SpriteBatch batcher) {
 		for (int x = 0; x < obyek.length; x++) {
-			for (int y = 0; y < obyek[0].length; y++) {
+			for (int y = 0; y < obyek[x].length; y++) {
 				switch (obyek[x][y]) {
 				case 1:
 					batcher.draw(AssetLoader.gambarLubang, y * UKURAN_UBIN, x
@@ -305,9 +418,15 @@ public class Level {
 		}
 	}
 
+	/**
+	 * Method yang digunakan untuk melakukan penggambaran peta level gim
+	 * 
+	 * @param batcher
+	 *            parameter yang digunakan untuk memanggil method draw
+	 */
 	private void tampilPetaLevel(SpriteBatch batcher) {
 		for (int x = 0; x < petaLevel.length; x++) {
-			for (int y = 0; y < petaLevel[0].length; y++) {
+			for (int y = 0; y < petaLevel[x].length; y++) {
 				switch (petaLevel[x][y]) {
 				case 1:
 					batcher.draw(AssetLoader.gambarUbinPojokKiriAtas, y
@@ -350,6 +469,16 @@ public class Level {
 		}
 	}
 
+	/**
+	 * Method yang digunakan untuk menggerakkan pemain
+	 * 
+	 * @param x
+	 *            posisi X dari pemain
+	 * @param y
+	 *            posisi Y dari pemain
+	 * @param arah
+	 *            arah jalan, arah gambar dari pemain ketika berjalan
+	 */
 	public void gerakanPemain(int x, int y, int arah) {
 		setX(x);
 		setY(y);
@@ -360,6 +489,13 @@ public class Level {
 		posisiY += getY();
 	}
 
+	/**
+	 * Method yang digunakan untuk melakukan render/penggambaran semua komponen
+	 * dari gim
+	 * 
+	 * @param batch
+	 *            parameter untuk memanggil method draw
+	 */
 	public void render(SpriteBatch batch) {
 		tampilPetaLevel(batch);
 		tampilLabirin(batch);
@@ -368,6 +504,15 @@ public class Level {
 		gambarKontrolLayar(batch);
 	}
 
+	/**
+	 * Method yang digunakan untuk melakukan pengecekan halangan pada gim
+	 * 
+	 * @param x
+	 *            posisi X dari halangan
+	 * @param y
+	 *            posisi Y dari halangan
+	 * @return jika terdapat halangan maka bernilai benar
+	 */
 	public boolean cekHalangan(int x, int y) {
 		if ((labirin[x][y] == 3) || (obyek[x][y] == 3) || (obyek[x][y] == 1)) {
 			return true;
@@ -386,34 +531,105 @@ public class Level {
 	 *            Posisi dari kolom
 	 * @return Bernilai benar
 	 */
-	public boolean cekBatasObyek(int x, int y) {
-		if (labirin[x][y] == 2) {
+	public boolean cekLabirin(int x, int y) {
+		if (labirin[x][y] == 3) {
 			return true;
 		} else {
 			return false;
 		}
 	}
 
+	/**
+	 * Method yang digunakan untuk melakukan pengecekan pada peta level gim
+	 * 
+	 * @param x
+	 *            posisi X dari dinding dan lantai
+	 * @param y
+	 *            posisi Y dari dinding dan lantai
+	 * @return jika terdapat peta level bernilai benar
+	 */
+	public boolean cekPetaLevel(int x, int y) {
+		if (petaLevel[x][y] == 0 || petaLevel[x][y] == 1
+				|| petaLevel[x][y] == 2 || petaLevel[x][y] == 3
+				|| petaLevel[x][y] == 4 || petaLevel[x][y] == 5
+				|| petaLevel[x][y] == 6 || petaLevel[x][y] == 7
+				|| petaLevel[x][y] == 8 || petaLevel[x][y] == 9) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * Method yang digunakan untuk melakukan pengecekan pada obyek gim
+	 * 
+	 * @param x
+	 *            posisi X dari obyek
+	 * @param y
+	 *            posisi Y dari obyek
+	 * @return jika terdapat obyek bernilai benar
+	 */
+	public boolean cekObyek(int x, int y) {
+		if (obyek[x][y] == 3 || obyek[x][y] == 1) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * Method yang digunakan untuk melakukan pengambilan nilai X
+	 * 
+	 * @return nilai X
+	 */
 	public int getX() {
 		return x;
 	}
 
+	/**
+	 * Method yang digunakan untuk melakukan pengaturan nilai X
+	 * 
+	 * @param x
+	 *            nilai X
+	 */
 	public void setX(int x) {
 		this.x = x;
 	}
 
+	/**
+	 * Method yang digunakan untuk melakukan pengambilan nilai Y
+	 * 
+	 * @return nilai Y
+	 */
 	public int getY() {
 		return y;
 	}
 
+	/**
+	 * Method yang digunakan untuk mengatur nilai Y
+	 * 
+	 * @param y
+	 *            nilai Y
+	 */
 	public void setY(int y) {
 		this.y = y;
 	}
 
+	/**
+	 * Method yang digunakan untuk mengambil dunia gim
+	 * 
+	 * @return dunia gim
+	 */
 	public GameWorld getDuniaGim() {
 		return duniaGim;
 	}
 
+	/**
+	 * Method yang digunakan untuk mengatur dunia gim
+	 * 
+	 * @param duniaGim
+	 *            dunia gim
+	 */
 	public void setDuniaGim(GameWorld duniaGim) {
 		this.duniaGim = duniaGim;
 	}
