@@ -8,6 +8,6 @@
 	<classpathentry exported="true" kind="lib" path="/home/nauin/xdman/compress/libgdx/gdx.jar" sourcepath="/home/nauin/xdman/compress/libgdx/sources/gdx-sources.jar"/>
 	<classpathentry kind="lib" path="/home/nauin/xdman/compress/libgdx/sources/gdx-sources.jar"/>
 	<classpathentry kind="lib" path="/home/nauin/xdman/compress/libgdx/sources/gdx-backend-android-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="/home/nauin/xdman/compress/libgdx/gdx-backend-android.jar"/>
+	<classpathentry exported="true" kind="lib" path="/home/nauin/xdman/compress/libgdx/gdx-backend-android.jar" sourcepath="/home/blackshadow/xdman/compress/libgdx/sources/gdx-backend-android-sources.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
