@@ -26,6 +26,11 @@ package org.tego.android.dkvdua.gameobject;
  * @author blackshadow
  *
  */
-public class Angka {
+public class Angka extends Obyek {
+	public static final String TAG = Angka.class.getSimpleName();
 	
+	public Angka(int x, int y) {
+		super(x, y);
+		// TODO Auto-generated constructor stub
+	}	
 }
