@@ -26,9 +26,22 @@ package org.tego.android.dkvdua.gameobject;
  * @author blackshadow
  *
  */
-public class Musuh {
+public class Musuh extends Obyek {
+	public static final String TAG = Musuh.class.getSimpleName();
 	
-	public Musuh() {
+	public Musuh(int x, int y) {
+		super(x, y);
+		// TODO Auto-generated constructor stub
+	}
+	
+	public void bergerak(int x, int y) {
+		int nx = (int) this.getPosisiX() + x;
+		int ny = (int) this.getPosisiY() + y;
+		this.setPosisiX(nx);
+		this.setPosisiY(ny);
+	}
+	
+	public void kejarPemain() {
 		
 	}
 }
