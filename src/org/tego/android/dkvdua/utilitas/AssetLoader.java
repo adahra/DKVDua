@@ -73,6 +73,8 @@ public class AssetLoader {
 	public static TextureRegion gambarUbinPojokKananBawah;
 
 	public static TextureRegion gambarHalangan;
+	
+	public static TextureRegion gambarHati;
 
 	public static TextureAtlas taTombol;
 	public static AtlasRegion arTombolPanahAtas;
@@ -98,19 +100,28 @@ public class AssetLoader {
 	public static Preferences pengaturan;
 
 	public static void load() {
+		muatGambarHati();
 		muatGambarUbin();
 		muatGambarHalangan();
 		muatGambarObyek();
 		muatGambarPemain();
+		muatGambarHuruf();
 		antarMukaKontrolLayar();
 		antarMukaKontrol();
 		antarMuka();
 		dengarSuara();
 		dengarMusik();
-		tampilFont();
 		konfigurasi();
 	}
 
+	private static void muatGambarHati() {
+		dkvduaIcon = new Texture(Gdx.files.internal("data/gfx/dkvduaIcon.png"));
+		dkvduaIcon.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+		
+		gambarHati = new TextureRegion(dkvduaIcon, 0, 0, 16, 16);
+		gambarHati.flip(false, true);
+	}
+	
 	private static void muatGambarPemain() {
 		gambarPemainBelakang = new TextureRegion(dkvduaTexture, 80, 0, 16, 16);
 		gambarPemainBelakang.flip(false, true);
@@ -130,10 +141,10 @@ public class AssetLoader {
 				Gdx.files.internal("data/gfx/dkvduaBasicTiles.png"));
 		dkvduaBasicTile.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 
-		gambarLubang = new TextureRegion(dkvduaBasicTile, 16, 112, 16, 16);
+		gambarLubang = new TextureRegion(dkvduaBasicTile, 96, 32, 16, 16);
 		gambarLubang.flip(false, true);
 
-		gambarKotak = new TextureRegion(dkvduaBasicTile, 16, 96, 16, 16);
+		gambarKotak = new TextureRegion(dkvduaBasicTile, 16, 176, 16, 16);
 		gambarKotak.flip(false, true);
 	}
 
@@ -141,7 +152,7 @@ public class AssetLoader {
 		gambarHalangan = new TextureRegion(dkvduaTexture, 48, 16, 16, 16);
 		gambarHalangan.flip(false, true);
 	}
-
+	
 	private static void muatGambarUbin() {
 		dkvduaTexture = new Texture(
 				Gdx.files.internal("data/gfx/dkvduaTextures.png"));
@@ -250,7 +261,7 @@ public class AssetLoader {
 		dkvduaMusicMysteryBox.setLooping(true);
 	}
 
-	private static void tampilFont() {
+	private static void muatGambarHuruf() {
 		dkvduaFont = new BitmapFont(
 				Gdx.files.internal("data/gfx/font/dkvduafont/text.fnt"));
 		dkvduaFont.setScale(.25f, -.25f);
@@ -298,6 +309,7 @@ public class AssetLoader {
 
 		dkvduaTexture.dispose();
 		dkvduaBasicTile.dispose();
+		dkvduaIcon.dispose();
 
 		dkvduaFont.dispose();
 		dkvduaFontShadow.dispose();
