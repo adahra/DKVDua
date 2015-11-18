@@ -26,6 +26,23 @@ package org.tego.android.dkvdua.gameobject;
  * @author blackshadow
  *
  */
-public class Pemain {
+public class Pemain extends Obyek {
+	public static final String TAG = Pemain.class.getSimpleName();
+
+	public Pemain(int x, int y) {
+		super(x, y);
+		// TODO Auto-generated constructor stub
+
+	}
+
+	public void bergerak(int x, int y) {
+		int nx = (int) this.getPosisiX() + x;
+		int ny = (int) this.getPosisiY() + y;
+		this.setPosisiX(nx);
+		this.setPosisiY(ny);
+	}
 	
+	public void tembakMusuh() {
+		
+	}
 }
