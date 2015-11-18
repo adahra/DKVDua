@@ -19,6 +19,8 @@
 
 package org.tego.android.dkvdua.gameobject;
 
+import org.tego.android.dkvdua.utilitas.AssetLoader;
+
 /**
  * Kelas yang digunakan untuk mengatur gambar lubang yang ada pada permainan dan
  * untuk mengatur tata letak dari lubang dimana musuh keluar
@@ -26,9 +28,12 @@ package org.tego.android.dkvdua.gameobject;
  * @author blackshadow
  *
  */
-public class Lubang {
-
-	public Lubang() {
-		
+public class Lubang extends Obyek {
+	public static final String TAG = Lubang.class.getSimpleName();
+	
+	public Lubang(int x, int y) {
+		super(x, y);
+		// TODO Auto-generated constructor stub
+		this.setTrGambar(AssetLoader.gambarLubang);
 	}
 }
