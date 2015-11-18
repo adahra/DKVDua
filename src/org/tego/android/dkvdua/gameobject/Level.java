@@ -26,6 +26,8 @@ import org.tego.android.dkvdua.utilitas.MetodePengacakan;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.utils.Array;
 
 /**
  * Kelas yang digunakan untuk menggambar peta level pada permainan
@@ -36,6 +38,16 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class Level {
 	public static final String TAG = Level.class.getSimpleName();
 
+	public final int OFFSET = 16;
+	public final int TABRAKAN_KIRI = 1;
+	public final int TABRAKAN_KANAN = 2;
+	public final int TABRAKAN_ATAS = 3;
+	public final int TABRAKAN_BAWAH = 4;
+	
+	private final Array<Kotak> aKotak = new Array<Kotak>();
+	private final Array<Musuh> aMusuh = new Array<Musuh>();
+	private final Array<Lubang> aLubang = new Array<Lubang>();
+	
 	public static final int UKURAN_UBIN = 16;
 
 	public int lebarLayar;
@@ -43,6 +55,9 @@ public class Level {
 
 	private int posisiX = 1;
 	private int posisiY = 3;
+
+	private int posXKotak;
+	private int posYKotak;
 
 	private int arahPemain = 3;
 
@@ -60,6 +75,7 @@ public class Level {
 	private GameWorld duniaGim;
 
 	private boolean tombolDiTekan = false;
+	private Dinding dDinding;
 
 	/**
 	 * Array data dari peta level gim, sebagai layer satu yang digunakan untuk
@@ -135,6 +151,12 @@ public class Level {
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
 
+	private int nilaiSatu;
+
+	private int nilaiDua;
+
+	private int hasil;
+
 	/**
 	 * Konstruktor dari kelas Level
 	 * 
@@ -145,6 +167,8 @@ public class Level {
 		this.setDuniaGim(duniaGim);
 		acakArray();
 		mainkanMusik();
+		initPertanyaan();
+		init();
 	}
 
 	/**
@@ -165,6 +189,19 @@ public class Level {
 
 		acakArray();
 		mainkanMusik();
+
+		initPertanyaan();
+		init();
+	}
+
+	private void init() {
+
+	}
+
+	private void initPertanyaan() {
+		nilaiSatu = MathUtils.random(1, 9);
+		nilaiDua = MathUtils.random(1, 9);
+		hasil = nilaiSatu + nilaiDua;
 	}
 
 	/**
@@ -212,6 +249,8 @@ public class Level {
 					if (!cekHalangan(posisiY, posisiX - 1)) {
 						gerakanPemain(-1, 0, KIRI);
 					}
+
+					gerakanKotak(-1, 0);
 				}
 
 				tombolDiTekan = true;
@@ -222,6 +261,8 @@ public class Level {
 					if (!cekHalangan(posisiY, posisiX + 1)) {
 						gerakanPemain(1, 0, KANAN);
 					}
+
+					gerakanKotak(1, 0);
 				}
 
 				tombolDiTekan = true;
@@ -232,6 +273,8 @@ public class Level {
 					if (!cekHalangan(posisiY - 1, posisiX)) {
 						gerakanPemain(0, -1, BELAKANG);
 					}
+
+					gerakanKotak(0, -1);
 				}
 
 				tombolDiTekan = true;
@@ -242,6 +285,8 @@ public class Level {
 					if (!cekHalangan(posisiY + 1, posisiX)) {
 						gerakanPemain(0, 1, DEPAN);
 					}
+
+					gerakanKotak(0, 1);
 				}
 
 				tombolDiTekan = true;
@@ -344,6 +389,17 @@ public class Level {
 		return true;
 	}
 
+	private void tampilHati(SpriteBatch sbGambar) {
+		sbGambar.draw(AssetLoader.gambarHati, lebarLayar - 51, 0);
+		sbGambar.draw(AssetLoader.gambarHati, lebarLayar - 34, 0);
+		sbGambar.draw(AssetLoader.gambarHati, lebarLayar - 17, 0);
+	}
+
+	private void tampilPertanyaan(SpriteBatch sbGambar) {
+		AssetLoader.dkvduaFont.draw(sbGambar, nilaiSatu + " + " + nilaiDua
+				+ " = ", 1, 1);
+	}
+
 	/**
 	 * Method yang digunakan untuk melakukan penggambaran pemain
 	 * 
@@ -402,17 +458,22 @@ public class Level {
 	private void tampilObyek(SpriteBatch batcher) {
 		for (int x = 0; x < obyek.length; x++) {
 			for (int y = 0; y < obyek[x].length; y++) {
-				switch (obyek[x][y]) {
-				case 1:
-					batcher.draw(AssetLoader.gambarLubang, y * UKURAN_UBIN, x
-							* UKURAN_UBIN);
-					break;
-				case 2:
-					break;
-				case 3:
-					batcher.draw(AssetLoader.gambarKotak, y * UKURAN_UBIN, x
-							* UKURAN_UBIN);
-					break;
+				posXKotak = y;
+				posYKotak = x;
+
+				if ((y == posXKotak) && (x == posYKotak)) {
+					switch (obyek[x][y]) {
+					case 1:
+						batcher.draw(AssetLoader.gambarLubang, posXKotak
+								* UKURAN_UBIN, posYKotak * UKURAN_UBIN);
+						break;
+					case 2:
+						break;
+					case 3:
+						batcher.draw(AssetLoader.gambarKotak, posXKotak
+								* UKURAN_UBIN, posYKotak * UKURAN_UBIN);
+						break;
+					}
 				}
 			}
 		}
@@ -429,19 +490,27 @@ public class Level {
 			for (int y = 0; y < petaLevel[x].length; y++) {
 				switch (petaLevel[x][y]) {
 				case 1:
-					batcher.draw(AssetLoader.gambarUbinPojokKiriAtas, y
-							* UKURAN_UBIN, x * UKURAN_UBIN);
+					dDinding = new Dinding(x, y);
+					dDinding.setTrGambar(AssetLoader.gambarUbinPojokKiriAtas);
+					batcher.draw(dDinding.getTrGambar(), y * UKURAN_UBIN, x
+							* UKURAN_UBIN);
 					break;
 				case 2:
-					batcher.draw(AssetLoader.gambarUbinAtas, y * UKURAN_UBIN, x
+					dDinding = new Dinding(x, y);
+					dDinding.setTrGambar(AssetLoader.gambarUbinAtas);
+					batcher.draw(dDinding.getTrGambar(), y * UKURAN_UBIN, x
 							* UKURAN_UBIN);
 					break;
 				case 3:
-					batcher.draw(AssetLoader.gambarUbinPojokKananAtas, y
-							* UKURAN_UBIN, x * UKURAN_UBIN);
+					dDinding = new Dinding(x, y);
+					dDinding.setTrGambar(AssetLoader.gambarUbinPojokKananAtas);
+					batcher.draw(dDinding.getTrGambar(), y * UKURAN_UBIN, x
+							* UKURAN_UBIN);
 					break;
 				case 4:
-					batcher.draw(AssetLoader.gambarUbinKiri, y * UKURAN_UBIN, x
+					dDinding = new Dinding(x, y);
+					dDinding.setTrGambar(AssetLoader.gambarUbinKiri);
+					batcher.draw(dDinding.getTrGambar(), y * UKURAN_UBIN, x
 							* UKURAN_UBIN);
 					break;
 				case 5:
@@ -449,20 +518,28 @@ public class Level {
 							* UKURAN_UBIN);
 					break;
 				case 6:
-					batcher.draw(AssetLoader.gambarUbinKanan, y * UKURAN_UBIN,
-							x * UKURAN_UBIN);
+					dDinding = new Dinding(x, y);
+					dDinding.setTrGambar(AssetLoader.gambarUbinKanan);
+					batcher.draw(dDinding.getTrGambar(), y * UKURAN_UBIN, x
+							* UKURAN_UBIN);
 					break;
 				case 7:
-					batcher.draw(AssetLoader.gambarUbinPojokKiriBawah, y
-							* UKURAN_UBIN, x * UKURAN_UBIN);
+					dDinding = new Dinding(x, y);
+					dDinding.setTrGambar(AssetLoader.gambarUbinPojokKiriAtas);
+					batcher.draw(dDinding.getTrGambar(), y * UKURAN_UBIN, x
+							* UKURAN_UBIN);
 					break;
 				case 8:
-					batcher.draw(AssetLoader.gambarUbinBawah, y * UKURAN_UBIN,
-							x * UKURAN_UBIN);
+					dDinding = new Dinding(x, y);
+					dDinding.setTrGambar(AssetLoader.gambarUbinBawah);
+					batcher.draw(dDinding.getTrGambar(), y * UKURAN_UBIN, x
+							* UKURAN_UBIN);
 					break;
 				case 9:
-					batcher.draw(AssetLoader.gambarUbinPojokKananBawah, y
-							* UKURAN_UBIN, x * UKURAN_UBIN);
+					dDinding = new Dinding(x, y);
+					dDinding.setTrGambar(AssetLoader.gambarUbinPojokKananBawah);
+					batcher.draw(dDinding.getTrGambar(), y * UKURAN_UBIN, x
+							* UKURAN_UBIN);
 					break;
 				}
 			}
@@ -480,13 +557,22 @@ public class Level {
 	 *            arah jalan, arah gambar dari pemain ketika berjalan
 	 */
 	public void gerakanPemain(int x, int y, int arah) {
-		setX(x);
-		setY(y);
-
 		arahPemain = arah;
 
-		posisiX += getX();
-		posisiY += getY();
+		posisiX += x;
+		posisiY += y;
+	}
+
+	private void gerakanKotak(int x, int y) {
+		if (obyek[posisiY - 1][posisiX] == 3
+				|| obyek[posisiY + 1][posisiX] == 3
+				|| obyek[posisiY][posisiX - 1] == 3
+				|| obyek[posisiY][posisiX + 1] == 3) {
+			System.out.println("Kotak disentuh pemain");
+
+			posXKotak += x;
+			posYKotak += y;
+		}
 	}
 
 	/**
@@ -497,6 +583,8 @@ public class Level {
 	 *            parameter untuk memanggil method draw
 	 */
 	public void render(SpriteBatch batch) {
+		tampilPertanyaan(batch);
+		tampilHati(batch);
 		tampilPetaLevel(batch);
 		tampilLabirin(batch);
 		tampilObyek(batch);
