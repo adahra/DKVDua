@@ -19,8 +19,8 @@
 
 package org.tego.android.dkvdua.gameobject;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
 
 /**
  * Kelas yang digunakan untuk mengatur atau menggambar dinding yang digunakan
@@ -29,9 +29,27 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
  * @author blackshadow
  *
  */
-public class Dinding {
+public class Dinding extends Obyek {
+	public static final String TAG = Dinding.class.getSimpleName();
 	
-	public Dinding() {
-		// TODO Auto-generated constructor stub		
+	private TextureRegion trGambar;
+
+	public static int UBIN_POJOK_KIRI_ATAS = 1;
+	public static int UBIN_ATAS = 2;
+	public static int UBIN_POJOK_KANAN_ATAS = 3;
+	public static int UBIN_KIRI = 4;
+	public static int UBIN = 5;
+	public static int UBIN_KANAN = 6;
+	public static int UBIN_POJOK_KIRI_BAWAH = 7;
+	public static int UBIN_BAWAH = 8;
+	public static int UBIN_POJOK_KANAN_BAWAH = 9;
+	
+	public int tipeDinding;
+	
+	public Dinding(int x, int y) {
+		super(x, y);
+		// TODO Auto-generated constructor stub
+		
 	}
+	
 }
