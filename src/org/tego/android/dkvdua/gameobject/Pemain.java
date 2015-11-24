@@ -27,22 +27,21 @@ package org.tego.android.dkvdua.gameobject;
  *
  */
 public class Pemain extends Obyek {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6180174740100001866L;
 	public static final String TAG = Pemain.class.getSimpleName();
 
 	public Pemain(int x, int y) {
 		super(x, y);
 		// TODO Auto-generated constructor stub
-
 	}
 
 	public void bergerak(int x, int y) {
-		int nx = (int) this.getPosisiX() + x;
-		int ny = (int) this.getPosisiY() + y;
-		this.setPosisiX(nx);
-		this.setPosisiY(ny);
-	}
-	
-	public void tembakMusuh() {
-		
+		int nx = (int) this.getX() + x;
+		int ny = (int) this.getY() + y;
+		this.setX(nx);
+		this.setY(ny);
 	}
 }
