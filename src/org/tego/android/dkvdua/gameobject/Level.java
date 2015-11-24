@@ -27,7 +27,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.utils.Array;
 
 /**
  * Kelas yang digunakan untuk menggambar peta level pada permainan
@@ -38,16 +37,6 @@ import com.badlogic.gdx.utils.Array;
 public class Level {
 	public static final String TAG = Level.class.getSimpleName();
 
-	public final int OFFSET = 16;
-	public final int TABRAKAN_KIRI = 1;
-	public final int TABRAKAN_KANAN = 2;
-	public final int TABRAKAN_ATAS = 3;
-	public final int TABRAKAN_BAWAH = 4;
-	
-	private final Array<Kotak> aKotak = new Array<Kotak>();
-	private final Array<Musuh> aMusuh = new Array<Musuh>();
-	private final Array<Lubang> aLubang = new Array<Lubang>();
-	
 	public static final int UKURAN_UBIN = 16;
 
 	public int lebarLayar;
@@ -75,7 +64,6 @@ public class Level {
 	private GameWorld duniaGim;
 
 	private boolean tombolDiTekan = false;
-	private Dinding dDinding;
 
 	/**
 	 * Array data dari peta level gim, sebagai layer satu yang digunakan untuk
@@ -152,10 +140,7 @@ public class Level {
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
 
 	private int nilaiSatu;
-
 	private int nilaiDua;
-
-	private int hasil;
 
 	/**
 	 * Konstruktor dari kelas Level
@@ -201,7 +186,7 @@ public class Level {
 	private void initPertanyaan() {
 		nilaiSatu = MathUtils.random(1, 9);
 		nilaiDua = MathUtils.random(1, 9);
-		hasil = nilaiSatu + nilaiDua;
+		// hasil = nilaiSatu + nilaiDua;
 	}
 
 	/**
@@ -490,56 +475,32 @@ public class Level {
 			for (int y = 0; y < petaLevel[x].length; y++) {
 				switch (petaLevel[x][y]) {
 				case 1:
-					dDinding = new Dinding(x, y);
-					dDinding.setTrGambar(AssetLoader.gambarUbinPojokKiriAtas);
-					batcher.draw(dDinding.getTrGambar(), y * UKURAN_UBIN, x
-							* UKURAN_UBIN);
+					
 					break;
 				case 2:
-					dDinding = new Dinding(x, y);
-					dDinding.setTrGambar(AssetLoader.gambarUbinAtas);
-					batcher.draw(dDinding.getTrGambar(), y * UKURAN_UBIN, x
-							* UKURAN_UBIN);
+					
 					break;
 				case 3:
-					dDinding = new Dinding(x, y);
-					dDinding.setTrGambar(AssetLoader.gambarUbinPojokKananAtas);
-					batcher.draw(dDinding.getTrGambar(), y * UKURAN_UBIN, x
-							* UKURAN_UBIN);
+					
 					break;
 				case 4:
-					dDinding = new Dinding(x, y);
-					dDinding.setTrGambar(AssetLoader.gambarUbinKiri);
-					batcher.draw(dDinding.getTrGambar(), y * UKURAN_UBIN, x
-							* UKURAN_UBIN);
+					
 					break;
 				case 5:
 					batcher.draw(AssetLoader.gambarUbin, y * UKURAN_UBIN, x
 							* UKURAN_UBIN);
 					break;
 				case 6:
-					dDinding = new Dinding(x, y);
-					dDinding.setTrGambar(AssetLoader.gambarUbinKanan);
-					batcher.draw(dDinding.getTrGambar(), y * UKURAN_UBIN, x
-							* UKURAN_UBIN);
+					
 					break;
 				case 7:
-					dDinding = new Dinding(x, y);
-					dDinding.setTrGambar(AssetLoader.gambarUbinPojokKiriAtas);
-					batcher.draw(dDinding.getTrGambar(), y * UKURAN_UBIN, x
-							* UKURAN_UBIN);
+					
 					break;
 				case 8:
-					dDinding = new Dinding(x, y);
-					dDinding.setTrGambar(AssetLoader.gambarUbinBawah);
-					batcher.draw(dDinding.getTrGambar(), y * UKURAN_UBIN, x
-							* UKURAN_UBIN);
+					
 					break;
 				case 9:
-					dDinding = new Dinding(x, y);
-					dDinding.setTrGambar(AssetLoader.gambarUbinPojokKananBawah);
-					batcher.draw(dDinding.getTrGambar(), y * UKURAN_UBIN, x
-							* UKURAN_UBIN);
+					
 					break;
 				}
 			}
