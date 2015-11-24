@@ -4,8 +4,6 @@ import java.util.List;
 
 import javax.microedition.khronos.opengles.GL10;
 
-import org.tego.android.dkvdua.gamescreen.Game;
-import org.tego.android.dkvdua.gameworld.GameRenderer;
 import org.tego.android.dkvdua.gameworld.GameWorld;
 import org.tego.android.dkvdua.helper.InputHandler;
 import org.tego.android.dkvdua.ui.Tombol;
@@ -13,7 +11,6 @@ import org.tego.android.dkvdua.utilitas.AssetLoader;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /**
@@ -22,11 +19,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  * @author blackshadow
  *
  */
-public class LayarMenuUtama extends Game {
+public class LayarMenuUtama implements Screen {
 	private SpriteBatch mSpriteBatch;
-	private Sprite mSprite;
+	// private Sprite mSprite;
 	private GameWorld mGameWorld;
-	private GameRenderer mGameRenderer;
+	// private GameRenderer mGameRenderer;
 	private float lebar = Gdx.graphics.getWidth();
 	private float tinggi = Gdx.graphics.getHeight();
 	private List<Tombol> tombolMenu;
@@ -49,21 +46,16 @@ public class LayarMenuUtama extends Game {
 		mGameWorld = new GameWorld(gameWidth, gameHeight);
 		Gdx.input
 				.setInputProcessor(new InputHandler(mGameWorld, lebar, tinggi));
-		mGameRenderer = new GameRenderer(mGameWorld, (int) gameWidth, (int) gameHeight);
+		// mGameRenderer = new GameRenderer(mGameWorld, (int) gameWidth, (int)
+		// gameHeight);
 		mSpriteBatch = new SpriteBatch();
 
 		this.tombolMenu = ((InputHandler) Gdx.input.getInputProcessor())
 				.getTombolMenu();
 
 		AssetLoader.dkvduaMusicMysteryBox.play();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.badlogic.gdx.Screen#render(float)
-	 */
-	@Override
+	}	
+	
 	public void render() {
 		Gdx.gl.glClearColor(0.2f, 0.2f, 0.2f, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
@@ -117,11 +109,31 @@ public class LayarMenuUtama extends Game {
 		AssetLoader.dkvduaMusicMysteryBox.dispose();
 	}
 
+	@Override
+	public void render(float delta) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void show() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void hide() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	/**
 	 * Method yang digunakan untuk mengatur event dari tombol menu
 	 */
-	private void tombolMenu() {
-
-	}
+	/*
+	 * private void tombolMenu() {
+	 * 
+	 * }
+	 */
 
 }
