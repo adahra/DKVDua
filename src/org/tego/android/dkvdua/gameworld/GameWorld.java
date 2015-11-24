@@ -10,9 +10,9 @@ import org.tego.android.dkvdua.gameobject.Level;
  */
 public class GameWorld {
 	private GameState currentState;
-	private float gameWidth;
-	private float gameHeight;
-	private GameRenderer renderer;
+	// private float gameWidth;
+	// private float gameHeight;
+	// private GameRenderer renderer;
 	private Level petaGim;
 
 	/**
@@ -35,8 +35,8 @@ public class GameWorld {
 	 */
 	public GameWorld(float gameWidth, float gameHeight) {
 		currentState = GameState.MENU;
-		this.gameWidth = gameWidth;
-		this.gameHeight = gameHeight;
+		// this.gameWidth = gameWidth;
+		// this.gameHeight = gameHeight;
 	}
 
 	/**
@@ -187,8 +187,8 @@ public class GameWorld {
 	public void ready() {
 		currentState = GameState.READY;
 	}
-	
+
 	public void setRenderer(GameRenderer renderer) {
-		this.renderer = renderer;
+		// this.renderer = renderer;
 	}
 }
