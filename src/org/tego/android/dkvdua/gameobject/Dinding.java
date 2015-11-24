@@ -19,9 +19,6 @@
 
 package org.tego.android.dkvdua.gameobject;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-
-
 /**
  * Kelas yang digunakan untuk mengatur atau menggambar dinding yang digunakan
  * dalam penggambaran game
@@ -30,10 +27,13 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
  *
  */
 public class Dinding extends Obyek {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1256442104758377591L;
+
 	public static final String TAG = Dinding.class.getSimpleName();
 	
-	private TextureRegion trGambar;
-
 	public static int UBIN_POJOK_KIRI_ATAS = 1;
 	public static int UBIN_ATAS = 2;
 	public static int UBIN_POJOK_KANAN_ATAS = 3;
@@ -49,7 +49,5 @@ public class Dinding extends Obyek {
 	public Dinding(int x, int y) {
 		super(x, y);
 		// TODO Auto-generated constructor stub
-		
 	}
-	
 }
