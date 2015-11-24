@@ -3,13 +3,11 @@ package org.tego.android.dkvdua.helper;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.tego.android.dkvdua.gameobject.Level;
 import org.tego.android.dkvdua.gameworld.GameWorld;
 import org.tego.android.dkvdua.ui.Tombol;
 import org.tego.android.dkvdua.utilitas.AssetLoader;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 
 /**
@@ -19,23 +17,14 @@ import com.badlogic.gdx.InputProcessor;
  *
  */
 public class InputHandler implements InputProcessor {
-	private static final String TAG = InputHandler.class.getSimpleName();
+	public static final String TAG = InputHandler.class.getSimpleName();
 	
-	private GameWorld myWorld;
-	private float scaleFactorX;
-	private float scaleFactorY;
 	private List<Tombol> tombolMenu;
 	private Tombol tombolMulai;
 	private Tombol tombolPengaturan;
 	private Tombol tombolKeluar;
 	private List<Tombol> tombolKontrol;
-	private Tombol tombolKontrolKiri;
-	private Tombol tombolKontrolKanan;
-	private Tombol tombolKontrolAtas;
-	private Tombol tombolKontrolBawah;
-	private Tombol tombolTembak;
-	private Level level;
-
+	
 	/**
 	 * Konstruktor dari kelas
 	 * 
@@ -48,10 +37,7 @@ public class InputHandler implements InputProcessor {
 	 */
 	public InputHandler(GameWorld myWorld, float scaleFactorX,
 			float scaleFactorY) {
-		this.myWorld = myWorld;
-		this.scaleFactorX = scaleFactorX;
-		this.scaleFactorY = scaleFactorY;
-
+		
 		tombolMenu = new ArrayList<Tombol>();
 		tombolMulai = new Tombol((Gdx.graphics.getWidth() / 4) - 25,
 				(Gdx.graphics.getHeight() / 4) - 25,
