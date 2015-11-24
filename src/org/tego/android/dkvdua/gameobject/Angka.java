@@ -27,10 +27,14 @@ package org.tego.android.dkvdua.gameobject;
  *
  */
 public class Angka extends Obyek {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3871739236764210722L;
 	public static final String TAG = Angka.class.getSimpleName();
 	
 	public Angka(int x, int y) {
 		super(x, y);
 		// TODO Auto-generated constructor stub
-	}	
+	}
 }
