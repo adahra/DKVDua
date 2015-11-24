@@ -1,16 +1,11 @@
 package org.tego.android.dkvdua.gameworld;
 
-import org.tego.android.dkvdua.gameobject.Kotak;
-import org.tego.android.dkvdua.gameobject.Level;
-import org.tego.android.dkvdua.gameobject.Lubang;
-import org.tego.android.dkvdua.gameobject.Musuh;
-import org.tego.android.dkvdua.gameobject.Pemain;
+import org.tego.android.dkvdua.gameobject.LevelGenerator;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
@@ -23,21 +18,22 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 public class GameRenderer {
 	public static final String TAG = GameRenderer.class.getSimpleName();
 
-	private GameWorld myWorld;
+	// private GameWorld myWorld;
 	public OrthographicCamera camera;
 	private ShapeRenderer shapeRenderer;
 	private SpriteBatch batcher;
-	private Pemain pemain;
-	private Musuh musuh;
-	private Kotak kotak;
-	private Lubang lubang;
-	private TextureRegion trPemain;
-	private TextureRegion trMusuh;
-	private TextureRegion trKotak;
-	private TextureRegion trLubang;
+	// private Pemain pemain;
+	// private Musuh musuh;
+	// private Kotak kotak;
+	// private Lubang lubang;
+	// private TextureRegion trPemain;
+	// private TextureRegion trMusuh;
+	// private TextureRegion trKotak;
+	// private TextureRegion trLubang;
 	private int lebarLayar;
 	private int tinggiLayar;
-	private Level petaGim;
+	// private Level petaGim;
+	private LevelGenerator levelGenerator;
 
 	/**
 	 * Konstruktor dari kelas
@@ -50,7 +46,7 @@ public class GameRenderer {
 	 *            Tinggi layar dari permainan
 	 */
 	public GameRenderer(GameWorld world, int gameWidth, int gameHeight) {
-		myWorld = world;
+		// myWorld = world;
 
 		lebarLayar = gameWidth;
 		tinggiLayar = gameHeight;
@@ -58,7 +54,8 @@ public class GameRenderer {
 		camera = new OrthographicCamera();
 		camera.setToOrtho(true, lebarLayar, tinggiLayar);
 
-		petaGim = new Level(world, lebarLayar, tinggiLayar);
+		// petaGim = new Level(world, lebarLayar, tinggiLayar);
+		levelGenerator = new LevelGenerator(world, lebarLayar, tinggiLayar);
 
 		batcher = new SpriteBatch();
 		batcher.setProjectionMatrix(camera.combined);
@@ -86,41 +83,59 @@ public class GameRenderer {
 		shapeRenderer.end();
 
 		batcher.begin();
-		petaGim.render(batcher);
+		// petaGim.render(batcher);
+		levelGenerator.render(batcher);
 		batcher.end();
-		
-		petaGim.update(delta);
+
+		levelGenerator.update(delta);
+		// petaGim.update(delta);
 	}
 
-	private void inisialisasiObyek() {
+	/*
+	 * private void inisialisasiObyek() {
+	 * 
+	 * }
+	 */
 
-	}
+	/*
+	 * private void inisialisasiAset() {
+	 * 
+	 * }
+	 */
 
-	private void inisialisasiAset() {
+	/*
+	 * private void gambarPeta() {
+	 * 
+	 * }
+	 */
 
-	}
+	/*
+	 * private void gambarPemain() {
+	 * 
+	 * }
+	 */
 
-	private void gambarPeta() {
+	/*
+	 * private void gambarMusuh() {
+	 * 
+	 * }
+	 */
 
-	}
+	/*
+	 * private void gambarKotak() {
+	 * 
+	 * }
+	 */
 
-	private void gambarPemain() {
+	/*
+	 * private void gambarLubang() {
+	 * 
+	 * }
+	 */
 
-	}
-
-	private void gambarMusuh() {
-
-	}
-
-	private void gambarKotak() {
-
-	}
-
-	private void gambarLubang() {
-
-	}
-
-	private void gambarHati() {
-
-	}
+	/*
+	 * private void gambarHati() {
+	 * 
+	 * }
+	 */
 }
