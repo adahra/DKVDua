@@ -1,7 +1,7 @@
 package org.tego.android.dkvdua;
 
 import org.tego.android.dkvdua.gamescreen.Game;
-import org.tego.android.dkvdua.gamescreen.LayarPermainan;
+import org.tego.android.dkvdua.layar.LayarMenuUtama;
 import org.tego.android.dkvdua.utilitas.AssetLoader;
 
 /**
@@ -20,8 +20,8 @@ public class DKVDuaMain extends Game {
 	@Override
 	public void create() {
 		AssetLoader.load();
-		// setScreen(new LayarMenuUtama());
-		setScreen(new LayarPermainan());
+		setScreen(new LayarMenuUtama());
+		// setScreen(new LayarPermainan());
 	}
 
 	/*
