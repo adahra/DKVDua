@@ -1,6 +1,5 @@
 package org.tego.android.dkvdua.gamescreen;
 
-import org.tego.android.dkvdua.gameobject.Level;
 import org.tego.android.dkvdua.gameworld.GameRenderer;
 import org.tego.android.dkvdua.gameworld.GameWorld;
 import org.tego.android.dkvdua.helper.InputHandler;
