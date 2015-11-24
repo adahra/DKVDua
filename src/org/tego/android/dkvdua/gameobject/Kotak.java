@@ -19,9 +19,6 @@
 
 package org.tego.android.dkvdua.gameobject;
 
-import org.tego.android.dkvdua.utilitas.AssetLoader;
-
-
 /**
  * Kelas yang digunakan untuk mengatur tampilan dari kotak, mengatur peletakan
  * dari kotak
@@ -30,18 +27,21 @@ import org.tego.android.dkvdua.utilitas.AssetLoader;
  *
  */
 public class Kotak extends Obyek {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5657594727623382988L;
 	public static final String TAG = Kotak.class.getSimpleName();
 	
 	public Kotak(int x, int y) {
 		super(x, y);
 		// TODO Auto-generated constructor stub
-		this.setTrGambar(AssetLoader.gambarKotak);
 	}
 	
 	public void bergerak(int x, int y) {
-		int nx = (int) this.getPosisiX() + x;
-		int ny = (int) this.getPosisiY() + y;
-		this.setPosisiX(nx);
-		this.setPosisiY(ny);
+		int nx = (int) this.getX() + x;
+		int ny = (int) this.getY() + y;
+		this.setX(nx);
+		this.setY(ny);
 	}
 }
