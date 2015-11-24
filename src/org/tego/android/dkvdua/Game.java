@@ -8,11 +8,6 @@ import javax.microedition.khronos.opengles.GL10;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 /**
  * Kelas yang digunakan untuk mengatur/membentuk aplikasi permainan
@@ -22,11 +17,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
  */
 public class Game implements ApplicationListener {
 	private OrthographicCamera camera;
-	private SpriteBatch batch;
-	private Texture texture;
-	private TextureRegion textureRegion;
-	private Sprite sprite;
-
+	
 	private float SCREEN_WIDTH = 320;
 	private float SCREEN_HEIGHT = 480;
 
