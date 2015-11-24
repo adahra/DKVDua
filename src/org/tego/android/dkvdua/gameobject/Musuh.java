@@ -19,6 +19,8 @@
 
 package org.tego.android.dkvdua.gameobject;
 
+import com.badlogic.gdx.math.MathUtils;
+
 /**
  * Kelas yang digunakan untuk menangani pergerakah musuh, penampakan musuh, dan
  * semua kecerdasan yang ada pada musuh
@@ -27,21 +29,31 @@ package org.tego.android.dkvdua.gameobject;
  *
  */
 public class Musuh extends Obyek {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5548666305239189785L;
 	public static final String TAG = Musuh.class.getSimpleName();
-	
+	private Angka angka;
+	private static int acakAngka;
+
 	public Musuh(int x, int y) {
 		super(x, y);
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	public void bergerak(int x, int y) {
-		int nx = (int) this.getPosisiX() + x;
-		int ny = (int) this.getPosisiY() + y;
-		this.setPosisiX(nx);
-		this.setPosisiY(ny);
+		int nx = (int) this.getX() + x;
+		int ny = (int) this.getY() + y;
+		this.setX(nx);
+		this.setY(ny);
 	}
-	
-	public void kejarPemain() {
-		
+
+	public void jatuhkanAngka() {
+		acakAngka = MathUtils.random(1, 50);
+		if (acakAngka < 1) {
+			this.angka.setX(this.getX());
+			this.angka.setY(this.getY());
+		}
 	}
 }
