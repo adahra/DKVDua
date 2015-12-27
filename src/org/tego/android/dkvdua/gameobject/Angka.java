@@ -32,9 +32,36 @@ public class Angka extends Obyek {
 	 */
 	private static final long serialVersionUID = 3871739236764210722L;
 	public static final String TAG = Angka.class.getSimpleName();
-	
-	public Angka(int x, int y) {
+	public static final int SATU = 1;
+	public static final int DUA = 2;
+	public static final int TIGA = 3;
+	public static final int EMPAT = 4;
+	public static final int LIMA = 5;
+	public static final int ENAM = 6;
+	public static final int TUJUH = 7;
+	public static final int DELAPAN = 8;
+	public static final int SEMBILAN = 9;
+	private int angka = 0;
+	private int tipeAngka;
+
+	public Angka(int x, int y, int tipeAngka) {
 		super(x, y);
 		// TODO Auto-generated constructor stub
+	}
+
+	public int getTipeAngka() {
+		return this.tipeAngka;
+	}
+
+	public int getAngka() {
+		return this.angka;
+	}
+
+	public void setTipeAngka(int tipeAngka) {
+		this.tipeAngka = tipeAngka;
+	}
+
+	public void setAngka(int angka) {
+		this.angka = angka;
 	}
 }
