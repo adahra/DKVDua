@@ -32,6 +32,8 @@ public class Pemain extends Obyek {
 	 */
 	private static final long serialVersionUID = -6180174740100001866L;
 	public static final String TAG = Pemain.class.getSimpleName();
+	public int nyawa = 3;
+	public int nyawaMaksimal = 3;
 
 	public Pemain(int x, int y) {
 		super(x, y);
