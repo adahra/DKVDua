@@ -1,11 +1,12 @@
 package org.tego.android.dkvdua.gamescreen;
 
-import org.tego.android.dkvdua.gameworld.GameRenderer;
-import org.tego.android.dkvdua.gameworld.GameWorld;
-import org.tego.android.dkvdua.helper.InputHandler;
+import org.tego.android.dkvdua.DKVDuaMain;
+import org.tego.android.dkvdua.gameworld.DuniaPermainan;
+import org.tego.android.dkvdua.gameworld.RendDuniaPermainan;
+import org.tego.android.dkvdua.helper.PenangananKontrol;
+import org.tego.android.dkvdua.layar.LayarAbstrak;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 
 /**
  * Kelas yang digunakan untuk mengatur penggambaran layar dari permainan
@@ -13,13 +14,15 @@ import com.badlogic.gdx.Screen;
  * @author blackshadow
  *
  */
-public class LayarPermainan implements Screen {
+public class LayarPermainan extends LayarAbstrak {
 	private static final String TAG = LayarPermainan.class.getSimpleName();
 
-	private GameWorld world;
-	private GameRenderer renderer;
-
-	public LayarPermainan() {
+	private DuniaPermainan world;
+	private RendDuniaPermainan renderer;
+	private DKVDuaMain game;
+	
+	public LayarPermainan(DKVDuaMain game) {
+		super(game);
 		float screenWidth = Gdx.graphics.getWidth();
 		float screenHeight = Gdx.graphics.getHeight();
 		float gameWidth = 192;
@@ -27,11 +30,13 @@ public class LayarPermainan implements Screen {
 		// float gameHeight = (screenHeight / screenWidth) * gameWidth;
 		float gameHeight = 272;
 
-		world = new GameWorld(gameWidth, gameHeight);
-		Gdx.input.setInputProcessor(new InputHandler(world, screenWidth
+		this.setGame(game);
+		
+		world = new DuniaPermainan(gameWidth, gameHeight);
+		Gdx.input.setInputProcessor(new PenangananKontrol(world, screenWidth
 				/ gameWidth, screenHeight / gameHeight));
-		renderer = new GameRenderer(world, (int) gameWidth, (int) gameHeight);
-
+		renderer = new RendDuniaPermainan(world, (int) gameWidth, (int) gameHeight);
+		
 		Gdx.app.log(TAG, "Lebar Layar HP : " + screenWidth
 				+ " \nTinggi Layar HP : " + screenHeight);
 	}
@@ -64,7 +69,7 @@ public class LayarPermainan implements Screen {
 	 */
 	@Override
 	public void show() {
-
+		
 	}
 
 	/*
@@ -105,5 +110,13 @@ public class LayarPermainan implements Screen {
 	@Override
 	public void dispose() {
 
+	}
+
+	public DKVDuaMain getGame() {
+		return game;
+	}
+
+	public void setGame(DKVDuaMain game) {
+		this.game = game;
 	}
 }
