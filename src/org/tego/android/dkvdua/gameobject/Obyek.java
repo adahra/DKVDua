@@ -14,7 +14,7 @@ public class Obyek extends Rectangle {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 2146870618165367924L;
+	private static final long serialVersionUID = 2114881509840914039L;
 
 	public static final String TAG = Obyek.class.getSimpleName();
 
@@ -32,14 +32,6 @@ public class Obyek extends Rectangle {
 		this.setHeight(JARAK);
 	}
 
-	public void setX(int x) {
-		this.x = x;
-	}
-	
-	public void setY(int y) {
-		this.y = y;
-	}
-	
 	public TextureRegion getTrGambar() {
 		return trGambar;
 	}
@@ -49,22 +41,22 @@ public class Obyek extends Rectangle {
 	}
 
 	public boolean isTabrakanKiri(Obyek obyek) {
-		return ((this.x - JARAK) == obyek.x)
-				&& (this.y == obyek.y);
+		return ((this.getX() - JARAK) == obyek.getX())
+				&& (this.getY() == obyek.getY());
 	}
 
 	public boolean isTabrakanKanan(Obyek obyek) {
-		return ((this.x + JARAK) == obyek.x)
-				&& (this.y == obyek.y);
+		return ((this.getX() + JARAK) == obyek.getX())
+				&& (this.getY() == obyek.getY());
 	}
 
 	public boolean isTabrakanAtas(Obyek obyek) {
-		return ((this.y - JARAK) == obyek.y)
-				&& (this.x == obyek.x);
+		return ((this.getY() - JARAK) == obyek.getY())
+				&& (this.getX() == obyek.getX());
 	}
 
 	public boolean isTabrakanBawah(Obyek obyek) {
-		return ((this.y + JARAK) == obyek.y)
-				&& (this.x == obyek.x);
+		return ((this.getY() + JARAK) == obyek.getY())
+				&& (this.getX() == obyek.getX());
 	}
 }
