@@ -1,8 +1,10 @@
 package org.tego.android.dkvdua;
 
-import org.tego.android.dkvdua.gamescreen.Game;
-import org.tego.android.dkvdua.layar.LayarMenuUtama;
-import org.tego.android.dkvdua.utilitas.AssetLoader;
+import org.tego.android.dkvdua.gamescreen.Permainan;
+import org.tego.android.dkvdua.layar.LayarPemuat;
+import org.tego.android.dkvdua.utilitas.PemuatAktiva;
+
+import com.badlogic.gdx.assets.AssetManager;
 
 /**
  * Kelas utama dari aplikasi
@@ -10,28 +12,28 @@ import org.tego.android.dkvdua.utilitas.AssetLoader;
  * @author blackshadow
  *
  */
-public class DKVDuaMain extends Game {
+public class DKVDuaMain extends Permainan {
+	public AssetManager manager = new AssetManager();
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.nauin.android.dkvdua.gamescreen.Game#create()
+	 * @see org.tego.android.dkvdua.gamescreen.Permainan#create()
 	 */
 	@Override
 	public void create() {
-		AssetLoader.load();
-		setScreen(new LayarMenuUtama());
-		// setScreen(new LayarPermainan());
+		PemuatAktiva.load();
+		this.setScreen(new LayarPemuat(this));
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.nauin.android.dkvdua.gamescreen.Game#dispose()
+	 * @see org.tego.android.dkvdua.gamescreen.Permainan#dispose()
 	 */
 	@Override
 	public void dispose() {
 		super.dispose();
-		AssetLoader.dispose();
+		PemuatAktiva.dispose();
 	}
 }
