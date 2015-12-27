@@ -32,14 +32,17 @@ public class Musuh extends Obyek {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 5548666305239189785L;
+	private static final long serialVersionUID = 315584608560158430L;
 	public static final String TAG = Musuh.class.getSimpleName();
 	private Angka angka;
 	private static int acakAngka;
+	private float kecX;
+	private float kecY;
+	private float rotasi;
 
 	public Musuh(int x, int y) {
 		super(x, y);
-		// TODO Auto-generated constructor stub
+		// TODO Auto-generated constructor stub		
 	}
 
 	public void bergerak(int x, int y) {
@@ -53,7 +56,23 @@ public class Musuh extends Obyek {
 		acakAngka = MathUtils.random(1, 50);
 		if (acakAngka < 1) {
 			this.angka.setX(this.getX());
-			this.angka.setY(this.getY());
+			this.angka.setY(this.getX());
 		}
+	}
+	
+	public void kejarPemain(Obyek pemain, float waktuDelta) {
+		int tx = (int) this.getX() - (int) pemain.getX();
+		int ty = (int) this.getY() - (int) pemain.getY();
+		
+		rotasi = (float) (MathUtils.atan2(ty, tx) * 180 / MathUtils.PI);
+		kecX = waktuDelta * (90 - Math.abs(rotasi)) / 90;
+		
+		if (rotasi < 0) {
+			kecY = -waktuDelta + Math.abs(kecX);
+		} else {
+			kecY = waktuDelta - Math.abs(kecX);
+		}
+		
+		this.bergerak((int)kecX, (int)kecY);
 	}
 }
