@@ -30,20 +30,8 @@ public class Dinding extends Obyek {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -1256442104758377591L;
-
+	private static final long serialVersionUID = -656316615834431472L;
 	public static final String TAG = Dinding.class.getSimpleName();
-	
-	public static int UBIN_POJOK_KIRI_ATAS = 1;
-	public static int UBIN_ATAS = 2;
-	public static int UBIN_POJOK_KANAN_ATAS = 3;
-	public static int UBIN_KIRI = 4;
-	public static int UBIN = 5;
-	public static int UBIN_KANAN = 6;
-	public static int UBIN_POJOK_KIRI_BAWAH = 7;
-	public static int UBIN_BAWAH = 8;
-	public static int UBIN_POJOK_KANAN_BAWAH = 9;
-	
 	public int tipeDinding;
 	
 	public Dinding(int x, int y) {
