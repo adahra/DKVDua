@@ -1,16 +1,12 @@
 package org.tego.android.dkvdua.layar;
 
-import java.util.List;
-
-import javax.microedition.khronos.opengles.GL10;
-
-import org.tego.android.dkvdua.gameworld.GameWorld;
-import org.tego.android.dkvdua.helper.InputHandler;
-import org.tego.android.dkvdua.ui.Tombol;
-import org.tego.android.dkvdua.utilitas.AssetLoader;
+import org.tego.android.dkvdua.DKVDuaMain;
+import org.tego.android.dkvdua.gameobject.PembuatArena;
+import org.tego.android.dkvdua.utilitas.PemuatAktiva;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /**
@@ -19,19 +15,23 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  * @author blackshadow
  *
  */
-public class LayarMenuUtama implements Screen {
-	private SpriteBatch mSpriteBatch;
-	// private Sprite mSprite;
-	private GameWorld mGameWorld;
-	// private GameRenderer mGameRenderer;
-	private float lebar = Gdx.graphics.getWidth();
-	private float tinggi = Gdx.graphics.getHeight();
-	private List<Tombol> tombolMenu;
+public class LayarMenuUtama extends LayarAbstrak {
+	private final static String TAG = LayarMenuUtama.class.getSimpleName();
+
+	private SpriteBatch batcher;
+	private OrthographicCamera camera;
+
+	private int lebarLayar;
+	private int tinggiLayar;
+
+	private int lebarDuniaGim;
+	private int tinggiDuniaGim;
 
 	/**
 	 * Konstruktor dari kelas
 	 */
-	public LayarMenuUtama() {
+	public LayarMenuUtama(DKVDuaMain game) {
+		super(game);
 		buatLayar();
 	}
 
@@ -40,34 +40,22 @@ public class LayarMenuUtama implements Screen {
 	 * ke layar sehingga sedemikian rupa membentuk layar menu utama
 	 */
 	public void buatLayar() {
-		float gameWidth = 136;
-		float gameHeight = tinggi / (lebar / gameWidth);
+		lebarLayar = Gdx.graphics.getWidth();
+		tinggiLayar = Gdx.graphics.getHeight();
+		lebarDuniaGim = 192;
+		tinggiDuniaGim = 272;
 
-		mGameWorld = new GameWorld(gameWidth, gameHeight);
-		Gdx.input
-				.setInputProcessor(new InputHandler(mGameWorld, lebar, tinggi));
-		// mGameRenderer = new GameRenderer(mGameWorld, (int) gameWidth, (int)
-		// gameHeight);
-		mSpriteBatch = new SpriteBatch();
+		camera = new OrthographicCamera();
+		camera.setToOrtho(false, lebarDuniaGim, tinggiDuniaGim);
 
-		this.tombolMenu = ((InputHandler) Gdx.input.getInputProcessor())
-				.getTombolMenu();
+		batcher = new SpriteBatch();
+		batcher.setProjectionMatrix(camera.combined);
 
-		AssetLoader.dkvduaMusicMysteryBox.play();
-	}	
-	
-	public void render() {
-		Gdx.gl.glClearColor(0.2f, 0.2f, 0.2f, 1);
-		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		mSpriteBatch.begin();
-		mSpriteBatch.draw(AssetLoader.dkvduaPopup, 0, 0, lebar, tinggi);
-		mSpriteBatch.draw(AssetLoader.dkvduaTitle, 35, 550, 400, 178);
+		Gdx.app.log(TAG, "Lebar Layar : " + lebarDuniaGim
+				+ " \nTinggi Layar : " + tinggiDuniaGim);
 
-		for (Tombol tombol : tombolMenu) {
-			tombol.gambar(mSpriteBatch);
-		}
-
-		mSpriteBatch.end();
+		Gdx.app.log(TAG, "Lebar Layar HP : " + lebarLayar
+				+ " \nTinggi Layar HP : " + tinggiLayar);
 	}
 
 	/*
@@ -87,7 +75,7 @@ public class LayarMenuUtama implements Screen {
 	 */
 	@Override
 	public void pause() {
-		AssetLoader.dkvduaMusicMysteryBox.pause();
+		PemuatAktiva.dkvduaMusicMysteryBox.pause();
 	}
 
 	/*
@@ -106,34 +94,47 @@ public class LayarMenuUtama implements Screen {
 	 */
 	@Override
 	public void dispose() {
-		AssetLoader.dkvduaMusicMysteryBox.dispose();
+		PemuatAktiva.dkvduaMusicMysteryBox.dispose();
 	}
 
 	@Override
 	public void render(float delta) {
 		// TODO Auto-generated method stub
+		Gdx.gl.glClearColor(0.2f, 0.2f, 0.2f, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		batcher.begin();
+		batcher.draw(PemuatAktiva.dkvduaPopup, 0, 0, lebarDuniaGim,
+				tinggiDuniaGim);
+		batcher.draw(PemuatAktiva.dkvduaTitle, (lebarDuniaGim / 4),
+				(tinggiDuniaGim / 2) + 50, PemuatAktiva.dkvduaTitle.getWidth(),
+				PemuatAktiva.dkvduaTitle.getHeight());
+		PemuatAktiva.dkvduaFont.draw(batcher, "Dorong Kotak", lebarLayar,
+				tinggiLayar);
+		batcher.end();
 		
+		if (Gdx.input.isTouched()) {
+			game.setScreen(new PembuatArena(game));
+		}
 	}
 
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
-		
+		Gdx.gl.glClearColor(0.2f, 0.2f, 0.2f, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		batcher.begin();
+		batcher.draw(PemuatAktiva.dkvduaPopup, 0, 0, lebarLayar, tinggiLayar);
+		batcher.draw(PemuatAktiva.dkvduaTitle, 35, 550, 400, 178);
+		PemuatAktiva.dkvduaFont.draw(batcher, "Dorong Kotak", lebarLayar / 2,
+				tinggiLayar / 2);
+		batcher.end();
+
+		PemuatAktiva.dkvduaMusicMysteryBox.play();
 	}
 
 	@Override
 	public void hide() {
 		// TODO Auto-generated method stub
-		
+		PemuatAktiva.dkvduaMusicMysteryBox.stop();
 	}
-
-	/**
-	 * Method yang digunakan untuk mengatur event dari tombol menu
-	 */
-	/*
-	 * private void tombolMenu() {
-	 * 
-	 * }
-	 */
-
 }
