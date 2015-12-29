@@ -58,7 +58,7 @@ public class PemuatAktiva {
 	public static Texture gambarUIWindowStage;
 	public static Texture gambarUIWindowTombolNormal;
 	public static Texture gambarUIWindowTombolDiTekan;
-	
+
 	public static TextureRegion gambarPemainDepan;
 	public static TextureRegion gambarPemainBelakang;
 	public static TextureRegion gambarPemainKiri;
@@ -96,6 +96,7 @@ public class PemuatAktiva {
 	public static Sound dkvduaSoundLaser;
 	public static Sound dkvduaSoundMonsterCome;
 	public static Sound dkvduaSoundPickItem;
+	public static Sound soundClick;
 
 	public static Music dkvduaMusicHappyEnding;
 	public static Music dkvduaMusicKremKaakkuja;
@@ -122,10 +123,12 @@ public class PemuatAktiva {
 	}
 
 	private static void muatGambarUIWindow() {
-		gambarUIWindowBackground = new Texture(Gdx.files.internal("data/gfx/ui/window/blue_panel.png"));
-		gambarUIWindowBackground.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+		gambarUIWindowBackground = new Texture(
+				Gdx.files.internal("data/gfx/ui/window/blue_panel.png"));
+		gambarUIWindowBackground.setFilter(TextureFilter.Nearest,
+				TextureFilter.Nearest);
 	}
-	
+
 	private static void muatGambarHati() {
 		dkvduaIcon = new Texture(Gdx.files.internal("data/gfx/dkvduaIcon.png"));
 		dkvduaIcon.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
@@ -135,9 +138,10 @@ public class PemuatAktiva {
 	}
 
 	private static void muatGambarMusuh() {
-		dkvduaCharacter = new Texture(Gdx.files.internal("data/gfx/dkvduaCharacter.png"));
+		dkvduaCharacter = new Texture(
+				Gdx.files.internal("data/gfx/dkvduaCharacter.png"));
 		dkvduaCharacter.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-		
+
 		gambarMusuh = new TextureRegion(dkvduaCharacter, 96, 64, 16, 16);
 		gambarMusuh.flip(false, true);
 	}
@@ -266,6 +270,8 @@ public class PemuatAktiva {
 				.internal("data/sfx/dkvduaMonsterCome.ogg"));
 		dkvduaSoundPickItem = Gdx.audio.newSound(Gdx.files
 				.internal("data/sfx/dkvduaPickItem.ogg"));
+		soundClick = Gdx.audio.newSound(Gdx.files
+				.internal("data/sfx/switch2.ogg"));
 	}
 
 	private static void dengarMusik() {
@@ -336,5 +342,6 @@ public class PemuatAktiva {
 		dkvduaFontShadow.dispose();
 
 		dkvduaMusicKremKaakkuja.dispose();
+		soundClick.dispose();
 	}
 }
