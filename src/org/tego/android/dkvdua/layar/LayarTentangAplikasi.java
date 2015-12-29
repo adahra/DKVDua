@@ -1,18 +1,20 @@
 package org.tego.android.dkvdua.layar;
 
-import com.badlogic.gdx.Screen;
+import org.tego.android.dkvdua.DKVDuaMain;
 
 /**
  * Kelas yang digunakan untuk menggambar layar Tentang Aplikasi
+ * 
  * @author blackshadow
  *
  */
-public class LayarTentangAplikasi implements Screen {
+public class LayarTentangAplikasi extends LayarAbstrak {
 
 	/**
 	 * Konstruktor kelas
 	 */
-	public LayarTentangAplikasi() {
+	public LayarTentangAplikasi(DKVDuaMain game) {
+		super(game);
 	}
 
 	/*

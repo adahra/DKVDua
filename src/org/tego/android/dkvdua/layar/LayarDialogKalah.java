@@ -5,6 +5,7 @@ package org.tego.android.dkvdua.layar;
 
 import org.tego.android.dkvdua.DKVDuaMain;
 import org.tego.android.dkvdua.gameobject.PembuatArena;
+import org.tego.android.dkvdua.utilitas.PemuatAktiva;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
@@ -30,7 +31,6 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 public class LayarDialogKalah extends LayarAbstrak {
 	private static boolean tampilDialog;
 	private Stage stage = null;
-	
 
 	/**
 	 * 
@@ -46,12 +46,14 @@ public class LayarDialogKalah extends LayarAbstrak {
 		Skin skin = new Skin();
 		skin.addRegions(textureAtlas);
 
-		BitmapFont bitmapFont;
-		bitmapFont = new BitmapFont(Gdx.files.internal("data/gfx/font/dkvduafont/text.fnt"),
-				Gdx.files.internal("data/gfx/font/dkvduafont/text.png"), false);
+		BitmapFont bitmapFont = new BitmapFont(
+				Gdx.files.internal("data/gfx/font/kenvectorFutureThin.fnt"),
+				Gdx.files.internal("data/gfx/font/kenvectorFutureThin.png"),
+				false);
 
 		Window.WindowStyle windowStyle = new Window.WindowStyle();
 		windowStyle.titleFont = bitmapFont;
+		windowStyle.stageBackground = skin.getDrawable("background");
 		NinePatch background = skin.getPatch("background");
 		windowStyle.background = new NinePatchDrawable(background);
 
@@ -71,11 +73,13 @@ public class LayarDialogKalah extends LayarAbstrak {
 			protected void result(Object object) {
 				boolean keluar = (Boolean) object;
 				if (keluar) {
+					PemuatAktiva.soundClick.play();
 					game.setScreen(new PembuatArena(game));
 				} else {
+					PemuatAktiva.soundClick.play();
 					game.setScreen(new LayarMenuUtama(game));
 				}
-				
+
 				tampilDialog = false;
 			}
 
@@ -107,7 +111,7 @@ public class LayarDialogKalah extends LayarAbstrak {
 	@Override
 	public void render(float delta) {
 		// TODO Auto-generated method stub
-		Gdx.gl.glClearColor(0, 0, 0, 0);
+		Gdx.gl.glClearColor(1, 1, 1, 0);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		stage.act(delta);
@@ -137,7 +141,8 @@ public class LayarDialogKalah extends LayarAbstrak {
 		InputMultiplexer inputMultiplexer = new InputMultiplexer();
 		inputMultiplexer.addProcessor(stage);
 		Gdx.input.setInputProcessor(inputMultiplexer);
-		
+		Gdx.input.setCatchBackKey(true);
+
 		tampilDialogKalah(stage);
 	}
 
@@ -183,5 +188,6 @@ public class LayarDialogKalah extends LayarAbstrak {
 	public void dispose() {
 		// TODO Auto-generated method stub
 		this.dispose();
+		stage.dispose();
 	}
 }

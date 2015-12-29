@@ -1,11 +1,10 @@
 package org.tego.android.dkvdua.layar;
 
 import org.tego.android.dkvdua.DKVDuaMain;
+import org.tego.android.dkvdua.utilitas.PemuatAktiva;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -21,17 +20,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 
-public class LayarDialogKeluar implements Screen, InputProcessor {
-
-	private DKVDuaMain permainan;
+public class LayarDialogKeluar extends LayarAbstrak {
 	private static boolean tampilDialogKeluar;
 	public Stage stage;
-	private BitmapFont bitmapFont;
 
 	public LayarDialogKeluar(DKVDuaMain permainan) {
-		this.setPermainan(permainan);
-		bitmapFont = new BitmapFont(Gdx.files.internal("data/gfx/font/chancery.fnt"),
-				Gdx.files.internal("data/gfx/font/chancery.png"), false);
+		super(permainan);
 	}
 
 	public void tampilDialogKeluar(Stage stage) {
@@ -40,8 +34,14 @@ public class LayarDialogKeluar implements Screen, InputProcessor {
 		Skin skin = new Skin();
 		skin.addRegions(textureAtlas);
 
+		BitmapFont bitmapFont = new BitmapFont(
+				Gdx.files.internal("data/gfx/font/kenvectorFutureThin.fnt"),
+				Gdx.files.internal("data/gfx/font/kenvectorFutureThin.png"),
+				false);
+
 		Window.WindowStyle windowStyle = new Window.WindowStyle();
 		windowStyle.titleFont = bitmapFont;
+		windowStyle.stageBackground = skin.getDrawable("background");
 		NinePatch background = skin.getPatch("background");
 		windowStyle.background = new NinePatchDrawable(background);
 
@@ -52,7 +52,7 @@ public class LayarDialogKeluar implements Screen, InputProcessor {
 
 		Label.LabelStyle labelStyle = new Label.LabelStyle(bitmapFont,
 				Color.WHITE);
-		Label label = new Label("Anda yakin mau keluar?", labelStyle);
+		Label label = new Label("Anda yakin\nmau keluar?", labelStyle);
 		label.setAlignment(Align.center);
 
 		Dialog dialog = new Dialog("", windowStyle) {
@@ -60,11 +60,15 @@ public class LayarDialogKeluar implements Screen, InputProcessor {
 			@Override
 			protected void result(Object object) {
 				boolean keluar = (Boolean) object;
+				
 				if (keluar) {
+					PemuatAktiva.soundClick.play();
 					Gdx.app.exit();
 				} else {
-					remove();
+					PemuatAktiva.soundClick.play();
+					game.setScreen(new LayarMenuUtama(game));
 				}
+
 				tampilDialogKeluar = false;
 			}
 
@@ -89,12 +93,12 @@ public class LayarDialogKeluar implements Screen, InputProcessor {
 
 	@Override
 	public void dispose() {
-
+		stage.dispose();
 	}
 
 	@Override
 	public void render(float delta) {
-		Gdx.gl.glClearColor(0, 0, 0, 0);
+		Gdx.gl.glClearColor(1, 3, 5, 0);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		stage.act(delta);
@@ -106,9 +110,10 @@ public class LayarDialogKeluar implements Screen, InputProcessor {
 		Gdx.input.setCatchBackKey(true);
 		stage = new Stage(new StretchViewport(480, 640));
 		InputMultiplexer inputMultiplexer = new InputMultiplexer();
-		inputMultiplexer.addProcessor(this);
 		inputMultiplexer.addProcessor(stage);
 		Gdx.input.setInputProcessor(inputMultiplexer);
+
+		tampilDialogKeluar(stage);
 	}
 
 	@Override
@@ -130,54 +135,4 @@ public class LayarDialogKeluar implements Screen, InputProcessor {
 	public void hide() {
 
 	}
-
-	@Override
-	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		return false;
-	}
-
-	@Override
-	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		return false;
-	}
-
-	@Override
-	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		return false;
-	}
-
-	@Override
-	public boolean keyDown(int keycode) {
-		return false;
-	}
-
-	@Override
-	public boolean keyTyped(char character) {
-		return false;
-	}
-
-	@Override
-	public boolean keyUp(int keycode) {
-		tampilDialogKeluar(stage);
-		return false;
-	}
-
-	@Override
-	public boolean mouseMoved(int screenX, int screenY) {
-		return false;
-	}
-
-	@Override
-	public boolean scrolled(int amount) {
-		return false;
-	}
-
-	public DKVDuaMain getPermainan() {
-		return permainan;
-	}
-
-	public void setPermainan(DKVDuaMain permainan) {
-		this.permainan = permainan;
-	}
-
 }

@@ -38,6 +38,7 @@ public class LayarPemuat extends LayarAbstrak {
 	public void show() {
 		// Tell the manager to load assets for the loading screen
 		game.manager.load("data/loading.pack", TextureAtlas.class);
+		game.manager.load("data/dialog.atlas", TextureAtlas.class);
 		// Wait until they are finished loading
 		game.manager.finishLoading();
 
@@ -47,12 +48,14 @@ public class LayarPemuat extends LayarAbstrak {
 		// Get our textureatlas from the manager
 		TextureAtlas atlas = game.manager.get("data/loading.pack",
 				TextureAtlas.class);
+		TextureAtlas textureAtlas = game.manager.get("data/dialog.atlas",
+				TextureAtlas.class);
 
 		// Grab the regions from the atlas and create some images
 		// logo = new Image(atlas.findRegion("libgdx-logo"));
 		loadingFrame = new Image(atlas.findRegion("loading-frame"));
 		loadingBarHidden = new Image(atlas.findRegion("loading-bar-hidden"));
-		screenBg = new Image(atlas.findRegion("screen-bg"));
+		screenBg = new Image(textureAtlas.findRegion("background"));
 		loadingBg = new Image(atlas.findRegion("loading-frame-bg"));
 
 		// Add the loading bar animation
@@ -171,6 +174,6 @@ public class LayarPemuat extends LayarAbstrak {
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
-
+		stage.dispose();
 	}
 }
