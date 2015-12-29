@@ -24,17 +24,33 @@ import java.util.ArrayList;
 import org.tego.android.dkvdua.DKVDuaMain;
 import org.tego.android.dkvdua.layar.LayarAbstrak;
 import org.tego.android.dkvdua.layar.LayarDialogKalah;
+import org.tego.android.dkvdua.layar.LayarDialogMenang;
+import org.tego.android.dkvdua.layar.LayarMenuUtama;
 import org.tego.android.dkvdua.utilitas.MetodePengacakan;
 import org.tego.android.dkvdua.utilitas.PemuatAktiva;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldStyle;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 
 /**
  * Kelas yang digunakan untuk membuat level pada permainan
@@ -74,16 +90,28 @@ public class PembuatArena extends LayarAbstrak {
 	private boolean kotakSelesai = false;
 	private boolean pemainDiAtasLubang = false;
 	private boolean tombolDiTekan = false;
+	private boolean jawabanBenar = false;
 
 	private int nilaiSatu;
 	private int nilaiDua;
-	private int angkaAcakSatu;
-	private int angkaAcakDua;
+	// private int angkaAcakSatu;
+	// private int angkaAcakDua;
 	private int hasil;
 
 	private OrthographicCamera camera;
 	private SpriteBatch batcher;
 	private ShapeRenderer shapeRenderer;
+	private LabelStyle labelStyle;
+	private Label lblPertanyaan;
+	private TextFieldStyle textFieldStyle;
+	private TextField txtJawaban;
+	private InputMultiplexer inputMultiplexer;
+	private BitmapFont bitmapFont;
+	private Skin skin;
+	private Table table;
+	private Table tTable;
+	private Texture textureTextField;
+	private Stage stage;
 
 	public int[][] petaLevel = new int[][] {
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -140,6 +168,8 @@ public class PembuatArena extends LayarAbstrak {
 		initPertanyaan();
 		pengaturanLayar();
 
+		pemain.setNyawa(3);
+
 		if (kotakSelesai) {
 			kotakSelesai = false;
 		}
@@ -158,17 +188,11 @@ public class PembuatArena extends LayarAbstrak {
 		batcher.setProjectionMatrix(camera.combined);
 		shapeRenderer = new ShapeRenderer();
 		shapeRenderer.setProjectionMatrix(camera.combined);
-
-		Gdx.app.log(TAG, "Lebar Layar : " + lebarDuniaGim
-				+ " \nTinggi Layar : " + tinggiDuniaGim);
-
-		Gdx.app.log(TAG, "Lebar Layar HP : " + lebarLayar
-				+ " \nTinggi Layar HP : " + tinggiLayar);
 	}
 
 	private void initPertanyaan() {
-		angkaAcakSatu = MathUtils.random(1, 9);
-		angkaAcakDua = MathUtils.random(1, 9);
+		// angkaAcakSatu = MathUtils.random(1, 9);
+		// angkaAcakDua = MathUtils.random(1, 9);
 		nilaiSatu = MathUtils.random(1, 9);
 		nilaiDua = MathUtils.random(1, 9);
 		hasil = nilaiSatu + nilaiDua;
@@ -190,11 +214,11 @@ public class PembuatArena extends LayarAbstrak {
 	}
 
 	private void gambarHati(SpriteBatch sbGambar) {
-		float x = lebarDuniaGim - 51 - pemain.nyawaMaksimal;
+		float x = lebarDuniaGim - 51 - pemain.getNyawaMaksimal();
 		float y = 0;
 
-		for (int i = 0; i < pemain.nyawaMaksimal; i++) {
-			if (pemain.nyawa <= i) {
+		for (int i = 0; i < pemain.getNyawaMaksimal(); i++) {
+			if (pemain.getNyawa() <= i) {
 				sbGambar.setColor(0.2f, 0.2f, 0.2f, 0.2f);
 			}
 
@@ -203,30 +227,33 @@ public class PembuatArena extends LayarAbstrak {
 		}
 	}
 
-	private void gambarPertanyaan(SpriteBatch sbGambar) {
-		PemuatAktiva.dkvduaFont.draw(sbGambar, nilaiSatu + " + " + nilaiDua
-				+ " = ", 1, 1);
-	}
+	// private void gambarPertanyaan(SpriteBatch sbGambar) {
+	// PemuatAktiva.dkvduaFont.draw(sbGambar, nilaiSatu + " + " + nilaiDua
+	// + " = ", 1, 1);
+	// }
 
-	private void gambarAngka(SpriteBatch sbGambar) {
-		// angkaSatu.setAngka(angkaAcakSatu);
-		// angkaSatu.render(sbGambar);
-		/*
-		 * angkaJawaban = new Angka(4, 4, Integer.toString(hasil));
-		 * angkaJawaban.setSbGambar(sbGambar); angkaDua = new Angka(6, 4,
-		 * Integer.toString(angkaAcakDua)); angkaDua.setSbGambar(sbGambar);
-		 */
-		// aAngka.add(angkaDua);
-		// aAngka.add(angkaJawaban);
-		// aAngka.add(angkaSatu);
+	// private void gambarAngka(SpriteBatch sbGambar) {
+	// angkaSatu.setAngka(angkaAcakSatu);
+	// angkaSatu.render(sbGambar);
+	/*
+	 * angkaJawaban = new Angka(4, 4, Integer.toString(hasil));
+	 * angkaJawaban.setSbGambar(sbGambar); angkaDua = new Angka(6, 4,
+	 * Integer.toString(angkaAcakDua)); angkaDua.setSbGambar(sbGambar);
+	 */
+	// aAngka.add(angkaDua);
+	// aAngka.add(angkaJawaban);
+	// aAngka.add(angkaSatu);
 
-		PemuatAktiva.dkvduaFont.draw(sbGambar, Integer.toString(angkaAcakSatu),
-				32, 64);
-		PemuatAktiva.dkvduaFont.draw(sbGambar, Integer.toString(hasil), 64, 64);
-		PemuatAktiva.dkvduaFont.draw(sbGambar, Integer.toString(angkaAcakDua),
-				96, 64);
+	// PemuatAktiva.dkvduaFont.draw(sbGambar,
+	// Integer.toString(angkaAcakSatu),
+	// 32, 64);
+	// PemuatAktiva.dkvduaFont.draw(sbGambar, Integer.toString(hasil), 64,
+	// 64);
+	// PemuatAktiva.dkvduaFont.draw(sbGambar,
+	// Integer.toString(angkaAcakDua),
+	// 96, 64);
 
-	}
+	// }
 
 	private void gambarDunia(SpriteBatch sbGambar) {
 		ArrayList<Obyek> dunia = new ArrayList<Obyek>();
@@ -234,7 +261,10 @@ public class PembuatArena extends LayarAbstrak {
 		dunia.addAll(aLantai);
 		dunia.addAll(aLubang);
 		dunia.addAll(aMusuh);
-		// dunia.addAll(aKotak);
+		if (jawabanBenar) {
+			dunia.addAll(aKotak);
+		}
+
 		dunia.addAll(aAngka);
 		dunia.add(pemain);
 
@@ -261,9 +291,8 @@ public class PembuatArena extends LayarAbstrak {
 			for (int j = 0; j < jumlahLubang; j++) {
 				if (pemain.getX() == lubang.getX()) {
 					if (pemain.getY() == lubang.getY()) {
-						pemain.nyawa -= 1;
+						pemain.setNyawa(pemain.getNyawa() - 1);
 						pemainDiAtasLubang = true;
-						Gdx.app.log(TAG, "Pemain berada diatas lubang");
 					}
 				}
 			}
@@ -276,9 +305,9 @@ public class PembuatArena extends LayarAbstrak {
 	}
 
 	public void render(SpriteBatch sbGambar) {
-		gambarPertanyaan(sbGambar);
+		// gambarPertanyaan(sbGambar);
 		gambarDunia(sbGambar);
-		gambarAngka(sbGambar);
+		// gambarAngka(sbGambar);
 		gambarHati(sbGambar);
 		gambarKontrolLayar(sbGambar);
 	}
@@ -324,6 +353,7 @@ public class PembuatArena extends LayarAbstrak {
 				|| (Gdx.input.isTouched(1) && x1 > 64 && y0 < 64);
 
 		if (kotakSelesai) {
+			game.setScreen(new LayarDialogMenang(game));
 			hentikanMusik();
 			return;
 		}
@@ -332,6 +362,11 @@ public class PembuatArena extends LayarAbstrak {
 			game.setScreen(new LayarDialogKalah(game));
 			hentikanMusik();
 			return;
+		}
+		
+		if (pemain.pemainMati()) {
+			game.setScreen(new LayarDialogKalah(game));
+			hentikanMusik();
 		}
 
 		if (Gdx.input.isKeyPressed(Keys.LEFT) || tombolKiri) {
@@ -634,23 +669,89 @@ public class PembuatArena extends LayarAbstrak {
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
+		stage = new Stage(new StretchViewport(480, 640));
+		inputMultiplexer = new InputMultiplexer();
+		inputMultiplexer.addProcessor(stage);
+		Gdx.input.setInputProcessor(inputMultiplexer);
+		Gdx.input.setCatchBackKey(true);
+
+		textureTextField = new Texture(
+				Gdx.files.internal("data/gfx/ui/window/grey_button05.png"));
+
+		bitmapFont = new BitmapFont(
+				Gdx.files.internal("data/gfx/font/kenvectorFutureThin.fnt"),
+				Gdx.files.internal("data/gfx/font/kenvectorFutureThin.png"),
+				false);
+
+		skin = new Skin();
+		skin.add("textField", textureTextField);
+
+		table = new Table(skin);
+		tTable = new Table(skin);
+
+		labelStyle = new LabelStyle();
+		labelStyle.font = bitmapFont;
+		labelStyle.fontColor = Color.WHITE;
+
+		lblPertanyaan = new Label(nilaiSatu + " + " + nilaiDua + " = ",
+				labelStyle);
+		lblPertanyaan.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
+				// TODO Auto-generated method stub
+				if (txtJawaban.getText().equals(String.valueOf(hasil))) {
+					txtJawaban.setDisabled(true);
+					jawabanBenar = true;
+				} else {
+					pemain.setNyawa(pemain.getNyawa() - 1);
+					if (pemain.pemainMati()) {
+						Gdx.app.log(TAG, "Nyawa pemain habis");
+						jawabanBenar = false;
+					}
+				}
+
+				return super.touchDown(event, x, y, pointer, button);
+			}
+		});
+
+		textFieldStyle = new TextFieldStyle();
+		textFieldStyle.background = skin.getDrawable("textField");
+		textFieldStyle.font = bitmapFont;
+		textFieldStyle.fontColor = Color.GREEN;
+
+		txtJawaban = new TextField("", textFieldStyle);
+		txtJawaban.setSize(50, 100);
+
+		table.defaults().pad(3f);
+		table.row().center();
+		table.add(lblPertanyaan).left().expandX();
+		table.add(txtJawaban).left().expandX();
+
+		tTable.setPosition(150, 610);
+		tTable.defaults().pad(2f);
+		tTable.row();
+		tTable.add(table);
+
+		stage.addActor(tTable);
+
 		mainkanMusik();
 	}
 
 	@Override
 	public void hide() {
 		// TODO Auto-generated method stub
-
+		hentikanMusik();
 	}
 
 	@Override
 	public void render(float delta) {
 		// TODO Auto-generated method stub
-		Gdx.gl.glClearColor(0, 0, 0, 1);
+		Gdx.gl.glClearColor(114 / 255.0f, 129 / 255.0f, 146 / 255.0f, 0);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		shapeRenderer.begin(ShapeType.Filled);
-		shapeRenderer.setColor(114 / 255.0f, 129 / 255.0f, 146 / 255.0f, 1);
+		shapeRenderer.setColor(114 / 255.0f, 129 / 255.0f, 146 / 255.0f, 0);
 		shapeRenderer.rect(0, 0, lebarLayar, 32);
 		shapeRenderer.end();
 
@@ -658,29 +759,40 @@ public class PembuatArena extends LayarAbstrak {
 		render(batcher);
 		batcher.end();
 		update(delta);
+
+		stage.act(delta);
+		stage.draw();
+
+		if (Gdx.input.isKeyPressed(Keys.BACK)) {
+			game.setScreen(new LayarMenuUtama(game));
+		}
 	}
 
 	@Override
 	public void resize(int width, int height) {
 		// TODO Auto-generated method stub
-
+		stage.getViewport().update(width, height, true);
 	}
 
 	@Override
 	public void pause() {
 		// TODO Auto-generated method stub
-
+		PemuatAktiva.dkvduaMusicKremKaakkuja.pause();
 	}
 
 	@Override
 	public void resume() {
 		// TODO Auto-generated method stub
-
+		PemuatAktiva.dkvduaMusicKremKaakkuja.play();
 	}
 
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
+		stage.dispose();
+		skin.dispose();
+		textureTextField.dispose();
+		bitmapFont.dispose();
 		hentikanMusik();
 	}
 }

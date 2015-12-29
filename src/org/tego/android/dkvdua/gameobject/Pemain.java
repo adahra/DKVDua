@@ -32,12 +32,13 @@ public class Pemain extends Obyek {
 	 */
 	private static final long serialVersionUID = -6180174740100001866L;
 	public static final String TAG = Pemain.class.getSimpleName();
-	public int nyawa = 3;
-	public int nyawaMaksimal = 3;
+	private int nyawa;
+	private int nyawaMaksimal;
 
 	public Pemain(int x, int y) {
 		super(x, y);
 		// TODO Auto-generated constructor stub
+		this.setNyawaMaksimal(3);
 	}
 
 	public void bergerak(int x, int y) {
@@ -45,5 +46,25 @@ public class Pemain extends Obyek {
 		int ny = (int) this.getY() + y;
 		this.setX(nx);
 		this.setY(ny);
+	}
+	
+	public void setNyawa(int nyawa) {
+		this.nyawa = nyawa;
+	}
+	
+	public int getNyawa() {
+		return nyawa;
+	}
+	
+	public void setNyawaMaksimal(int nyawaMaks) {
+		nyawaMaksimal = nyawaMaks;
+	}
+	
+	public int getNyawaMaksimal() {
+		return nyawaMaksimal;
+	}
+	
+	public boolean pemainMati() {
+		return getNyawa() < 0;
 	}
 }
