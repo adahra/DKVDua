@@ -10,7 +10,7 @@ membuat game.
 
 ==================================================================================
 
-Copyright 2014 Adnanto A.R. a.k.a NauiN <adnantoa@gmail.com>
+Copyright 2014 Adnanto A.R. a.k.a Blackshadow <adnantoa@gmail.com>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
