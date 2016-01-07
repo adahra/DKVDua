@@ -3,6 +3,7 @@ package org.tego.android.dkvdua;
 import org.tego.android.dkvdua.gamescreen.Permainan;
 import org.tego.android.dkvdua.layar.LayarMenuUtama;
 import org.tego.android.dkvdua.utilitas.PemuatAktiva;
+import org.tego.android.dkvdua.utilitas.PengaturanGim;
 
 import com.badlogic.gdx.assets.AssetManager;
 
@@ -23,6 +24,7 @@ public class DKVDuaMain extends Permainan {
 	@Override
 	public void create() {
 		PemuatAktiva.load();
+		PengaturanGim.pengaturan.muat();
 		this.setScreen(new LayarMenuUtama(this));
 	}
 

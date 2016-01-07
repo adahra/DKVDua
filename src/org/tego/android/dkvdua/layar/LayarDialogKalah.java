@@ -5,6 +5,7 @@ package org.tego.android.dkvdua.layar;
 
 import org.tego.android.dkvdua.DKVDuaMain;
 import org.tego.android.dkvdua.gameobject.PembuatArena;
+import org.tego.android.dkvdua.utilitas.ManajemenSuara;
 import org.tego.android.dkvdua.utilitas.PemuatAktiva;
 
 import com.badlogic.gdx.Gdx;
@@ -73,10 +74,10 @@ public class LayarDialogKalah extends LayarAbstrak {
 			protected void result(Object object) {
 				boolean keluar = (Boolean) object;
 				if (keluar) {
-					PemuatAktiva.soundClick.play();
+					ManajemenSuara.manajemen.mainkan(PemuatAktiva.soundClick);
 					game.setScreen(new PembuatArena(game));
 				} else {
-					PemuatAktiva.soundClick.play();
+					ManajemenSuara.manajemen.mainkan(PemuatAktiva.soundClick);
 					game.setScreen(new LayarMenuUtama(game));
 				}
 

@@ -120,6 +120,8 @@ public class PemuatAktiva {
 		dengarSuara();
 		dengarMusik();
 		konfigurasi();
+		
+		PengaturanGim.pengaturan.muat();
 	}
 
 	private static void muatGambarUIWindow() {
@@ -342,6 +344,8 @@ public class PemuatAktiva {
 		dkvduaFontShadow.dispose();
 
 		dkvduaMusicKremKaakkuja.dispose();
+		dkvduaMusicMysteryBox.dispose();
+		dkvduaMusicHappyEnding.dispose();
 		soundClick.dispose();
 	}
 }

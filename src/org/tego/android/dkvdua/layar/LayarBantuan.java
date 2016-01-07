@@ -1,6 +1,7 @@
 package org.tego.android.dkvdua.layar;
 
 import org.tego.android.dkvdua.DKVDuaMain;
+import org.tego.android.dkvdua.utilitas.ManajemenSuara;
 import org.tego.android.dkvdua.utilitas.PemuatAktiva;
 
 import com.badlogic.gdx.Gdx;
@@ -37,6 +38,7 @@ public class LayarBantuan extends LayarAbstrak {
 	private Table tabelDalam;
 	private Table tabelLuar;
 	private LabelStyle labelStyle;
+	private LabelStyle lblStyle;
 	private Label lblBantuan;
 	private Label lblIsiBantuan;
 	private TextButtonStyle textButtonStyle;
@@ -48,6 +50,7 @@ public class LayarBantuan extends LayarAbstrak {
 	 */
 	public LayarBantuan(DKVDuaMain game) {
 		super(game);
+
 	}
 
 	/*
@@ -106,17 +109,21 @@ public class LayarBantuan extends LayarAbstrak {
 
 		tabelDalam = new Table(skin);
 		tabelLuar = new Table(skin);
-
+		
+		lblStyle = new LabelStyle();
+		lblStyle.font = bitmapFont;
+		lblStyle.fontColor = Color.WHITE;
+		
 		labelStyle = new LabelStyle();
-		labelStyle.font = bitmapFont;
+		labelStyle.font = PemuatAktiva.dkvduaFont;
 		labelStyle.fontColor = Color.WHITE;
 
-		lblBantuan = new Label("Bantuan", labelStyle);
+		lblBantuan = new Label("Bantuan", lblStyle);
 		lblBantuan.setFontScale(1.5f);
 		lblBantuan.setAlignment(Align.center);
 
 		lblIsiBantuan = new Label(bantuan, labelStyle);
-		lblIsiBantuan.setFontScale(0.6f);
+		lblIsiBantuan.setFontScale(0.3f);
 		lblIsiBantuan.setAlignment(Align.center);
 
 		textButtonStyle = new TextButtonStyle();
@@ -130,7 +137,7 @@ public class LayarBantuan extends LayarAbstrak {
 			public void clicked(InputEvent event, float x, float y) {
 				// TODO Auto-generated method stub
 				super.clicked(event, x, y);
-				PemuatAktiva.soundClick.play();
+				ManajemenSuara.manajemen.mainkan(PemuatAktiva.soundClick);
 				game.setScreen(new LayarPengaturan(game));
 			}
 		});
@@ -151,6 +158,8 @@ public class LayarBantuan extends LayarAbstrak {
 		tabelLuar.add(txtBtnKembali).right().expandX();
 
 		stage.addActor(tabelLuar);
+		
+		ManajemenSuara.manajemen.mainkan(PemuatAktiva.dkvduaMusicHappyEnding);
 	}
 
 	/*
@@ -160,6 +169,7 @@ public class LayarBantuan extends LayarAbstrak {
 	 */
 	@Override
 	public void hide() {
+		ManajemenSuara.manajemen.hentikanMusik();
 	}
 
 	/*
@@ -169,6 +179,7 @@ public class LayarBantuan extends LayarAbstrak {
 	 */
 	@Override
 	public void pause() {
+		ManajemenSuara.manajemen.hentikanMusik();
 	}
 
 	/*
@@ -178,6 +189,7 @@ public class LayarBantuan extends LayarAbstrak {
 	 */
 	@Override
 	public void resume() {
+		ManajemenSuara.manajemen.mainkan(PemuatAktiva.dkvduaMusicHappyEnding);
 	}
 
 	/*

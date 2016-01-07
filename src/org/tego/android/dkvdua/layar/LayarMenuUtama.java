@@ -2,6 +2,7 @@ package org.tego.android.dkvdua.layar;
 
 import org.tego.android.dkvdua.DKVDuaMain;
 import org.tego.android.dkvdua.gameobject.PembuatArena;
+import org.tego.android.dkvdua.utilitas.ManajemenSuara;
 import org.tego.android.dkvdua.utilitas.PemuatAktiva;
 
 import com.badlogic.gdx.Gdx;
@@ -91,7 +92,7 @@ public class LayarMenuUtama extends LayarAbstrak {
 	 */
 	@Override
 	public void pause() {
-		PemuatAktiva.dkvduaMusicMysteryBox.pause();
+		ManajemenSuara.manajemen.hentikanMusik();
 	}
 
 	/*
@@ -101,7 +102,7 @@ public class LayarMenuUtama extends LayarAbstrak {
 	 */
 	@Override
 	public void resume() {
-		PemuatAktiva.dkvduaMusicMysteryBox.play();
+		ManajemenSuara.manajemen.mainkan(PemuatAktiva.dkvduaMusicMysteryBox);
 	}
 
 	/*
@@ -115,7 +116,6 @@ public class LayarMenuUtama extends LayarAbstrak {
 		textureAtlas.dispose();
 		skin.dispose();
 		bitmapFont.dispose();
-		PemuatAktiva.dkvduaMusicMysteryBox.dispose();
 	}
 
 	@Override
@@ -129,11 +129,6 @@ public class LayarMenuUtama extends LayarAbstrak {
 
 		stage.act(delta);
 		stage.draw();
-
-		/*
-		 * if (Gdx.input.justTouched()) { game.setScreen(new
-		 * PembuatArena(game)); }
-		 */
 	}
 
 	@Override
@@ -177,7 +172,7 @@ public class LayarMenuUtama extends LayarAbstrak {
 			public void clicked(InputEvent event, float x, float y) {
 				// TODO Auto-generated method stub
 				super.clicked(event, x, y);
-				PemuatAktiva.soundClick.play();
+				ManajemenSuara.manajemen.mainkan(PemuatAktiva.soundClick);
 				game.setScreen(new PembuatArena(game));
 			}
 		});
@@ -188,7 +183,7 @@ public class LayarMenuUtama extends LayarAbstrak {
 			public void clicked(InputEvent event, float x, float y) {
 				// TODO Auto-generated method stub
 				super.clicked(event, x, y);
-				PemuatAktiva.soundClick.play();
+				ManajemenSuara.manajemen.mainkan(PemuatAktiva.soundClick);
 				game.setScreen(new LayarPengaturan(game));
 			}
 		});
@@ -199,7 +194,7 @@ public class LayarMenuUtama extends LayarAbstrak {
 			public void clicked(InputEvent event, float x, float y) {
 				// TODO Auto-generated method stub
 				super.clicked(event, x, y);
-				PemuatAktiva.soundClick.play();
+				ManajemenSuara.manajemen.mainkan(PemuatAktiva.soundClick);
 				game.setScreen(new LayarDialogKeluar(game));
 			}
 		});
@@ -221,12 +216,12 @@ public class LayarMenuUtama extends LayarAbstrak {
 
 		stage.addActor(tableD);
 
-		PemuatAktiva.dkvduaMusicMysteryBox.play();
+		ManajemenSuara.manajemen.mainkan(PemuatAktiva.dkvduaMusicMysteryBox);
 	}
 
 	@Override
 	public void hide() {
 		// TODO Auto-generated method stub
-		PemuatAktiva.dkvduaMusicMysteryBox.stop();
+		ManajemenSuara.manajemen.hentikanMusik();
 	}
 }

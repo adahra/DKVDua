@@ -26,6 +26,7 @@ import org.tego.android.dkvdua.layar.LayarAbstrak;
 import org.tego.android.dkvdua.layar.LayarDialogKalah;
 import org.tego.android.dkvdua.layar.LayarDialogMenang;
 import org.tego.android.dkvdua.layar.LayarMenuUtama;
+import org.tego.android.dkvdua.utilitas.ManajemenSuara;
 import org.tego.android.dkvdua.utilitas.MetodePengacakan;
 import org.tego.android.dkvdua.utilitas.PemuatAktiva;
 
@@ -38,6 +39,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
@@ -48,8 +50,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 
 /**
@@ -105,32 +110,56 @@ public class PembuatArena extends LayarAbstrak {
 	private Label lblPertanyaan;
 	private TextFieldStyle textFieldStyle;
 	private TextField txtJawaban;
+	private TextButtonStyle textButtonStyle;
+	private TextButton txtBtnUlang;
+	private TextButton txtBtnHasil;
+	private TextButton txtBtnTombolAtas;
+	private TextButton txtBtnTombolBawah;
+	private TextButton txtBtnTombolKiri;
+	private TextButton txtBtnTombolKanan;
 	private InputMultiplexer inputMultiplexer;
 	private BitmapFont bitmapFont;
 	private Skin skin;
 	private Table table;
 	private Table tTable;
+	private Table tblTombol;
+	private Table tblKir;
+	private Table tblKan;
 	private Texture textureTextField;
+	private TextureAtlas textureAtlas;
 	private Stage stage;
 
 	public int[][] petaLevel = new int[][] {
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-			{ 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3 },
-			{ 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6 },
-			{ 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6 },
-			{ 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6 },
-			{ 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6 },
-			{ 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6 },
-			{ 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6 },
-			{ 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6 },
-			{ 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6 },
-			{ 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6 },
-			{ 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6 },
-			{ 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6 },
-			{ 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6 },
-			{ 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6 },
-			{ 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9 } };
+			{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
+			{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
+			{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
+			{ 5, 2, 2, 2, 2, 2, 2, 2, 2, 5, 5, 5 },
+			{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
+			{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
+			{ 5, 5, 5, 2, 2, 2, 2, 2, 2, 2, 2, 5 },
+			{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
+			{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
+			{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
+			{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
+			{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
+			{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
+
+	/*
+	 * public int[][] petaLevel = new int[][] { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	 * 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 1, 2, 2, 2, 2, 2, 2, 2,
+	 * 2, 2, 2, 3 }, { 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6 }, { 4, 5, 5, 5, 5, 5,
+	 * 5, 5, 5, 5, 5, 6 }, { 1, 2, 2, 2, 2, 2, 2, 2, 2, 5, 5, 6 }, { 4, 5, 5, 5,
+	 * 5, 5, 5, 5, 5, 5, 5, 6 }, { 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6 }, { 4, 5,
+	 * 5, 2, 2, 2, 2, 2, 2, 2, 2, 3 }, { 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6 }, {
+	 * 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6 }, { 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+	 * 6 }, { 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6 }, { 0, 4, 5, 5, 5, 5, 5, 5, 5,
+	 * 5, 5, 6 }, { 0, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6 }, { 0, 4, 5, 5, 5, 5, 5,
+	 * 5, 8, 8, 8, 9 }, { 0, 7, 8, 8, 8, 8, 8, 8, 0, 0, 0, 0 } };
+	 */
 
 	public int[][] obyek = new int[][] {
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -199,18 +228,18 @@ public class PembuatArena extends LayarAbstrak {
 	}
 
 	private static void mainkanMusik() {
-		PemuatAktiva.dkvduaMusicKremKaakkuja.play();
+		ManajemenSuara.manajemen.mainkan(PemuatAktiva.dkvduaMusicKremKaakkuja);
 	}
 
 	private static void hentikanMusik() {
-		PemuatAktiva.dkvduaMusicKremKaakkuja.stop();
+		ManajemenSuara.manajemen.hentikanMusik();
 	}
 
 	private void gambarKontrolLayar(SpriteBatch sbGambar) {
-		sbGambar.draw(PemuatAktiva.arTombolPanahAtas, 0, 240);
-		sbGambar.draw(PemuatAktiva.arTombolPanahBawah, 0, 208);
-		sbGambar.draw(PemuatAktiva.arTombolPanahKanan, 160, 240);
-		sbGambar.draw(PemuatAktiva.arTombolPanahKiri, 128, 240);
+		// sbGambar.draw(PemuatAktiva.arTombolPanahAtas, 0, 240);
+		// sbGambar.draw(PemuatAktiva.arTombolPanahBawah, 32, 240);
+		// sbGambar.draw(PemuatAktiva.arTombolPanahKanan, 160, 240);
+		// sbGambar.draw(PemuatAktiva.arTombolPanahKiri, 128, 240);
 	}
 
 	private void gambarHati(SpriteBatch sbGambar) {
@@ -338,19 +367,22 @@ public class PembuatArena extends LayarAbstrak {
 	}
 
 	private void kontrolGerakan(float delta) {
-		float x0 = (Gdx.input.getX(0) / (float) Gdx.graphics.getWidth()) * 192;
-		float x1 = (Gdx.input.getX(1) / (float) Gdx.graphics.getWidth()) * 192;
-		float y0 = 272 - (Gdx.input.getY(0) / (float) Gdx.graphics.getHeight()) * 272;
-		float y1 = 272 - (Gdx.input.getY(1) / (float) Gdx.graphics.getHeight()) * 272;
-
-		boolean tombolAtas = (Gdx.input.isTouched(0) && y0 > 32 && y0 < 208)
-				|| (Gdx.input.isTouched(1) && y1 > 32 && y1 < 208);
-		boolean tombolBawah = (Gdx.input.isTouched(0) && x0 > 0 && x0 < 208)
-				|| (Gdx.input.isTouched(1) && x1 > 0 && x1 < 208);
-		boolean tombolKiri = (Gdx.input.isTouched(0) && x0 > 32 && x0 < 160)
-				|| (Gdx.input.isTouched(1) && x1 > 32 && x1 < 160);
-		boolean tombolKanan = (Gdx.input.isTouched(0) && x0 > 64 && y0 < 64)
-				|| (Gdx.input.isTouched(1) && x1 > 64 && y0 < 64);
+		/*
+		 * float x0 = (Gdx.input.getX(0) / (float) Gdx.graphics.getWidth()) *
+		 * 192; float x1 = (Gdx.input.getX(1) / (float) Gdx.graphics.getWidth())
+		 * * 192; float y0 = 272 - (Gdx.input.getY(0) / (float)
+		 * Gdx.graphics.getHeight()) * 272; float y1 = 272 - (Gdx.input.getY(1)
+		 * / (float) Gdx.graphics.getHeight()) * 272;
+		 * 
+		 * boolean tombolAtas = (Gdx.input.isTouched(0) && y0 > 250 && y0 < 256)
+		 * || (Gdx.input.isTouched(1) && y1 > 250 && y1 < 256); boolean
+		 * tombolBawah = (Gdx.input.isTouched(0) && x0 > 0 && x0 < 240) ||
+		 * (Gdx.input.isTouched(1) && x1 > 0 && x1 < 240); boolean tombolKiri =
+		 * (Gdx.input.isTouched(0) && x0 > 32 && x0 < 160) ||
+		 * (Gdx.input.isTouched(1) && x1 > 32 && x1 < 160); boolean tombolKanan
+		 * = (Gdx.input.isTouched(0) && x0 > 32 && y0 < 64) ||
+		 * (Gdx.input.isTouched(1) && x1 > 32 && y0 < 64);
+		 */
 
 		if (kotakSelesai) {
 			game.setScreen(new LayarDialogMenang(game));
@@ -363,13 +395,13 @@ public class PembuatArena extends LayarAbstrak {
 			hentikanMusik();
 			return;
 		}
-		
+
 		if (pemain.pemainMati()) {
 			game.setScreen(new LayarDialogKalah(game));
 			hentikanMusik();
 		}
 
-		if (Gdx.input.isKeyPressed(Keys.LEFT) || tombolKiri) {
+		if (Gdx.input.isKeyPressed(Keys.LEFT) || txtBtnTombolKiri.isPressed()) {
 			if (!tombolDiTekan) {
 				if (cekTabrakanDinding(pemain, TABRAKAN_KIRI)) {
 					return;
@@ -382,7 +414,7 @@ public class PembuatArena extends LayarAbstrak {
 				pemain.bergerak(-UKURAN_UBIN, 0);
 				tombolDiTekan = true;
 			}
-		} else if (Gdx.input.isKeyPressed(Keys.RIGHT) || tombolKanan) {
+		} else if (Gdx.input.isKeyPressed(Keys.RIGHT) || txtBtnTombolKanan.isPressed()) {
 			if (!tombolDiTekan) {
 				if (cekTabrakanDinding(pemain, TABRAKAN_KANAN)) {
 					return;
@@ -395,7 +427,7 @@ public class PembuatArena extends LayarAbstrak {
 				pemain.bergerak(UKURAN_UBIN, 0);
 				tombolDiTekan = true;
 			}
-		} else if (Gdx.input.isKeyPressed(Keys.UP) || tombolAtas) {
+		} else if (Gdx.input.isKeyPressed(Keys.UP) || txtBtnTombolAtas.isPressed()) {
 			if (!tombolDiTekan) {
 				if (cekTabrakanDinding(pemain, TABRAKAN_ATAS)) {
 					return;
@@ -408,7 +440,7 @@ public class PembuatArena extends LayarAbstrak {
 				pemain.bergerak(0, -UKURAN_UBIN);
 				tombolDiTekan = true;
 			}
-		} else if (Gdx.input.isKeyPressed(Keys.DOWN) || tombolBawah) {
+		} else if (Gdx.input.isKeyPressed(Keys.DOWN) || txtBtnTombolBawah.isPressed()) {
 			if (!tombolDiTekan) {
 				if (cekTabrakanDinding(pemain, TABRAKAN_BAWAH)) {
 					return;
@@ -675,6 +707,8 @@ public class PembuatArena extends LayarAbstrak {
 		Gdx.input.setInputProcessor(inputMultiplexer);
 		Gdx.input.setCatchBackKey(true);
 
+		textureAtlas = new TextureAtlas(Gdx.files.internal("data/dialog.atlas"));
+
 		textureTextField = new Texture(
 				Gdx.files.internal("data/gfx/ui/window/grey_button05.png"));
 
@@ -684,10 +718,14 @@ public class PembuatArena extends LayarAbstrak {
 				false);
 
 		skin = new Skin();
+		skin.addRegions(textureAtlas);
 		skin.add("textField", textureTextField);
 
 		table = new Table(skin);
 		tTable = new Table(skin);
+		tblTombol = new Table(skin);
+		tblKir = new Table(skin);
+		tblKan = new Table(skin);
 
 		labelStyle = new LabelStyle();
 		labelStyle.font = bitmapFont;
@@ -721,7 +759,68 @@ public class PembuatArena extends LayarAbstrak {
 		textFieldStyle.fontColor = Color.GREEN;
 
 		txtJawaban = new TextField("", textFieldStyle);
-		txtJawaban.setSize(50, 100);
+		txtJawaban.setSize(25, 50);
+
+		textButtonStyle = new TextButtonStyle();
+		textButtonStyle.up = skin.getDrawable("button");
+		textButtonStyle.down = skin.getDrawable("touched-button");
+		textButtonStyle.font = bitmapFont;
+
+		txtBtnTombolAtas = new TextButton("^", textButtonStyle);
+		txtBtnTombolAtas.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				// TODO Auto-generated method stub
+				super.clicked(event, x, y);
+				ManajemenSuara.manajemen.mainkan(PemuatAktiva.soundClick);
+			}
+		});
+
+		txtBtnTombolBawah = new TextButton("v", textButtonStyle);
+		txtBtnTombolBawah.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				// TODO Auto-generated method stub
+				super.clicked(event, x, y);
+				ManajemenSuara.manajemen.mainkan(PemuatAktiva.soundClick);
+			}
+		});
+
+		txtBtnTombolKiri = new TextButton("<", textButtonStyle);
+		txtBtnTombolKiri.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				// TODO Auto-generated method stub
+				super.clicked(event, x, y);
+				ManajemenSuara.manajemen.mainkan(PemuatAktiva.soundClick);
+			}
+		});
+
+		txtBtnTombolKanan = new TextButton(">", textButtonStyle);
+		txtBtnTombolKanan.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				// TODO Auto-generated method stub
+				super.clicked(event, x, y);
+				ManajemenSuara.manajemen.mainkan(PemuatAktiva.soundClick);
+			}
+		});
+
+		tblKir.defaults().pad(0.5f);
+		tblKir.row().center();
+		tblKir.add(txtBtnTombolAtas).left().expandX();
+		tblKir.add(txtBtnTombolBawah).left().expandX();
+
+		tblKan.defaults().pad(0.5f);
+		tblKan.row().center();
+		tblKan.add(txtBtnTombolKiri).left().expandX();
+		tblKan.add(txtBtnTombolKanan).left().expandX();
+
+		tblTombol.defaults().pad(1.5f);
+		tblTombol.setPosition(237, 35);
+		tblTombol.row();
+		tblTombol.add(tblKir);
+		tblTombol.add(tblKan);
 
 		table.defaults().pad(3f);
 		table.row().center();
@@ -734,6 +833,7 @@ public class PembuatArena extends LayarAbstrak {
 		tTable.add(table);
 
 		stage.addActor(tTable);
+		stage.addActor(tblTombol);
 
 		mainkanMusik();
 	}
@@ -747,7 +847,7 @@ public class PembuatArena extends LayarAbstrak {
 	@Override
 	public void render(float delta) {
 		// TODO Auto-generated method stub
-		Gdx.gl.glClearColor(114 / 255.0f, 129 / 255.0f, 146 / 255.0f, 0);
+		Gdx.gl.glClearColor(114 / 255.0f, 129 / 255.0f, 146 / 255.0f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		shapeRenderer.begin(ShapeType.Filled);
@@ -765,6 +865,8 @@ public class PembuatArena extends LayarAbstrak {
 
 		if (Gdx.input.isKeyPressed(Keys.BACK)) {
 			game.setScreen(new LayarMenuUtama(game));
+		} else if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
+			game.setScreen(new LayarMenuUtama(game));
 		}
 	}
 
@@ -777,13 +879,13 @@ public class PembuatArena extends LayarAbstrak {
 	@Override
 	public void pause() {
 		// TODO Auto-generated method stub
-		PemuatAktiva.dkvduaMusicKremKaakkuja.pause();
+		ManajemenSuara.manajemen.hentikanMusik();
 	}
 
 	@Override
 	public void resume() {
 		// TODO Auto-generated method stub
-		PemuatAktiva.dkvduaMusicKremKaakkuja.play();
+		ManajemenSuara.manajemen.mainkan(PemuatAktiva.dkvduaMusicKremKaakkuja);
 	}
 
 	@Override

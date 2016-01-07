@@ -1,7 +1,9 @@
 package org.tego.android.dkvdua.layar;
 
 import org.tego.android.dkvdua.DKVDuaMain;
+import org.tego.android.dkvdua.utilitas.ManajemenSuara;
 import org.tego.android.dkvdua.utilitas.PemuatAktiva;
+import org.tego.android.dkvdua.utilitas.PengaturanGim;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
@@ -139,18 +141,19 @@ public class LayarPengaturan extends LayarAbstrak {
 			public void clicked(InputEvent event, float x, float y) {
 				// TODO Auto-generated method stub
 				super.clicked(event, x, y);
-				PemuatAktiva.soundClick.play();
+				ManajemenSuara.manajemen.mainkan(PemuatAktiva.soundClick);
 				game.setScreen(new LayarBantuan(game));
 			}
 		});
 
-		txtBtnKredit = new TextButton("Credits", textButtonStyle);
+		txtBtnKredit = new TextButton("Info", textButtonStyle);
 		txtBtnKredit.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				// TODO Auto-generated method stub
 				super.clicked(event, x, y);
-				PemuatAktiva.soundClick.play();
+				ManajemenSuara.manajemen.mainkan(PemuatAktiva.soundClick);
+				game.setScreen(new LayarTentangAplikasi(game));
 			}
 		});
 
@@ -160,7 +163,7 @@ public class LayarPengaturan extends LayarAbstrak {
 			public void clicked(InputEvent event, float x, float y) {
 				// TODO Auto-generated method stub
 				super.clicked(event, x, y);
-				PemuatAktiva.soundClick.play();
+				ManajemenSuara.manajemen.mainkan(PemuatAktiva.soundClick);
 				game.setScreen(new LayarMenuUtama(game));
 			}
 		});
@@ -171,22 +174,20 @@ public class LayarPengaturan extends LayarAbstrak {
 		checkBoxStyle.font = bitmapFont;
 
 		chkSuara = new CheckBox("Suara", checkBoxStyle);
-		chkSuara.setChecked(true);
 		chkSuara.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				// TODO Auto-generated method stub
-				PemuatAktiva.soundClick.play();
+				ManajemenSuara.manajemen.mainkan(PemuatAktiva.soundClick);
 			}
 		});
 
 		chkMusik = new CheckBox("Musik", checkBoxStyle);
-		chkMusik.setChecked(true);
 		chkMusik.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				// TODO Auto-generated method stub
-				PemuatAktiva.soundClick.play();
+				ManajemenSuara.manajemen.mainkan(PemuatAktiva.soundClick);
 			}
 		});
 
@@ -206,7 +207,7 @@ public class LayarPengaturan extends LayarAbstrak {
 		tableC.row();
 		tableC.add(txtBtnKredit).left().expandX();
 		tableC.add(txtBtnKembali).left().expandX();
-		
+
 		tableD.setBackground(skin.getDrawable("background"));
 		tableD.setFillParent(true);
 		tableD.defaults().pad(3f);
@@ -216,6 +217,10 @@ public class LayarPengaturan extends LayarAbstrak {
 		tableD.add(tableC);
 
 		stage.addActor(tableD);
+
+		ManajemenSuara.manajemen.mainkan(PemuatAktiva.dkvduaMusicHappyEnding);
+		
+		muatPengaturan();
 	}
 
 	/*
@@ -225,6 +230,8 @@ public class LayarPengaturan extends LayarAbstrak {
 	 */
 	@Override
 	public void hide() {
+		ManajemenSuara.manajemen.hentikanMusik();
+		simpanPengaturan();
 	}
 
 	/*
@@ -234,6 +241,7 @@ public class LayarPengaturan extends LayarAbstrak {
 	 */
 	@Override
 	public void pause() {
+		ManajemenSuara.manajemen.hentikanMusik();
 	}
 
 	/*
@@ -243,6 +251,7 @@ public class LayarPengaturan extends LayarAbstrak {
 	 */
 	@Override
 	public void resume() {
+		ManajemenSuara.manajemen.mainkan(PemuatAktiva.dkvduaMusicHappyEnding);
 	}
 
 	/*
@@ -257,5 +266,20 @@ public class LayarPengaturan extends LayarAbstrak {
 		bitmapFont.dispose();
 		skin.dispose();
 	}
-
+	
+	private void muatPengaturan() {
+		PengaturanGim pengatur = PengaturanGim.pengaturan;
+		pengatur.muat();
+		chkSuara.setChecked(pengatur.suara);
+		chkMusik.setChecked(pengatur.musik);
+	}
+	
+	private void simpanPengaturan() {
+		PengaturanGim pengatur = PengaturanGim.pengaturan;
+		pengatur.suara = chkSuara.isChecked();
+		pengatur.musik = chkMusik.isChecked();
+		pengatur.simpan();
+		
+		ManajemenSuara.manajemen.perbaruiPengaturan();
+	}
 }
