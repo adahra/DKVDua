@@ -46,6 +46,8 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -113,10 +115,14 @@ public class PembuatArena extends LayarAbstrak {
 	private TextButtonStyle textButtonStyle;
 	private TextButton txtBtnUlang;
 	private TextButton txtBtnHasil;
-	private TextButton txtBtnTombolAtas;
-	private TextButton txtBtnTombolBawah;
-	private TextButton txtBtnTombolKiri;
-	private TextButton txtBtnTombolKanan;
+	private ImageButtonStyle imgBtnStylAtas;
+	private ImageButtonStyle imgBtnStylBawah;
+	private ImageButtonStyle imgBtnStylKiri;
+	private ImageButtonStyle imgBtnStylKanan;
+	private ImageButton imgBtnTombolAtas;
+	private ImageButton imgBtnTombolBawah;
+	private ImageButton imgBtnTombolKiri;
+	private ImageButton imgBtnTombolKanan;
 	private InputMultiplexer inputMultiplexer;
 	private BitmapFont bitmapFont;
 	private Skin skin;
@@ -126,27 +132,31 @@ public class PembuatArena extends LayarAbstrak {
 	private Table tblKir;
 	private Table tblKan;
 	private Texture textureTextField;
+	private Texture textureTombolAtas;
+	private Texture textureTombolBawah;
+	private Texture textureTombolKiri;
+	private Texture textureTombolKanan;
 	private TextureAtlas textureAtlas;
 	private Stage stage;
 
 	public int[][] petaLevel = new int[][] {
-			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-			{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
-			{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
-			{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
-			{ 5, 2, 2, 2, 2, 2, 2, 2, 2, 5, 5, 5 },
-			{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
-			{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
-			{ 5, 5, 5, 2, 2, 2, 2, 2, 2, 2, 2, 5 },
 			{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
 			{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
 			{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
 			{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
 			{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
+			{ 5, 5, 5, 5, 5, 2, 2, 2, 2, 5, 5, 5 },
 			{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
-			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
+			{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
+			{ 5, 5, 5, 2, 2, 2, 2, 5, 5, 5, 5, 5 },
+			{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
+			{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
+			{ 5, 5, 5, 5, 5, 2, 2, 2, 2, 5, 5, 5 },
+			{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
+			{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
+			{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
+			{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
+			{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 } };
 
 	/*
 	 * public int[][] petaLevel = new int[][] { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -174,9 +184,9 @@ public class PembuatArena extends LayarAbstrak {
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-			{ 0, 0, 0, 0, 3, 0, 0, 0, 0, 1, 0, 0 },
+			{ 0, 0, 0, 0, 3, 0, 0, 0, 4, 1, 0, 0 },
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-			{ 0, 0, 0, 3, 0, 0, 0, 0, 0, 1, 0, 0 },
+			{ 0, 0, 0, 3, 0, 0, 0, 0, 4, 1, 0, 0 },
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
 
@@ -401,7 +411,7 @@ public class PembuatArena extends LayarAbstrak {
 			hentikanMusik();
 		}
 
-		if (Gdx.input.isKeyPressed(Keys.LEFT) || txtBtnTombolKiri.isPressed()) {
+		if (Gdx.input.isKeyPressed(Keys.LEFT) || imgBtnTombolKiri.isPressed()) {
 			if (!tombolDiTekan) {
 				if (cekTabrakanDinding(pemain, TABRAKAN_KIRI)) {
 					return;
@@ -410,11 +420,17 @@ public class PembuatArena extends LayarAbstrak {
 				if (cekTabrakanKotak(TABRAKAN_KIRI)) {
 					return;
 				}
+				
+				if (cekTabrakanMusuh(pemain, TABRAKAN_KIRI)) {
+					pemain.setNyawa(pemain.getNyawa() - 1);
+					return;
+				}
 
 				pemain.bergerak(-UKURAN_UBIN, 0);
 				tombolDiTekan = true;
 			}
-		} else if (Gdx.input.isKeyPressed(Keys.RIGHT) || txtBtnTombolKanan.isPressed()) {
+		} else if (Gdx.input.isKeyPressed(Keys.RIGHT)
+				|| imgBtnTombolKanan.isPressed()) {
 			if (!tombolDiTekan) {
 				if (cekTabrakanDinding(pemain, TABRAKAN_KANAN)) {
 					return;
@@ -424,10 +440,16 @@ public class PembuatArena extends LayarAbstrak {
 					return;
 				}
 
+				if (cekTabrakanMusuh(pemain, TABRAKAN_KANAN)) {
+					pemain.setNyawa(pemain.getNyawa() - 1);
+					return;
+				}
+				
 				pemain.bergerak(UKURAN_UBIN, 0);
 				tombolDiTekan = true;
 			}
-		} else if (Gdx.input.isKeyPressed(Keys.UP) || txtBtnTombolAtas.isPressed()) {
+		} else if (Gdx.input.isKeyPressed(Keys.UP)
+				|| imgBtnTombolAtas.isPressed()) {
 			if (!tombolDiTekan) {
 				if (cekTabrakanDinding(pemain, TABRAKAN_ATAS)) {
 					return;
@@ -437,10 +459,16 @@ public class PembuatArena extends LayarAbstrak {
 					return;
 				}
 
+				if (cekTabrakanMusuh(pemain, TABRAKAN_ATAS)) {
+					pemain.setNyawa(pemain.getNyawa() - 1);
+					return;
+				}
+				
 				pemain.bergerak(0, -UKURAN_UBIN);
 				tombolDiTekan = true;
 			}
-		} else if (Gdx.input.isKeyPressed(Keys.DOWN) || txtBtnTombolBawah.isPressed()) {
+		} else if (Gdx.input.isKeyPressed(Keys.DOWN)
+				|| imgBtnTombolBawah.isPressed()) {
 			if (!tombolDiTekan) {
 				if (cekTabrakanDinding(pemain, TABRAKAN_BAWAH)) {
 					return;
@@ -450,6 +478,11 @@ public class PembuatArena extends LayarAbstrak {
 					return;
 				}
 
+				if (cekTabrakanMusuh(pemain, TABRAKAN_BAWAH)) {
+					pemain.setNyawa(pemain.getNyawa() - 1);
+					return;
+				}
+				
 				pemain.bergerak(0, UKURAN_UBIN);
 				tombolDiTekan = true;
 			}
@@ -476,6 +509,10 @@ public class PembuatArena extends LayarAbstrak {
 						if (cekTabrakanDinding(kotak, TABRAKAN_KIRI)) {
 							return true;
 						}
+						
+						if (cekTabrakanMusuh(kotak, TABRAKAN_KIRI)) {
+							return true;
+						}
 					}
 
 					kotak.bergerak(-UKURAN_UBIN, 0);
@@ -497,6 +534,10 @@ public class PembuatArena extends LayarAbstrak {
 						}
 
 						if (cekTabrakanDinding(kotak, TABRAKAN_KANAN)) {
+							return true;
+						}
+						
+						if (cekTabrakanMusuh(kotak, TABRAKAN_KANAN)) {
 							return true;
 						}
 					}
@@ -522,6 +563,10 @@ public class PembuatArena extends LayarAbstrak {
 						if (cekTabrakanDinding(kotak, TABRAKAN_ATAS)) {
 							return true;
 						}
+						
+						if (cekTabrakanMusuh(kotak, TABRAKAN_ATAS)) {
+							return true;
+						}
 					}
 
 					kotak.bergerak(0, -UKURAN_UBIN);
@@ -545,6 +590,10 @@ public class PembuatArena extends LayarAbstrak {
 						if (cekTabrakanDinding(kotak, TABRAKAN_BAWAH)) {
 							return true;
 						}
+						
+						if (cekTabrakanMusuh(kotak, TABRAKAN_BAWAH)) {
+							return true;
+						}
 					}
 
 					kotak.bergerak(0, UKURAN_UBIN);
@@ -558,6 +607,48 @@ public class PembuatArena extends LayarAbstrak {
 		return false;
 	}
 
+	public boolean cekTabrakanMusuh(Obyek obyek, int tipe) {
+		if (tipe == TABRAKAN_KIRI) {
+			for (Obyek oMusuh : aMusuh) {
+				Musuh musuh = (Musuh) oMusuh;
+				if (obyek.isTabrakanKiri(musuh)) {
+					return true;
+				}
+			}
+			
+			return false;
+		} else if (tipe == TABRAKAN_KANAN) {
+			for (Obyek oMusuh : aMusuh) {
+				Musuh musuh = (Musuh) oMusuh;
+				if (obyek.isTabrakanKanan(musuh)) {
+					return true;
+				}
+			}
+			
+			return false;
+		} else if (tipe == TABRAKAN_ATAS) {
+			for (Obyek oMusuh : aMusuh) {
+				Musuh musuh = (Musuh) oMusuh;
+				if (obyek.isTabrakanAtas(musuh)) {
+					return true;
+				}
+			}
+			
+			return false;
+		} else if (tipe == TABRAKAN_BAWAH) {
+			for (Obyek oMusuh : aMusuh) {
+				Musuh musuh = (Musuh) oMusuh;
+				if (obyek.isTabrakanBawah(musuh)) {
+					return true;
+				}
+			}
+			
+			return false;
+		}
+		
+		return false;
+	}
+	
 	public boolean cekTabrakanDinding(Obyek obyek, int tipe) {
 		if (tipe == TABRAKAN_KIRI) {
 			for (Obyek oDinding : aDinding) {
@@ -662,9 +753,6 @@ public class PembuatArena extends LayarAbstrak {
 					lubang = new Lubang(y * UKURAN_UBIN, x * UKURAN_UBIN);
 					lubang.setTrGambar(PemuatAktiva.gambarLubang);
 					aLubang.add(lubang);
-					musuh = new Musuh(y * UKURAN_UBIN, x * UKURAN_UBIN);
-					musuh.setTrGambar(PemuatAktiva.gambarMusuh);
-					aMusuh.add(musuh);
 					break;
 				case 2:
 					pemain = new Pemain(y * UKURAN_UBIN, x * UKURAN_UBIN);
@@ -675,6 +763,10 @@ public class PembuatArena extends LayarAbstrak {
 					kotak.setTrGambar(PemuatAktiva.gambarKotak);
 					aKotak.add(kotak);
 					break;
+				case 4:
+					musuh = new Musuh(y * UKURAN_UBIN, x * UKURAN_UBIN);
+					musuh.setTrGambar(PemuatAktiva.gambarMusuh);
+					aMusuh.add(musuh);
 				default:
 					break;
 				}
@@ -712,6 +804,15 @@ public class PembuatArena extends LayarAbstrak {
 		textureTextField = new Texture(
 				Gdx.files.internal("data/gfx/ui/window/grey_button05.png"));
 
+		textureTombolAtas = new Texture(
+				Gdx.files.internal("data/gfx/ui/tombolAtas.png"));
+		textureTombolBawah = new Texture(
+				Gdx.files.internal("data/gfx/ui/tombolBawah.png"));
+		textureTombolKiri = new Texture(
+				Gdx.files.internal("data/gfx/ui/tombolKiri.png"));
+		textureTombolKanan = new Texture(
+				Gdx.files.internal(("data/gfx/ui/tombolKanan.png")));
+
 		bitmapFont = new BitmapFont(
 				Gdx.files.internal("data/gfx/font/kenvectorFutureThin.fnt"),
 				Gdx.files.internal("data/gfx/font/kenvectorFutureThin.png"),
@@ -720,6 +821,10 @@ public class PembuatArena extends LayarAbstrak {
 		skin = new Skin();
 		skin.addRegions(textureAtlas);
 		skin.add("textField", textureTextField);
+		skin.add("tombolAtas", textureTombolAtas);
+		skin.add("tombolBawah", textureTombolBawah);
+		skin.add("tombolKiri", textureTombolKiri);
+		skin.add("tombolKanan", textureTombolKanan);
 
 		table = new Table(skin);
 		tTable = new Table(skin);
@@ -744,7 +849,6 @@ public class PembuatArena extends LayarAbstrak {
 				} else {
 					pemain.setNyawa(pemain.getNyawa() - 1);
 					if (pemain.pemainMati()) {
-						Gdx.app.log(TAG, "Nyawa pemain habis");
 						jawabanBenar = false;
 					}
 				}
@@ -766,8 +870,20 @@ public class PembuatArena extends LayarAbstrak {
 		textButtonStyle.down = skin.getDrawable("touched-button");
 		textButtonStyle.font = bitmapFont;
 
-		txtBtnTombolAtas = new TextButton("^", textButtonStyle);
-		txtBtnTombolAtas.addListener(new ClickListener() {
+		imgBtnStylAtas = new ImageButtonStyle();
+		imgBtnStylAtas.imageUp = skin.getDrawable("tombolAtas");
+
+		imgBtnStylBawah = new ImageButtonStyle();
+		imgBtnStylBawah.imageUp = skin.getDrawable("tombolBawah");
+		
+		imgBtnStylKiri = new ImageButtonStyle();
+		imgBtnStylKiri.imageUp = skin.getDrawable("tombolKiri");
+		
+		imgBtnStylKanan = new ImageButtonStyle();
+		imgBtnStylKanan.imageUp = skin.getDrawable("tombolKanan");
+
+		imgBtnTombolAtas = new ImageButton(imgBtnStylAtas);
+		imgBtnTombolAtas.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				// TODO Auto-generated method stub
@@ -776,8 +892,8 @@ public class PembuatArena extends LayarAbstrak {
 			}
 		});
 
-		txtBtnTombolBawah = new TextButton("v", textButtonStyle);
-		txtBtnTombolBawah.addListener(new ClickListener() {
+		imgBtnTombolBawah = new ImageButton(imgBtnStylBawah);
+		imgBtnTombolBawah.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				// TODO Auto-generated method stub
@@ -786,8 +902,8 @@ public class PembuatArena extends LayarAbstrak {
 			}
 		});
 
-		txtBtnTombolKiri = new TextButton("<", textButtonStyle);
-		txtBtnTombolKiri.addListener(new ClickListener() {
+		imgBtnTombolKiri = new ImageButton(imgBtnStylKiri);
+		imgBtnTombolKiri.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				// TODO Auto-generated method stub
@@ -796,8 +912,8 @@ public class PembuatArena extends LayarAbstrak {
 			}
 		});
 
-		txtBtnTombolKanan = new TextButton(">", textButtonStyle);
-		txtBtnTombolKanan.addListener(new ClickListener() {
+		imgBtnTombolKanan = new ImageButton(imgBtnStylKanan);
+		imgBtnTombolKanan.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				// TODO Auto-generated method stub
@@ -806,17 +922,17 @@ public class PembuatArena extends LayarAbstrak {
 			}
 		});
 
-		tblKir.defaults().pad(0.5f);
+		tblKir.defaults().pad(5f);
 		tblKir.row().center();
-		tblKir.add(txtBtnTombolAtas).left().expandX();
-		tblKir.add(txtBtnTombolBawah).left().expandX();
+		tblKir.add(imgBtnTombolAtas).left().expandX();
+		tblKir.add(imgBtnTombolBawah).left().expandX();
 
-		tblKan.defaults().pad(0.5f);
+		tblKan.defaults().pad(5f);
 		tblKan.row().center();
-		tblKan.add(txtBtnTombolKiri).left().expandX();
-		tblKan.add(txtBtnTombolKanan).left().expandX();
+		tblKan.add(imgBtnTombolKiri).left().expandX();
+		tblKan.add(imgBtnTombolKanan).left().expandX();
 
-		tblTombol.defaults().pad(1.5f);
+		tblTombol.defaults().pad(5f);
 		tblTombol.setPosition(237, 35);
 		tblTombol.row();
 		tblTombol.add(tblKir);

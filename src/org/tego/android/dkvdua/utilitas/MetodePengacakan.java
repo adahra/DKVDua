@@ -3,7 +3,8 @@ package org.tego.android.dkvdua.utilitas;
 import com.badlogic.gdx.math.MathUtils;
 
 /**
- * Kelas yang mengimplementasikan metode/algoritma dari Fisher-Yates Shuffle
+ * Kelas yang mengimplementasikan metode/
+ * algoritma dari Fisher-Yates Shuffle
  * 
  * @author blackshadow
  *
@@ -23,13 +24,13 @@ public class MetodePengacakan {
 	 *            Nilai dari array dimensi satu
 	 */
 	public static void shuffle(int[] array) {
-		int n = array.length;
+		int n = array.length; // Ambil panjang array
 
-		while (n > 0) {
-			int k = MathUtils.random(n--);
-			int temp = array[n];
-			array[n] = array[k];
-			array[k] = temp;
+		while (n > 0) { // Lakukan perulangan selama panjang array lebih dari nol
+			int k = MathUtils.random(n--); // Ambil nilai acak k
+			int temp = array[n]; // Ambil array tersisa untuk diacak
+			array[n] = array[k]; // Tukar array n dengan nilai acak k
+			array[k] = temp; // Ambil elemen larik dari elemen yang tersisa
 		}
 	}
 

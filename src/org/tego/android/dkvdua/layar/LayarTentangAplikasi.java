@@ -40,9 +40,11 @@ public class LayarTentangAplikasi extends LayarAbstrak {
 	private LabelStyle labelStyle;
 	private Label lblTentang;
 	private Label lblDorKot;
+	private Label lblIsi;
 	private TextButtonStyle textButtonStyle;
 	private TextButton txtBtnKembali;
-
+	private String teks = null;
+	
 	/**
 	 * Konstruktor kelas
 	 */
@@ -87,6 +89,9 @@ public class LayarTentangAplikasi extends LayarAbstrak {
 		Gdx.input.setInputProcessor(inputMultiplexer);
 		Gdx.input.setCatchBackKey(true);
 
+		teks = "Adalah pengembangan permainan dari Sokoban \n"
+				+ "yang dibuat oleh Hiroyuki Imabayashi";
+		
 		textureAtlas = new TextureAtlas(Gdx.files.internal("data/dialog.atlas"));
 
 		skin = new Skin();
@@ -112,6 +117,10 @@ public class LayarTentangAplikasi extends LayarAbstrak {
 		lblDorKot.setFontScale(0.6f);
 		lblDorKot.setAlignment(Align.center);
 
+		lblIsi = new Label(teks, labelStyle);
+		lblIsi.setFontScale(0.4f);
+		lblIsi.setAlignment(Align.center);
+		
 		textButtonStyle = new TextButtonStyle();
 		textButtonStyle.up = skin.getDrawable("button");
 		textButtonStyle.down = skin.getDrawable("touched-button");
@@ -134,6 +143,8 @@ public class LayarTentangAplikasi extends LayarAbstrak {
 		tabelDalam.add(lblTentang);
 		tabelDalam.row();
 		tabelDalam.add(lblDorKot);
+		tabelDalam.row();
+		tabelDalam.add(lblIsi);
 
 		tabelLuar.setBackground(skin.getDrawable("background"));
 		tabelLuar.setFillParent(true);
